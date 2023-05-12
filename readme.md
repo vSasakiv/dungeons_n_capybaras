@@ -23,7 +23,7 @@ git clone git@gitlab.uspdigital.usp.br:henrique_eduardo_souza/dungeons-and-capyb
 
 Em seguida, abra o diretório do projeto
 ```
-cd dungeons-and-capybaras.git
+cd 'dungeons n capybaras'
 ```
 
 Compile o jogo, executando o game.java:
