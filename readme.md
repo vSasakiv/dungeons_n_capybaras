@@ -10,6 +10,10 @@
 - OpenJDK Runtime Environment
 - OpenJDK 64-Bit Server VM
 
+# O que é este projeto?
+
+**Dungeons and capybaras** é um jogo no estilo RogueLike escrito na linguagem Java, com temática fortemente inspirada na **Universidade de São Paulo**, especialmente na **Escola Politécnica** e seus arredores.
+
 # Como rodar este projeto?
 
 Comece clonando o repositório para sua máquina local:
