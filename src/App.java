@@ -17,7 +17,6 @@ class App {
         // Cria e executa o game loop
         GameLoop game = new GameLoop(frame);
         game.start();
-        game.run();
         ThreadPool.execute(game);
       }
     });

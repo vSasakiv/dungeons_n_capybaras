@@ -61,8 +61,12 @@ public class GameFrame extends JFrame {
      */
     private void doRendering(Graphics2D g2d, GameState gameState) {
         // RENDERIZA O QUE PRECISAR
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(0, 0, WIDTH, HEIGHT);
         // exemplo
         g2d.setColor(Color.BLACK);
-        g2d.fillOval(500, 500, 300, 300);
+        g2d.fillOval(gameState.x, gameState.y, 20, 20);
+        g2d.fillOval(gameState.x + 20, gameState.y, 20, 20);
+        
     }
 }
