@@ -3,9 +3,9 @@ package gameloop;
 public class GameLoop implements Runnable {
 
     /*
-     * Dentro de gameloop.GameLoop devemos ter um gameloop.GameFrame, onde será renderizado os
+     * Dentro de game loop devemos ter um GameFrame, onde será renderizado os
      * gráficos
-     * e um gameloop.GameState, onde será guardado todas as entidades e realizadas as
+     * e um GameState, onde será guardado todas as entidades e realizadas as
      * atualizações a cada tick.
      */
     private final GameFrame gameFrame;
@@ -13,7 +13,7 @@ public class GameLoop implements Runnable {
     private boolean running = false;
 
     /**
-     * @param gameFrame gameloop.GameFrame inicial para o jogo.
+     * @param gameFrame GameFrame inicial para o jogo.
      */
     public GameLoop(GameFrame gameFrame) {
         this.gameFrame = gameFrame;
@@ -37,7 +37,7 @@ public class GameLoop implements Runnable {
     }
 
     /**
-     * Método que inicia o jogo, isto é, inicia o gameloop.GameLoop, onde iremos ter ticks
+     * Método que inicia o jogo, isto é, inicia o game loop, onde iremos ter ticks
      * periódicos de 15ms cada, além de atualizar a renderização.
      */
     @Override
@@ -58,7 +58,7 @@ public class GameLoop implements Runnable {
             boolean shouldRender = false;
 
             /*
-             * Toda vez que um tempo dt passar, delta sera igual a dt/dt, que é igual a 1,
+             * Toda vez que um tempo dt passar, delta sera igual a dt/dt, igual a 1,
              * logo devemos ativar um tick e atualizar o gameState
              */
             while (delta >= 1) {
