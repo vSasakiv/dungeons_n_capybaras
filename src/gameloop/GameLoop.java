@@ -1,25 +1,19 @@
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
+package gameloop;
 
 public class GameLoop implements Runnable {
 
     /*
-     * Dentro de GameLoop devemos ter um GameFrame, onde será renderizado os
+     * Dentro de gameloop.GameLoop devemos ter um gameloop.GameFrame, onde será renderizado os
      * gráficos
-     * e um GameState, onde será guardados todas as entidades e realizadas as
+     * e um gameloop.GameState, onde será guardado todas as entidades e realizadas as
      * atualizações a cada tick.
      */
-    private GameFrame gameFrame;
+    private final GameFrame gameFrame;
     private GameState gameState;
     private boolean running = false;
 
     /**
-     * @param gameFrame GameFrame inicial para o jogo.
+     * @param gameFrame gameloop.GameFrame inicial para o jogo.
      */
     public GameLoop(GameFrame gameFrame) {
         this.gameFrame = gameFrame;
@@ -43,7 +37,7 @@ public class GameLoop implements Runnable {
     }
 
     /**
-     * Método que inicia o jogo, isto é, inicia o GameLoop, onde iremos ter ticks
+     * Método que inicia o jogo, isto é, inicia o gameloop.GameLoop, onde iremos ter ticks
      * periódicos de 15ms cada, além de atualizar a renderização.
      */
     @Override
@@ -91,7 +85,7 @@ public class GameLoop implements Runnable {
 
             if (System.currentTimeMillis() - lastTimer >= 1000) {
                 lastTimer += 1000;
-                //System.out.println(ticks + " ticks, " + frames + " frames");
+                System.out.println(ticks + " ticks, " + frames + " frames");
                 frames = 0;
                 ticks = 0;
             }

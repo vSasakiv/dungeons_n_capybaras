@@ -1,25 +1,22 @@
+package gameloop;
+
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class GameFrame extends JFrame {
-    public static final int HEIGHT = 720; // janela em 720p
-    public static final int WIDTH = 16 * HEIGHT / 9; // formato 16:9
-
     // Criemos uma estratégia de buffering para tornar mais eficiente a renderização
     private BufferStrategy bufferStrategy;
 
     /**
      * Construtor que apenas cria a janela
      */
-    public GameFrame() {
+    public GameFrame(int width, int height) {
         super("Dungeons n Capybaras");
         setResizable(false);
-        setSize(WIDTH, HEIGHT);
+        setSize(width, height);
 
     }
 
@@ -62,11 +59,9 @@ public class GameFrame extends JFrame {
     private void doRendering(Graphics2D g2d, GameState gameState) {
         // RENDERIZA O QUE PRECISAR
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0, 0, WIDTH, HEIGHT);
+		g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
         // exemplo
         g2d.setColor(Color.BLACK);
-        g2d.fillOval(gameState.x, gameState.y, 20, 20);
-        g2d.fillOval(gameState.x + 20, gameState.y, 20, 20);
-        
+        g2d.fillOval(gameState.getPlayer().getPosX(), gameState.getPlayer().getPosY(), 20, 20);
     }
 }
