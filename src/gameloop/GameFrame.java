@@ -67,7 +67,7 @@ public class GameFrame extends JFrame {
         g2d.fillOval((int) gameState.getPlayer().getPosX(), (int) gameState.getPlayer().getPosY(), 20, 20);
         for (Projectile p : gameState.getProjectiles()){
             g2d.setColor(Color.RED);
-            g2d.fillRect((int) p.getPosX(), (int) p.getPosY(), 5, 8);
+            g2d.fillOval((int) p.getPosX(), (int) p.getPosY(), 8, 8);
         }
     }
 }

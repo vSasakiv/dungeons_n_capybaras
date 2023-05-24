@@ -48,7 +48,7 @@ public class GameState {
             player.tick(DIRECTION_DOWN);
         if (this.keyHandler.isKeyD())
             player.tick(DIRECTION_RIGHT);
-        if (this.mouseHandler.isMousePress()){
+        if (this.mouseHandler.isMousePress() && this.getPlayer().canShoot()){
             projectiles.add(player.shoot(this.mouseHandler.getMouseX(), this.mouseHandler.getMouseY()));
         }
         for (Projectile p : projectiles)
