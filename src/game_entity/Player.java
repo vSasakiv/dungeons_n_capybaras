@@ -8,6 +8,6 @@ public class Player extends GameEntity{
     @Override
     public void tick(Vector direction) {
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
-        this.checkWindowBorder(Constants.WIDTH, Constants.HEIGHT);
+        this.checkWindowBorder();
     }
 }
