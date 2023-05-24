@@ -1,13 +1,13 @@
 package game_entity;
 
 public class Vector {
-    int x, y;
+    float x, y;
 
     /**
      * @param x primeira componente do vetor
      * @param y segunda componente do vetor
      */
-    public Vector(int x, int y) {
+    public Vector(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -46,5 +46,7 @@ public class Vector {
     public static Vector scalarMultiply(Vector a, int b){
         return new Vector (a.x * b, a.y * b);
     }
-
+    public static Vector unitVector(Vector a){
+        return new Vector (a.x/a.module(), a.y/a.module());
+    }
 }
