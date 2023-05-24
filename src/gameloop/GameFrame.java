@@ -1,5 +1,7 @@
 package gameloop;
 
+import game_entity.Projectile;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -62,6 +64,10 @@ public class GameFrame extends JFrame {
 		g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
         // exemplo
         g2d.setColor(Color.BLACK);
-        g2d.fillOval(gameState.getPlayer().getPosX(), gameState.getPlayer().getPosY(), 20, 20);
+        g2d.fillOval((int) gameState.getPlayer().getPosX(), (int) gameState.getPlayer().getPosY(), 20, 20);
+        for (Projectile p : gameState.getProjectiles()){
+            g2d.setColor(Color.RED);
+            g2d.fillRect((int) p.getPosX(), (int) p.getPosY(), 5, 8);
+        }
     }
 }

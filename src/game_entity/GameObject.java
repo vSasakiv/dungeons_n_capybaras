@@ -11,14 +11,14 @@ public class GameObject {
      * @param posX coordenadas da posição inicial x do objeto
      * @param posY coordenadas da posição inicial y do objeto
      */
-    public GameObject(int posX, int posY){
+    public GameObject(float posX, float posY){
         position = new Vector(posX, posY);
     }
-    public int getPosX() {
+    public float getPosX() {
         return position.x;
     }
 
-    public int getPosY() {
+    public float getPosY() {
         return position.y;
     }
 }

@@ -25,6 +25,8 @@ public class GameLoop implements Runnable {
     public synchronized void start() {
         gameState = new GameState();
         this.gameFrame.addKeyListener(gameState.getKeyHandler());
+        this.gameFrame.addMouseListener(gameState.getMouseListener());
+        this.gameFrame.addMouseMotionListener(gameState.getMouseMotionListener());
         new Thread(this).start();
         this.running = true;
     }
