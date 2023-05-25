@@ -16,8 +16,8 @@ public class Player extends GameEntity{
     public final int SCREEN_Y = Constants.HEIGHT / 2;
 
     //Sprites
-    private BufferedImage standFront, standBack;
-    private ArrayList<BufferedImage> up, down, right, left;
+    private BufferedImage standFront, standBack, standRight, standLeft; //OBS: Alguns ainda não implementados
+    private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
 
 
     private String spriteDirection; // Indica a orientação do sprite
@@ -39,7 +39,7 @@ public class Player extends GameEntity{
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
         this.weapon.tick();
         this.checkWindowBorder();
-        this.spriteUpdate(direction);
+
     }
 
     /**
@@ -47,8 +47,14 @@ public class Player extends GameEntity{
      * @param keyHandler Inputs do teclado
      * @return Devolve um vetor que indica a direção do movimento do player, com base no input do teclado
      */
-    public Vector updateDirection (KeyHandler keyHandler) {
+    public Vector updateDirection (KeyHandler keyHandler, MouseHandler mouseHandler) {
         Vector direction = Constants.NULL_VECTOR;
+
+        //SpriteCounter só é atualizado se alguma tecla esta sendo pressionada
+        if (keyHandler.isPressed())
+            spriteCounterUpdate();
+
+        this.spriteUpdate(mouseHandler);
 
         if (keyHandler.isKeyW())
             direction = Vector.add(Constants.DIRECTION_UP, direction);
@@ -86,22 +92,48 @@ public class Player extends GameEntity{
             case "STAND_FRONT" -> playerImage = standFront;
             case "STAND_BACK" -> playerImage = standBack;
             case "UP" -> playerImage = up.get(spriteNumber);
+            case "UP_LEFT" -> playerImage = up_left.get(spriteNumber);
+            case "UP_RIGHT" -> playerImage = up_right.get(spriteNumber);
             case "DOWN" -> playerImage = down.get(spriteNumber);
+            case "DOWN_LEFT" -> playerImage = down_left.get(spriteNumber);
+            case "DOWN_RIGHT" -> playerImage = down_right.get(spriteNumber);
             case "RIGHT" -> playerImage = right.get(spriteNumber);
             case "LEFT" -> playerImage = left.get(spriteNumber);
         }
-        g2d.drawImage(playerImage, SCREEN_X - Constants.TILE_SIZE / 2, SCREEN_Y - Constants.TILE_SIZE / 2, Constants.TILE_SIZE, Constants.TILE_SIZE, null);
+        g2d.drawImage(playerImage, SCREEN_X - Constants.TILE_SIZE / 2, SCREEN_Y - Constants.TILE_SIZE / 2, 2 * Constants.TILE_SIZE, 2 * Constants.TILE_SIZE, null);
     }
 
     /**
-     * @param direction Vetor que indica a direção do movimento do player
-     * Este método atualiza a direção do sprite com base no movimento do player
-     * Se não houver movimento, opta por uma das opções "stand"
+     * @param mouseHandler ferramente utilizada para descobrir a posição do mouse
+     * Este método atualiza a direção do sprite com base na posição do mouse
      */
-    private void spriteUpdate (Vector direction) {
-        spriteCounterUpdate();
+    private void spriteUpdate (MouseHandler mouseHandler) {
+        Vector direction = new Vector(mouseHandler.getMouseX() - SCREEN_X, mouseHandler.getMouseY() - SCREEN_Y);
+        this.spriteDirection = "UP";
+        float dirUp = Vector.innerProduct(direction, Constants.DIRECTION_UP);
+        double degree = Vector.getDegree(direction);
 
-        if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
+        if (degree >= Math.toRadians(0) && degree < Math.toRadians(30)) {
+            this.spriteDirection = "RIGHT";
+        }
+        if (degree >= Math.toRadians(30) && degree < Math.toRadians(60)) {
+            if (dirUp > 0) this.spriteDirection = "UP_RIGHT";
+            else this.spriteDirection = "DOWN_RIGHT";
+        }
+        if (degree >= Math.toRadians(60) && degree < Math.toRadians(120)) {
+            if (dirUp > 0) this.spriteDirection = "UP";
+            else this.spriteDirection = "DOWN";
+        }
+        if (degree >= Math.toRadians(120) && degree < Math.toRadians(150)) {
+            if (dirUp > 0) this.spriteDirection = "UP_LEFT";
+            else this.spriteDirection = "DOWN_LEFT";
+        }
+        if (degree >= Math.toRadians(150) && degree <= Math.toRadians(180)) {
+            this.spriteDirection = "LEFT";
+        }
+
+        //Mudança de sprite pelo teclado
+        /* if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
             this.spriteDirection = "UP";
         } else if (Vector.vectorEquals(direction, Constants.DIRECTION_LEFT)) {
             this.spriteDirection = "LEFT";
@@ -114,7 +146,7 @@ public class Player extends GameEntity{
                 this.spriteDirection = "STAND_BACK";
             else
                 this.spriteDirection = "STAND_FRONT";
-        }
+        } */
     }
 
     /**
@@ -125,10 +157,7 @@ public class Player extends GameEntity{
     private void spriteCounterUpdate () {
         spriteCounter++;
         if (spriteCounter >= 10) {
-            if (spriteNumber == 0) {
-                spriteNumber = 1;
-            } else if (spriteNumber == 1)
-                spriteNumber = 0;
+            spriteNumber = (spriteNumber + 1) % 3;
             spriteCounter = 0;
         }
     }
@@ -138,21 +167,51 @@ public class Player extends GameEntity{
      */
     private void getImage () {
         this.up = new ArrayList<>();
+        this.up_left = new ArrayList<>();
+        this.up_right = new ArrayList<>();
         this.down = new ArrayList<>();
+        this.down_left = new ArrayList<>();
+        this.down_right = new ArrayList<>();
         this.right = new ArrayList<>();
         this.left = new ArrayList<>();
 
+
         try {
-            standFront = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusStand.png")));
-            standBack = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusBack.png")));
-            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusUp1.png"))));
-            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusUp2.png"))));
-            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusDown1.png"))));
-            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusDown2.png"))));
-            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusRight1.png"))));
-            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusRight2.png"))));
-            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusLeft1.png"))));
-            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusLeft2.png"))));
+            standBack = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_01.png")));
+            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_02.png"))));
+            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_03.png"))));
+            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_04.png"))));
+
+            up_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_left/Character_UpLeft_02.png"))));
+            up_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_left/Character_UpLeft_03.png"))));
+            up_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_left/Character_UpLeft_04.png"))));
+
+            up_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_right/Character_UpRight_02.png"))));
+            up_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_right/Character_UpRight_03.png"))));
+            up_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_right/Character_UpRight_04.png"))));
+
+            standFront = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_01.png")));
+            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_02.png"))));
+            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_03.png"))));
+            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_04.png"))));
+
+            down_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_left/Character_DownLeft_02.png"))));
+            down_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_left/Character_DownLeft_03.png"))));
+            down_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_left/Character_DownLeft_04.png"))));
+
+            down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_02.png"))));
+            down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_03.png"))));
+            down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_04.png"))));
+
+            standRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_01.png")));
+            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_02.png"))));
+            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_03.png"))));
+            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_04.png"))));
+
+            standLeft = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_01.png")));
+            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_02.png"))));
+            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_03.png"))));
+            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_04.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

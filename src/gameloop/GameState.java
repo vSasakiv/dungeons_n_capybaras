@@ -34,7 +34,8 @@ public class GameState {
      * Método chamado a cada tick do GameLoop, onde devemos atualizar os estados do GameState
      */
     public void tick() {
-        player.tick(player.updateDirection(keyHandler)); //Atualiza as informações do player
+        player.tick(player.updateDirection(keyHandler, mouseHandler)); //Atualiza as informações do player
+
         projectiles.addAll(player.updateShoot(mouseHandler));
         projectiles.removeIf(Projectile::outOfBounds);
         System.out.println(projectiles);
