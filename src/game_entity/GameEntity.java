@@ -9,8 +9,8 @@ import gameloop.Constants;
 public abstract class GameEntity extends GameObject{
     int velocity;
     
-    public GameEntity(float worldPosX, float worldposY, int velocity) {
-        super(worldPosX, worldposY);
+    public GameEntity(float worldPosX, float worldPosY, int velocity) {
+        super(worldPosX, worldPosY);
         this.velocity = velocity;
     }
     public abstract void tick();
@@ -20,6 +20,6 @@ public abstract class GameEntity extends GameObject{
         if (position.x < 0) position.x = 0;
         else if (position.x > Constants.WORLD_WIDTH) position.x = Constants.WORLD_WIDTH;
         if (position.y < 0) position.y = 0;
-        else if (position.y > Constants.WOLRD_HEIGHT) position.y = Constants.WOLRD_HEIGHT;
+        else if (position.y > Constants.WORLD_HEIGHT) position.y = Constants.WORLD_HEIGHT;
     }
 }

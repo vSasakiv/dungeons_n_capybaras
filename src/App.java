@@ -10,7 +10,7 @@ class App {
 
     EventQueue.invokeLater(() -> {
       GameFrame frame = new GameFrame(Constants.WIDTH, Constants.HEIGHT);
-      frame.setLocationRelativeTo(null); // inicia o gameloop.GameFrame
+      frame.setLocationRelativeTo(null); // inicia o game-loop
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setVisible(true);
       frame.initBufferStrategy(); // inicia o buffering

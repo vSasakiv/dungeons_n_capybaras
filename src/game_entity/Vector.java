@@ -49,4 +49,8 @@ public class Vector {
     public static Vector unitVector(Vector a){
         return new Vector (a.x/a.module(), a.y/a.module());
     }
+
+    public static boolean vectorEquals(Vector a, Vector b){
+        return (a.x == b.x && a.y == b.y);
+    }
 }

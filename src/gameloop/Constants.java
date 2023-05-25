@@ -27,5 +27,5 @@ public final class Constants {
     public static final int WORLD_NUM_COL = 50;
     public static final int WORLD_NUM_ROW = 50;
     public static final int WORLD_WIDTH = Constants.TILE_SIZE * WORLD_NUM_COL;
-    public static final int WOLRD_HEIGHT = Constants.TILE_SIZE * WORLD_NUM_ROW;   
+    public static final int WORLD_HEIGHT = Constants.TILE_SIZE * WORLD_NUM_ROW;
 }

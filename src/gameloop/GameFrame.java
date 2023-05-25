@@ -69,7 +69,7 @@ public class GameFrame extends JFrame {
 
         for (Projectile p : gameState.getProjectiles()){
             g2d.setColor(Color.RED);
-            g2d.fillOval((int) p.getworldPosX(), (int) p.getworldPosY(), 8, 8);
+            g2d.fillOval((int) p.getWorldPosX(), (int) p.getWorldPosY(), 8, 8);
         }
 
         gameState.player.draw(g2d);

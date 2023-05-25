@@ -14,11 +14,11 @@ public class GameObject {
     public GameObject(float worldPosX, float worldPosY){
         position = new Vector(worldPosX, worldPosY);
     }
-    public float getworldPosX() {
+    public float getWorldPosX() {
         return position.x;
     }
 
-    public float getworldPosY() {
+    public float getWorldPosY() {
         return position.y;
     }
 }

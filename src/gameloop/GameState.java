@@ -18,7 +18,7 @@ public class GameState {
     private final ArrayList<Projectile> projectiles;     
 
     /**
-     * Construtor que inicia o GameState, onde são criados players, os handlers e o tileManager .
+     * Construtor que inicia o GameState, onde são criados players, os handlers e o tileManager.
      */
     public GameState() {
         player = new Player(150, 150, 4);

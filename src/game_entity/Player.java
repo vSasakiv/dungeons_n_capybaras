@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 import gameloop.Constants;
 import gameloop.KeyHandler;
@@ -60,25 +61,23 @@ public class Player extends GameEntity{
      * @return Devolve um vetor que indica a direção do movimento do player, com base no input do teclado
      */
     public Vector updateDirection (KeyHandler keyHandler) {
-        Vector direction;
+        Vector direction = Constants.NULL_VECTOR;
 
-        if (keyHandler.isKeyW()) {
-            direction = Constants.DIRECTION_UP;
-        } else if (keyHandler.isKeyA()) {
-            direction = Constants.DIRECTION_LEFT;
-        } else if (keyHandler.isKeyS()) {
-            direction = Constants.DIRECTION_DOWN;
-        }  else if (keyHandler.isKeyD()) {
-            direction = Constants.DIRECTION_RIGHT;
-        }  else {
-            direction = Constants.NULL_VECTOR;
-        }
+        if (keyHandler.isKeyW())
+            direction = Vector.add(Constants.DIRECTION_UP, direction);
+        if (keyHandler.isKeyA())
+            direction = Vector.add(Constants.DIRECTION_LEFT, direction);
+        if (keyHandler.isKeyS())
+            direction = Vector.add(Constants.DIRECTION_DOWN, direction);
+        if (keyHandler.isKeyD())
+            direction = Vector.add(Constants.DIRECTION_RIGHT, direction);
+
+        System.out.println("direction: " + direction.x + " " + direction.y);
         return direction;
     }
 
     /**
      * @param g2d ferramenta para renderização
-     * 
      * Este método é responsável por desenhar na tela (frame aberto) um sprite
      * de acordo com o a direção indicada pelo "spriteDirection"
      */
@@ -97,22 +96,21 @@ public class Player extends GameEntity{
 
     /**
      * @param direction Vetor que indica a direção do movimento do player
-     * 
      * Este método atualiza a direção do sprite com base no movimento do player
      * Se não houver movimento, opta por uma das opções "stand"
      */
     private void spriteUpdate (Vector direction) {
         spriteCounterUpdate();
 
-        if (direction == Constants.DIRECTION_UP) {
+        if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
             this.spriteDirection = "UP";
-        } else if (direction == Constants.DIRECTION_LEFT) {
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_LEFT)) {
             this.spriteDirection = "LEFT";
-        } else if (direction == Constants.DIRECTION_DOWN) {
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_DOWN)) {
             this.spriteDirection = "DOWN";
-        }  else if (direction == Constants.DIRECTION_RIGHT) {
+        }  else if (Vector.vectorEquals(direction, Constants.DIRECTION_RIGHT)) {
             this.spriteDirection = "RIGHT";
-        }  else if (direction == Constants.NULL_VECTOR) {
+        }  else if (Vector.vectorEquals(direction, Constants.NULL_VECTOR)) {
              if (spriteDirection == "UP" || spriteDirection == "STAND_BACK")
                 this.spriteDirection = "STAND_BACK";
             else
@@ -146,16 +144,16 @@ public class Player extends GameEntity{
         this.left = new ArrayList<>();
 
         try {
-            standFront = ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusStand.png"));
-            standBack = ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusBack.png"));
-            up.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusUp1.png")));
-            up.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusUp2.png")));
-            down.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusDown1.png")));
-            down.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusDown2.png")));
-            right.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusRight1.png")));
-            right.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusRight2.png")));
-            left.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusLeft1.png")));
-            left.add(ImageIO.read(getClass().getResourceAsStream("/resources/player/amongusLeft2.png")));
+            standFront = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusStand.png")));
+            standBack = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusBack.png")));
+            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusUp1.png"))));
+            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusUp2.png"))));
+            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusDown1.png"))));
+            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusDown2.png"))));
+            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusRight1.png"))));
+            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusRight2.png"))));
+            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusLeft1.png"))));
+            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/amongusLeft2.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
