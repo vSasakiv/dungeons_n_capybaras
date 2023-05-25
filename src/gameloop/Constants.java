@@ -21,8 +21,12 @@ public final class Constants {
     public static final Vector DIRECTION_DOWN = new Vector(0, 1);
     public static final Vector DIRECTION_LEFT = new Vector(-1, 0);
     public static final Vector DIRECTION_RIGHT = new Vector(1, 0);
+    public static final Vector DIRECTION_UP_LEFT = new Vector (-1, 1);
+    public static final Vector DIRECTION_UP_RIGHT = new Vector (1, 1);
+    public static final Vector DIRECTION_DOWN_LEFT = new Vector (-1, -1);
+    public static final Vector DIRECTION_DOWN_RIGHT = new Vector (1, -1);
     public static final Vector NULL_VECTOR = new Vector (0, 0);
- 
+
     //World settings 
     public static final int WORLD_NUM_COL = 50;
     public static final int WORLD_NUM_ROW = 50;

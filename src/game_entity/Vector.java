@@ -48,6 +48,21 @@ public class Vector {
     }
 
     /**
+     * @param a primeiro vetor
+     * @param b segundo vetor
+     * @return o produto escalar entre os vetores a e b
+     */
+    public static float innerProduct (Vector a, Vector b) { return (a.x * b.x) + (a.y * b.y); }
+
+    /**
+     * @param a Vetor 
+     * @return O ângulo que esse vetor forma com o eixo x
+     */
+    public static double getDegree (Vector a) {
+       double cosine =  a.x / a.module();
+       return Math.acos(cosine);
+    }
+    /**
      * @param a Vetor a ser transformado
      * @return um vetor de mesma direção e sentido, mas de módulo 1
      */
