@@ -8,17 +8,17 @@ public class GameObject {
     Vector position;
 
     /**
-     * @param posX coordenadas da posição inicial x do objeto
-     * @param posY coordenadas da posição inicial y do objeto
+     * @param worldPosX coordenadas da posição inicial x do objeto no mundo
+     * @param worldPosY coordenadas da posição inicial y do objeto no mundo
      */
-    public GameObject(float posX, float posY){
-        position = new Vector(posX, posY);
+    public GameObject(float worldPosX, float worldPosY){
+        position = new Vector(worldPosX, worldPosY);
     }
-    public float getPosX() {
+    public float getworldPosX() {
         return position.x;
     }
 
-    public float getPosY() {
+    public float getworldPosY() {
         return position.y;
     }
 }
