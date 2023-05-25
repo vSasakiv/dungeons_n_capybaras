@@ -11,6 +11,7 @@ public class GameLoop implements Runnable {
     private final GameFrame gameFrame;
     private GameState gameState;
     private boolean running = false;
+    public Thread thread;
 
     /**
      * @param gameFrame GameFrame inicial para o jogo.
@@ -27,7 +28,9 @@ public class GameLoop implements Runnable {
         this.gameFrame.addKeyListener(gameState.getKeyHandler());
         this.gameFrame.addMouseListener(gameState.getMouseListener());
         this.gameFrame.addMouseMotionListener(gameState.getMouseMotionListener());
-        new Thread(this).start();
+
+        thread = new Thread(this);
+        this.thread.start();
         this.running = true;
     }
 
@@ -68,12 +71,6 @@ public class GameLoop implements Runnable {
                 tick();
                 delta -= 1;
                 shouldRender = true;
-            }
-
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
             }
 
             /*

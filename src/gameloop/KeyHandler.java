@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 /**
  * Classe responsável por todas as entradas do usuário pelo teclado
  */
-class KeyHandler extends KeyAdapter {
+public class KeyHandler extends KeyAdapter {
     // Booleans para teclas apertadas no teclado que implicam em ações.
     private boolean keyW;
     private boolean keyA;
