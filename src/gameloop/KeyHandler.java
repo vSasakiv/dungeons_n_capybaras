@@ -63,4 +63,8 @@ public class KeyHandler extends KeyAdapter {
     public boolean isKeyD() {
         return keyD;
     }
+
+    public boolean isPressed() {
+        return isKeyD() || isKeyD() || isKeyS() || isKeyW();
+    }
 }
