@@ -7,6 +7,11 @@ public abstract class Weapon {
     protected float coolDown = 0;
     private final int fixedCoolDown = 300;
 
+    /**
+     * @param fireRate velocidade de ataque da arma
+     * @param damage dano de cada projétil da arma
+     * @param speed velocidade de cada projétil da arma
+     */
     public Weapon(int fireRate, int damage, int speed) {
         this.fireRate = fireRate;
         this.damage = damage;
