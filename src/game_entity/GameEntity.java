@@ -7,7 +7,7 @@ import gameloop.Constants;
  * um comportamento especial com o Player ou se movimentam.
  */
 public abstract class GameEntity extends GameObject{
-    int velocity;
+    protected int velocity;
     
     public GameEntity(float worldPosX, float worldPosY, int velocity) {
         super(worldPosX, worldPosY);

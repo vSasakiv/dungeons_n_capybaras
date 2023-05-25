@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
+import game_entity.weapons.Projectile;
+import game_entity.weapons.Weapon;
 
 public class Player extends GameEntity{
     //Posições fixas do player: centrado na tela

@@ -1,4 +1,6 @@
-package game_entity;
+package game_entity.weapons;
+
+import game_entity.Vector;
 
 import java.util.ArrayList;
 
@@ -7,8 +9,12 @@ import java.util.ArrayList;
  * um projétil por tiro.
  */
 public class AutomaticWeapon extends Weapon{
-    public AutomaticWeapon(int fireRate, int damage, int speed) {
-        super(fireRate, damage, speed);
+
+    private final ProjectileFactory projectileFactory;
+
+    public AutomaticWeapon(int fireRate, int damage, ProjectileFactory projectileFactory) {
+        super(fireRate, damage);
+        this.projectileFactory = projectileFactory;
     }
 
     /**
@@ -18,10 +24,11 @@ public class AutomaticWeapon extends Weapon{
      * @return um ArrayList contendo apenas um projétil gerado pela arma
      */
     @Override
-    ArrayList<Projectile> shoot(int posX, int posY, Vector direction) {
+    public ArrayList<Projectile> shoot(int posX, int posY, Vector direction) {
         this.coolDown = 0;
         ArrayList<Projectile> projectiles = new ArrayList<>();
-        projectiles.add(new Projectile(posX, posY, this.speed, direction));
+        projectiles.add(projectileFactory.criaProjetil(posX+10, posY+10, direction));
         return projectiles;
     }
+
 }

@@ -1,8 +1,7 @@
 package gameloop;
 
 import game_entity.Player;
-import game_entity.Projectile;
-import game_entity.Shotgun;
+import game_entity.weapons.*;
 import tile.TileManager;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -16,17 +15,22 @@ public class GameState {
     public final TileManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
-    private final ArrayList<Projectile> projectiles;     
+    private final ArrayList<Projectile> projectiles;
+    private final ArrayList<Projectile> subProjectiles;
 
     /**
      * Construtor que inicia o GameState, onde são criados players, os handlers e o tileManager.
      */
     public GameState() {
         player = new Player(150, 150, 4);
-        player.setWeapon(new Shotgun(5, 2, 8, 2, 20));
+        ProjectileFactory subSubFactory = new BulletFactory(4);
+        ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
+        ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
+        player.setWeapon(new Shotgun(5, 2, factory, 30, 3));
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
+        subProjectiles = new ArrayList<>();
         tileManager = new TileManager(this);
     }
 
@@ -35,12 +39,16 @@ public class GameState {
      */
     public void tick() {
         player.tick(player.updateDirection(keyHandler, mouseHandler)); //Atualiza as informações do player
-
         projectiles.addAll(player.updateShoot(mouseHandler));
-        projectiles.removeIf(Projectile::outOfBounds);
         System.out.println(projectiles);
-        for (Projectile p : projectiles)
+        for (Projectile p : projectiles){
             p.tick();
+            if (p.shouldDelete())
+                subProjectiles.addAll(p.subProjectiles());
+        }
+        projectiles.addAll(subProjectiles);
+        projectiles.removeIf(Projectile::shouldDelete);
+        subProjectiles.clear();
     }
 
     public ArrayList<Projectile> getProjectiles() {

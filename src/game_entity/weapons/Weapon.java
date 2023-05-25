@@ -1,21 +1,21 @@
-package game_entity;
+package game_entity.weapons;
+
+import game_entity.Vector;
 
 import java.util.ArrayList;
 
 public abstract class Weapon {
-    protected int fireRate, damage, speed;
+    protected int fireRate;
+    protected int damage;
     protected float coolDown = 0;
     private final int fixedCoolDown = 300;
-
     /**
      * @param fireRate velocidade de ataque da arma
      * @param damage dano de cada projétil da arma
-     * @param speed velocidade de cada projétil da arma
      */
-    public Weapon(int fireRate, int damage, int speed) {
+    public Weapon(int fireRate, int damage) {
         this.fireRate = fireRate;
         this.damage = damage;
-        this.speed = speed;
     }
 
     /**
@@ -39,5 +39,5 @@ public abstract class Weapon {
      * @param direction Direção do projétil
      * @return um ArrayList contendo todos os projéteis gerados
      */
-    abstract ArrayList<Projectile> shoot(int posX, int posY, Vector direction);
+    public abstract ArrayList<Projectile> shoot(int posX, int posY, Vector direction);
 }

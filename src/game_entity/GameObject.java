@@ -5,7 +5,7 @@ package game_entity;
  * o atributo posição
  */
 public class GameObject {
-    Vector position;
+    protected Vector position;
 
     /**
      * @param worldPosX coordenadas da posição inicial x do objeto no mundo

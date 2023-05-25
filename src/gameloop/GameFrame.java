@@ -1,6 +1,6 @@
 package gameloop;
 
-import game_entity.Projectile;
+import game_entity.weapons.Projectile;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
