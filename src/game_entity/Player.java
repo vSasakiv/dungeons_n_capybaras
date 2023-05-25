@@ -8,11 +8,9 @@ import java.util.Objects;
 import javax.imageio.ImageIO;
 import gameloop.Constants;
 import gameloop.KeyHandler;
+import gameloop.MouseHandler;
 
 public class Player extends GameEntity{
-    private int cooldown;
-    private final int COOLDOWN = 5;
-
     //Posições fixas do player: centrado na tela
     public final int SCREEN_X = Constants.WIDTH / 2;
     public final int SCREEN_Y = Constants.HEIGHT / 2;
@@ -22,13 +20,14 @@ public class Player extends GameEntity{
     private ArrayList<BufferedImage> up, down, right, left;
 
 
-    private String spriteDirection; //Indica a orientação do sprite
-    private int spriteCounter = 0; //Conta quantos sprites foram renderizados
-    private int spriteNumber = 0; //Indica qual sprite está sendo renderizado, no caso de um array
+    private String spriteDirection; // Indica a orientação do sprite
+    private int spriteCounter = 0; // Conta quantos sprites foram renderizados
+    private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
+
+    private Weapon weapon;
 
     public Player(int posX, int posY, int velocity) {
         super(posX, posY, velocity);
-        this.cooldown = 0;
         this.getImage();
     }
 
@@ -38,21 +37,9 @@ public class Player extends GameEntity{
     @Override
     public void tick (Vector direction) {
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
+        this.weapon.tick();
         this.checkWindowBorder();
         this.spriteUpdate(direction);
-    }
-
-    public Projectile shoot(int mouseX, int mouseY){
-        this.cooldown = 0;
-        Vector direction = new Vector(mouseX - SCREEN_X, mouseY - this.SCREEN_Y);
-        direction = Vector.unitVector(direction);
-        return new Projectile(this.SCREEN_X + 10, this.SCREEN_Y + 10, 10, direction);
-    }
-
-    public boolean canShoot() {
-        if (this.cooldown < this.COOLDOWN)
-            this.cooldown += 1;
-        return this.cooldown == this.COOLDOWN;
     }
 
     /**
@@ -72,14 +59,26 @@ public class Player extends GameEntity{
         if (keyHandler.isKeyD())
             direction = Vector.add(Constants.DIRECTION_RIGHT, direction);
 
-        System.out.println("direction: " + direction.x + " " + direction.y);
         return direction;
+    }
+
+    /**
+     * @param mouseHandler Inputs do mouse
+     * @return uma lista contendo todos os projéteis gerados, podendo ser vazia.
+     */
+    public ArrayList<Projectile> updateShoot(MouseHandler mouseHandler){
+        if (mouseHandler.isMousePress() && this.weapon.canShoot()){
+            Vector direction = new Vector(mouseHandler.getMouseX() - SCREEN_X, mouseHandler.getMouseY() - SCREEN_Y);
+            direction = Vector.unitVector(direction);
+            return weapon.shoot(this.SCREEN_X - 10, this.SCREEN_Y - 10, direction);
+        }
+        else return new ArrayList<>();
     }
 
     /**
      * @param g2d ferramenta para renderização
      * Este método é responsável por desenhar na tela (frame aberto) um sprite
-     * de acordo com o a direção indicada pelo "spriteDirection"
+     * conforme a direção indicada pelo "spriteDirection"
      */
     public void draw (Graphics2D g2d) {
         BufferedImage playerImage = null;
@@ -157,5 +156,9 @@ public class Player extends GameEntity{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } 
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
 }

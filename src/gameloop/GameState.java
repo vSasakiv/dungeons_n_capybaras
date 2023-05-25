@@ -2,6 +2,7 @@ package gameloop;
 
 import game_entity.Player;
 import game_entity.Projectile;
+import game_entity.Shotgun;
 import tile.TileManager;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class GameState {
      */
     public GameState() {
         player = new Player(150, 150, 4);
+        player.setWeapon(new Shotgun(5, 2, 8, 2, 20));
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
@@ -33,19 +35,11 @@ public class GameState {
      */
     public void tick() {
         player.tick(player.updateDirection(keyHandler)); //Atualiza as informações do player
-
-        if (this.mouseHandler.isMousePress() && this.getPlayer().canShoot()){
-            projectiles.add(player.shoot(this.mouseHandler.getMouseX(), this.mouseHandler.getMouseY()));
-        }
+        projectiles.addAll(player.updateShoot(mouseHandler));
+        projectiles.removeIf(Projectile::outOfBounds);
+        System.out.println(projectiles);
         for (Projectile p : projectiles)
             p.tick();
-    }
-    
-    /**
-     * @return objeto player de onde podem ser acessados sua posição para renderização
-     */
-    public Player getPlayer(){
-        return this.player;
     }
 
     public ArrayList<Projectile> getProjectiles() {

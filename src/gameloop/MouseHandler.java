@@ -3,7 +3,7 @@ package gameloop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-class MouseHandler extends MouseAdapter {
+public class MouseHandler extends MouseAdapter {
 
     private int mouseX, mouseY;
     private boolean mousePress;
