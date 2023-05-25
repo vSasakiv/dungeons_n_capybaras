@@ -18,7 +18,7 @@ public class Player extends GameEntity{
     public final int SCREEN_Y = Constants.HEIGHT / 2;
 
     //Sprites
-    private BufferedImage standFront, standBack, standRight, standLeft; //OBS: Alguns ainda não implementados
+    private BufferedImage standFront, standBack;
     private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
 
 
@@ -49,24 +49,32 @@ public class Player extends GameEntity{
      * @param keyHandler Inputs do teclado
      * @return Devolve um vetor que indica a direção do movimento do player, com base no input do teclado
      */
-    public Vector updateDirection (KeyHandler keyHandler, MouseHandler mouseHandler) {
+    public Vector updateDirection (KeyHandler keyHandler) {
         Vector direction = Constants.NULL_VECTOR;
 
         //SpriteCounter só é atualizado se alguma tecla esta sendo pressionada
         if (keyHandler.isPressed())
             spriteCounterUpdate();
 
-        this.spriteUpdate(mouseHandler);
+        if (keyHandler.isKeyA() && keyHandler.isKeyW())
+            direction = Vector.add(Constants.DIRECTION_UP_LEFT, direction);
+        else if (keyHandler.isKeyD() && keyHandler.isKeyW())
+            direction = Vector.add(Constants.DIRECTION_UP_RIGHT, direction);
+        else if (keyHandler.isKeyS() && keyHandler.isKeyA())
+            direction = Vector.add(Constants.DIRECTION_DOWN_LEFT, direction);
+        else if (keyHandler.isKeyS() && keyHandler.isKeyD())
+            direction = Vector.add(Constants.DIRECTION_DOWN_RIGHT, direction);
 
-        if (keyHandler.isKeyW())
+        else if (keyHandler.isKeyW())
             direction = Vector.add(Constants.DIRECTION_UP, direction);
-        if (keyHandler.isKeyA())
+        else if (keyHandler.isKeyA())
             direction = Vector.add(Constants.DIRECTION_LEFT, direction);
-        if (keyHandler.isKeyS())
+        else if (keyHandler.isKeyS())
             direction = Vector.add(Constants.DIRECTION_DOWN, direction);
-        if (keyHandler.isKeyD())
+        else if (keyHandler.isKeyD())
             direction = Vector.add(Constants.DIRECTION_RIGHT, direction);
 
+        this.spriteUpdate(direction);
         return direction;
     }
 
@@ -106,49 +114,34 @@ public class Player extends GameEntity{
     }
 
     /**
-     * @param mouseHandler ferramente utilizada para descobrir a posição do mouse
-     * Este método atualiza a direção do sprite com base na posição do mouse
+     * @param direction direção do movimento do player
+     * Este método atualiza a direção do sprite com base na movimentação do player
      */
-    private void spriteUpdate (MouseHandler mouseHandler) {
-        Vector direction = new Vector(mouseHandler.getMouseX() - SCREEN_X, mouseHandler.getMouseY() - SCREEN_Y);
-        this.spriteDirection = "UP";
-        float dirUp = Vector.innerProduct(direction, Constants.DIRECTION_UP);
-        double degree = Vector.getDegree(direction);
-
-        if (degree >= Math.toRadians(0) && degree < Math.toRadians(30)) {
-            this.spriteDirection = "RIGHT";
-        }
-        if (degree >= Math.toRadians(30) && degree < Math.toRadians(60)) {
-            if (dirUp > 0) this.spriteDirection = "UP_RIGHT";
-            else this.spriteDirection = "DOWN_RIGHT";
-        }
-        if (degree >= Math.toRadians(60) && degree < Math.toRadians(120)) {
-            if (dirUp > 0) this.spriteDirection = "UP";
-            else this.spriteDirection = "DOWN";
-        }
-        if (degree >= Math.toRadians(120) && degree < Math.toRadians(150)) {
-            if (dirUp > 0) this.spriteDirection = "UP_LEFT";
-            else this.spriteDirection = "DOWN_LEFT";
-        }
-        if (degree >= Math.toRadians(150) && degree <= Math.toRadians(180)) {
-            this.spriteDirection = "LEFT";
-        }
+    private void spriteUpdate (Vector direction) {
 
         //Mudança de sprite pelo teclado
-        /* if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
+        if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
             this.spriteDirection = "UP";
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_UP_LEFT)) {
+            this.spriteDirection = "UP_LEFT";
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_UP_RIGHT)) {
+            this.spriteDirection = "UP_RIGHT";
         } else if (Vector.vectorEquals(direction, Constants.DIRECTION_LEFT)) {
             this.spriteDirection = "LEFT";
         } else if (Vector.vectorEquals(direction, Constants.DIRECTION_DOWN)) {
             this.spriteDirection = "DOWN";
-        }  else if (Vector.vectorEquals(direction, Constants.DIRECTION_RIGHT)) {
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_DOWN_LEFT)) {
+            this.spriteDirection = "DOWN_LEFT";
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_DOWN_RIGHT)) {
+            this.spriteDirection = "DOWN_RIGHT";
+        } else if (Vector.vectorEquals(direction, Constants.DIRECTION_RIGHT)) {
             this.spriteDirection = "RIGHT";
         }  else if (Vector.vectorEquals(direction, Constants.NULL_VECTOR)) {
              if (spriteDirection == "UP" || spriteDirection == "STAND_BACK")
                 this.spriteDirection = "STAND_BACK";
             else
                 this.spriteDirection = "STAND_FRONT";
-        } */
+        }
     }
 
     /**
@@ -205,12 +198,10 @@ public class Player extends GameEntity{
             down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_03.png"))));
             down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_04.png"))));
 
-            standRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_01.png")));
             right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_02.png"))));
             right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_03.png"))));
             right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_04.png"))));
 
-            standLeft = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_01.png")));
             left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_02.png"))));
             left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_03.png"))));
             left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_04.png"))));
