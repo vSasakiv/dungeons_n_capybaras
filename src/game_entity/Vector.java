@@ -46,10 +46,32 @@ public class Vector {
     public static Vector scalarMultiply(Vector a, int b){
         return new Vector (a.x * b, a.y * b);
     }
+
+    /**
+     * @param a Vetor a ser transformado
+     * @return um vetor de mesma direção e sentido, mas de módulo 1
+     */
     public static Vector unitVector(Vector a){
         return new Vector (a.x/a.module(), a.y/a.module());
     }
 
+    /**
+     * @param a Vetor a ser transformado
+     * @param degrees Angulo em graus
+     * @return Vetor rotacionado degrees graus na direção anti horária
+     */
+    public static Vector rotateVector(Vector a, int degrees){
+        double angle = degrees * 2 * Math.PI / 360.0;
+        return new Vector(
+                (float) (Math.cos(angle)*a.x - Math.sin(angle)*a.y),
+                (float) (Math.sin(angle)*a.x + Math.cos(angle)*a.y));
+    }
+
+    /**
+     * @param a Vetor a ser comparado
+     * @param b Vetor a ser comparado
+     * @return true caso o Vetor a seja igual a b, ou seja, suas componentes sejam as mesmas.
+     */
     public static boolean vectorEquals(Vector a, Vector b){
         return (a.x == b.x && a.y == b.y);
     }
