@@ -41,29 +41,46 @@ public class GameState {
         player.tick(player.updateDirection(keyHandler)); //Atualiza as informações do player
         projectiles.addAll(player.updateShoot(mouseHandler));
         System.out.println(projectiles);
+
         for (Projectile p : projectiles){
             p.tick();
             if (p.shouldDelete())
                 subProjectiles.addAll(p.subProjectiles());
         }
+
         projectiles.addAll(subProjectiles);
         projectiles.removeIf(Projectile::shouldDelete);
         subProjectiles.clear();
     }
 
+    /**
+     * obtém os projéteis
+     * @return array list tipo <Projectile>
+     */
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
+
     /**
-     * @return retorna o KeyListener sendo utilizado no GameState, para podermos o incluir
-     * ao GameFrame.
+     * obtém o KeyListener utilizado no GameState, para inclusão no GameFrame.
+     * @return o KeyListener 
      */
     public KeyListener getKeyHandler() {
         return keyHandler;
     }
+
+    /**
+     * obtém o MouseListener
+     * @return MouseHandler
+     */
     public MouseHandler getMouseListener() {
         return mouseHandler;
     }
+
+    /**
+     * obtém o MouseHandler
+     * @return MouseHandler
+     */
     public MouseHandler getMouseMotionListener() {
         return mouseHandler;
     }

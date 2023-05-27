@@ -1,5 +1,7 @@
 package geometry;
 
+import geometry.primitives.Point;
+
 public class Vector {
     private float x; // coordenada x
     private float y; // coordenada y
@@ -20,6 +22,25 @@ public class Vector {
     public Vector(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * construtor do vetor, definido por dois pontos A e B (V = B - A)
+     * @param A
+     * @param B
+     */
+    public Vector(Point A, Point B) {
+        this.x = B.getX() - A.getX();
+        this.y = B.getY() - A.getY();
+    }
+
+    /**
+     * construtor do vetor a partir de um já existente
+     * @param V
+     */
+    public Vector(Vector V) {
+        this.x = V.getX();
+        this.y = V.getY();
     }
 
     /**
@@ -237,5 +258,15 @@ public class Vector {
         float newX = (float) (v.x*Math.cos(angle) - v.y*Math.sin(angle));
         float newY = (float) (v.x*Math.sin(angle) + v.y*Math.cos(angle));
         return new Vector(newX, newY);
+    }
+
+    public static Vector projection(Vector v, Vector direction) {
+        Vector proj = new Vector(direction.x, direction.y);
+        float dotProd = dotProduct(v, direction);
+        float directionNorm = direction.getModulus();
+
+        proj.scale(dotProd/(directionNorm*directionNorm));
+
+        return proj;
     }
 }

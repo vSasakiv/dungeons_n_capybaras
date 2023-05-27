@@ -21,13 +21,18 @@ public class Player extends GameEntity{
     private BufferedImage standFront, standBack;
     private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
 
-
     private String spriteDirection; // Indica a orientação do sprite
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
     private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
 
     private Weapon weapon;
 
+    /**
+     * construtor do player, que o inicializa numa posição pré-determinada
+     * @param posX coordenada x de nascimento
+     * @param posY coordenada y de nascimento
+     * @param velocity velocidade
+     */
     public Player(int posX, int posY, int velocity) {
         super(posX, posY, velocity);
         this.getImage();
@@ -37,19 +42,18 @@ public class Player extends GameEntity{
     public void tick() {}
 
     @Override
-    public void tick (Vector direction) {
+    public void tick(Vector direction) {
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
         this.weapon.tick();
         this.checkWindowBorder();
-
     }
 
     /**
-     * 
+     * atualiza a direção do movimento do player, com base no input do teclado
      * @param keyHandler Inputs do teclado
-     * @return Devolve um vetor que indica a direção do movimento do player, com base no input do teclado
+     * @return um vetor correspondente à nova direção
      */
-    public Vector updateDirection (KeyHandler keyHandler) {
+    public Vector updateDirection(KeyHandler keyHandler) {
         Vector direction = Constants.NULL_VECTOR;
 
         //SpriteCounter só é atualizado se alguma tecla esta sendo pressionada
@@ -79,6 +83,7 @@ public class Player extends GameEntity{
     }
 
     /**
+     * atualiza os projéteis
      * @param mouseHandler Inputs do mouse
      * @return uma lista contendo todos os projéteis gerados, podendo ser vazia.
      */
@@ -92,11 +97,10 @@ public class Player extends GameEntity{
     }
 
     /**
+     * Desenha um sprite na tela (frame aberto) conforme a direção indicada pelo "spriteDirection"
      * @param g2d ferramenta para renderização
-     * Este método é responsável por desenhar na tela (frame aberto) um sprite
-     * conforme a direção indicada pelo "spriteDirection"
      */
-    public void draw (Graphics2D g2d) {
+    public void draw(Graphics2D g2d) {
         BufferedImage playerImage = null;
         switch (spriteDirection) {
             case "STAND_FRONT" -> playerImage = standFront;
@@ -114,10 +118,10 @@ public class Player extends GameEntity{
     }
 
     /**
+     * atualiza a direção do sprite, com base na movimentação do player
      * @param direction direção do movimento do player
-     * Este método atualiza a direção do sprite com base na movimentação do player
      */
-    private void spriteUpdate (Vector direction) {
+    private void spriteUpdate(Vector direction) {
 
         //Mudança de sprite pelo teclado
         if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
@@ -145,11 +149,13 @@ public class Player extends GameEntity{
     }
 
     /**
-     * Método responsável pela alternação dos sprites, para fins de animação
-     * Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
-     * alternando entre 0 e 1 (indica dois sprites diferentes)
+     * Alterna os sprites, para fins de animação
      */
-    private void spriteCounterUpdate () {
+    private void spriteCounterUpdate() {
+        /**
+         * Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
+         * alternando entre 0 e 1 (indica dois sprites diferentes)
+         */
         spriteCounter++;
         if (spriteCounter >= 10) {
             spriteNumber = (spriteNumber + 1) % 3;
@@ -158,9 +164,9 @@ public class Player extends GameEntity{
     }
 
     /**
-     * Método que carrega as imagens dos sprites
+     * Carrega as imagens dos sprites
      */
-    private void getImage () {
+    private void getImage() {
         this.up = new ArrayList<>();
         this.up_left = new ArrayList<>();
         this.up_right = new ArrayList<>();
@@ -169,7 +175,6 @@ public class Player extends GameEntity{
         this.down_right = new ArrayList<>();
         this.right = new ArrayList<>();
         this.left = new ArrayList<>();
-
 
         try {
             standBack = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_01.png")));
@@ -210,6 +215,10 @@ public class Player extends GameEntity{
         }
     }
 
+    /**
+     * define arma do player
+     * @param weapon arma
+     */
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
