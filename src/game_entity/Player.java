@@ -86,7 +86,7 @@ public class Player extends GameEntity{
         if (mouseHandler.isMousePress() && this.weapon.canShoot()){
             Vector direction = new Vector(mouseHandler.getMouseX() - SCREEN_X, mouseHandler.getMouseY() - SCREEN_Y);
             direction = Vector.unitVector(direction);
-            return weapon.shoot(this.SCREEN_X - 10, this.SCREEN_Y - 10, direction);
+            return weapon.shoot((int) this.getWorldPosX() + 16, (int) (this.getWorldPosY()) + 16, direction);
         }
         else return new ArrayList<>();
     }
