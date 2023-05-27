@@ -69,14 +69,33 @@ public class Vector {
      * @return valor do ângulo
      */
     public float getTheta() {
-        float theta;
+        float theta = 0; // ângulo real
 
-        if(this.x > 0) {
-            theta = (float) Math.atan(this.y/this.x);
-        } else if(this.x < 0) {
-            theta = (float) ((2*Math.PI) - Math.atan(this.y/this.x));
+        if(this.x == 0) {
+            // casos em que o vetor é vertical
+            if(this.y > 0){
+                theta = (float) Math.PI/2;
+            } else if(this.y < 0){
+                theta = (float) -Math.PI/2;
+            } else {
+                theta = 0;
+            }
         } else {
-            theta = 0;
+            float phi = (float) Math.atan(this.y/this.x); // ângulo auxiliar
+
+            if(this.x > 0 && this.y >= 0) {
+                // primeiro quadrante
+                theta = phi;
+            } else if(this.x < 0 && this.y >= 0) {
+                // segundo quadrante
+                theta = (float) Math.PI - phi;
+            } else if(this.x < 0 && this.y < 0){
+                // terceiro quadrante
+                theta = (float) Math.PI + phi;
+            } else if(this.x > 0 && this.y < 0) {
+                // quarto quadrante
+                theta = (float) (2*Math.PI - phi);
+            }
         }
 
         return theta;
