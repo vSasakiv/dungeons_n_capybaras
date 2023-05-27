@@ -5,7 +5,7 @@ import game_entity.Vector;
 import java.util.ArrayList;
 
 
-public class Shotgun extends Weapon{
+public class MultiShotWeapon extends Weapon{
     private final ProjectileFactory projectileFactory;
     int angulo, numeroProjeteis;
 
@@ -16,7 +16,7 @@ public class Shotgun extends Weapon{
      * @param angulo angulo entre cada projétil
      * @param numeroProjeteis numero de projéteis por tiro
      */
-    public Shotgun(int fireRate, int damage, ProjectileFactory projectileFactory, int angulo, int numeroProjeteis) {
+    public MultiShotWeapon(int fireRate, int damage, ProjectileFactory projectileFactory, int angulo, int numeroProjeteis) {
         super(fireRate, damage);
         this.projectileFactory = projectileFactory;
         this.angulo = angulo;

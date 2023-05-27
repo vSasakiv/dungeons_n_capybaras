@@ -16,7 +16,7 @@ public class GameObject {
     }
 
     /**
-     * obtém coordenda x do objeto
+     * Obtém coordenada x do objeto
      * @return x
      */
     public float getWorldPosX() {
