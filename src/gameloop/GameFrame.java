@@ -13,17 +13,18 @@ public class GameFrame extends JFrame {
     private BufferStrategy bufferStrategy;
 
     /**
-     * Construtor que apenas cria a janela
+     * Construtor do GameFrame, com tamanho determinado
+     * @param width largura da janela em pixels
+     * @param height altura da janela em pixels
      */
     public GameFrame(int width, int height) {
         super("Dungeons n Capybaras");
         setResizable(false);
         setSize(width, height);
-
     }
 
     /**
-     * Função que inicia a estratégia de buffering
+     * Inicia a estratégia de buffering
      */
     public void initBufferStrategy() {
         createBufferStrategy(3);
@@ -31,10 +32,8 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * @param gameState gameState atual, para ser possível renderização de entidades
-     *                  Método chamada toda vez que há alguma atualização de tick,
-     *                  que renderiza os
-     *                  todos os objetos necessários na tela
+     * renderiza todos os objetos em tela, a cada atualização de tick
+     * @param gameState gameState atual
      */
     public void render(GameState gameState) {
         do {
@@ -53,10 +52,9 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * @param g2d       instância do objeto Graphics2D, utilizado para desenhar
-     *                  coisas na tela
-     * @param gameState Estado atual do game, para ser possível desenhar os objetos
-     *                  presentes.
+     * Renderiza um gráfico em particular
+     * @param g2d gráfico a ser desenhado
+     * @param gameState Estado atual do game
      */
     private void doRendering(Graphics2D g2d, GameState gameState) {
         // RENDERIZA O QUE PRECISAR

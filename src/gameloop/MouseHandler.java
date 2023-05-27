@@ -8,6 +8,7 @@ public class MouseHandler extends MouseAdapter implements MouseMotionListener {
 
     private int mouseX, mouseY;
     private boolean mousePress;
+    
     @Override
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();

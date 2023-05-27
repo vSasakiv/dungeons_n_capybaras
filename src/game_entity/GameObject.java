@@ -14,10 +14,19 @@ public class GameObject {
     public GameObject(float worldPosX, float worldPosY){
         position = new Vector(worldPosX, worldPosY);
     }
+
+    /**
+     * obtém coordenda x do objeto
+     * @return x
+     */
     public float getWorldPosX() {
         return position.x;
     }
 
+    /**
+     * obtém coordenada y do objeto
+     * @return y
+     */
     public float getWorldPosY() {
         return position.y;
     }
