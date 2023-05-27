@@ -73,5 +73,5 @@ public class GameFrame extends JFrame {
         }
 
         gameState.player.draw(g2d);
-    }
+    } 
 }
