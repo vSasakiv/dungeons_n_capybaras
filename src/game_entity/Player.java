@@ -20,7 +20,6 @@ public class Player extends GameEntity{
     //Sprites
     private BufferedImage standFront, standBack;
     private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
-
     private String spriteDirection; // Indica a orientação do sprite
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
     private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
@@ -28,13 +27,17 @@ public class Player extends GameEntity{
     private Weapon weapon;
 
     /**
-     * construtor do player, que o inicializa numa posição pré-determinada
+     * Construtor do player, que o inicializa numa posição pré-determinada
      * @param posX coordenada x de nascimento
      * @param posY coordenada y de nascimento
      * @param velocity velocidade
      */
     public Player(int posX, int posY, int velocity) {
         super(posX, posY, velocity);
+        this.setSpriteSizeX(Constants.TILE_SIZE * 2);
+        this.setSpriteSizeY(Constants.TILE_SIZE * 2);
+        this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
+        this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
         this.getImage();
     }
 
@@ -88,10 +91,17 @@ public class Player extends GameEntity{
      * @return uma lista contendo todos os projéteis gerados, podendo ser vazia.
      */
     public ArrayList<Projectile> updateShoot(MouseHandler mouseHandler){
-        if (mouseHandler.isMousePress() && this.weapon.canShoot()){
-            Vector direction = new Vector(mouseHandler.getMouseX() - SCREEN_X, mouseHandler.getMouseY() - SCREEN_Y);
+        if (mouseHandler.isMousePress() && this.weapon.canShoot()) {
+            Vector direction = new Vector (
+                    mouseHandler.getMouseX() - (float) (this.getScreenX() + this.getSpriteSizeX() / 2),
+                    mouseHandler.getMouseY() - (float) (this.getScreenY() + this.getSpriteSizeY() / 2)
+            );
             direction = Vector.unitVector(direction);
-            return weapon.shoot((int) this.getWorldPosX() + 16, (int) (this.getWorldPosY()) + 16, direction);
+            return this.weapon.shoot(
+                    (int) this.getWorldPosX(),
+                    (int) this.getWorldPosY(),
+                    direction
+            );
         } 
         else return new ArrayList<>();
     }
@@ -114,12 +124,34 @@ public class Player extends GameEntity{
             case "RIGHT" -> playerImage = right.get(spriteNumber);
             case "LEFT" -> playerImage = left.get(spriteNumber);
         }
-        g2d.drawImage(playerImage, SCREEN_X - Constants.TILE_SIZE / 2, SCREEN_Y - Constants.TILE_SIZE / 2, 2 * Constants.TILE_SIZE, 2 * Constants.TILE_SIZE, null);
+        //Desenha o player
+        g2d.drawImage(
+                playerImage,
+                (int)this.getScreenX(),
+                (int)this.getScreenY(),
+                this.getSpriteSizeX(),
+                this.getSpriteSizeY(),
+                null
+        );
+        //Desenha a armar do player
+        this.weapon.draw(g2d, this);
     }
 
     /**
-     * atualiza a direção do sprite, com base na movimentação do player
-     * @param direction direção do movimento do player
+     * Atualiza direção da arma conforme a posição do mouse
+     * @param mouseHandler input do mouse
+     */
+    public void updateWeapon(MouseHandler mouseHandler) {
+        this.weapon.setDirection (
+                new Vector(
+                mouseHandler.getMouseX() - (this.getScreenX() + (float) this.getSpriteSizeX() / 2) ,
+                mouseHandler.getMouseY() - (this.getScreenY() + (float) this.getSpriteSizeY() / 2))
+        );
+    }
+
+    /**
+     * Atualiza a direção do sprite, com base na movimentação do player
+     * @param direction Direção do movimento do player
      */
     private void spriteUpdate(Vector direction) {
 
@@ -141,7 +173,7 @@ public class Player extends GameEntity{
         } else if (Vector.vectorEquals(direction, Constants.DIRECTION_RIGHT)) {
             this.spriteDirection = "RIGHT";
         }  else if (Vector.vectorEquals(direction, Constants.NULL_VECTOR)) {
-             if (spriteDirection == "UP" || spriteDirection == "STAND_BACK")
+             if (Objects.equals(spriteDirection, "UP") || Objects.equals(spriteDirection, "STAND_BACK"))
                 this.spriteDirection = "STAND_BACK";
             else
                 this.spriteDirection = "STAND_FRONT";

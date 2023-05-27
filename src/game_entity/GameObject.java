@@ -7,16 +7,19 @@ package game_entity;
 public class GameObject {
     protected Vector position;
 
+    private Vector screenPosition;
+
     /**
      * @param worldPosX coordenadas da posição inicial x do objeto no mundo
      * @param worldPosY coordenadas da posição inicial y do objeto no mundo
      */
     public GameObject(float worldPosX, float worldPosY){
         position = new Vector(worldPosX, worldPosY);
+        screenPosition = new Vector (worldPosX ,worldPosY);
     }
 
     /**
-     * obtém coordenda x do objeto
+     * obtém coordenada x do objeto
      * @return x
      */
     public float getWorldPosX() {
@@ -30,4 +33,10 @@ public class GameObject {
     public float getWorldPosY() {
         return position.y;
     }
+
+    public void setScreenX(float x)  {this.screenPosition.x = x; }
+    public void setScreenY(float y)  {this.screenPosition.y = y; }
+
+    public float getScreenX () { return this.screenPosition.x; }
+    public float getScreenY () { return this.screenPosition.y; }
 }

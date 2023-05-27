@@ -1,7 +1,8 @@
 package game_entity.weapons;
 
+import game_entity.GameEntity;
 import game_entity.Vector;
-
+import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Weapon {
@@ -9,7 +10,11 @@ public abstract class Weapon {
     protected int damage;
     protected float coolDown = 0;
     private final int fixedCoolDown = 300;
-    /**
+    private Vector direction;
+    private int SpriteSizeX;
+    private int SpriteSizeY;
+
+    /** Construtor da classe Weapon
      * @param fireRate velocidade de ataque da arma
      * @param damage dano de cada projétil da arma
      */
@@ -40,4 +45,28 @@ public abstract class Weapon {
      * @return um ArrayList contendo todos os projéteis gerados
      */
     public abstract ArrayList<Projectile> shoot(int posX, int posY, Vector direction);
+
+    /**
+     * Método responsável por desenhar componentes na tela
+     * @param g2d Ferramenta gráfica
+     * @param entity Entidade que weapon está atrelada
+     */
+    public abstract void draw (Graphics2D g2d, GameEntity entity);
+
+    public void setDirection(Vector direction) {
+        this.direction = direction;
+    }
+
+    public Vector getDirection() {
+        return direction;
+    }
+
+    public void setSpriteSizeX(int SpriteSizeX) { this.SpriteSizeX = SpriteSizeX; }
+
+    public void setSpriteSizeY(int SpriteSizeY) { this.SpriteSizeY = SpriteSizeY; }
+
+    public int getSpriteSizeX() { return SpriteSizeX; }
+
+    public int getSpriteSizeY() { return SpriteSizeY; }
+
 }

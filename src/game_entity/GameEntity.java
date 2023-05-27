@@ -8,6 +8,8 @@ import gameloop.Constants;
  */
 public abstract class GameEntity extends GameObject{
     protected int velocity;
+    private int SpriteSizeX;
+    private int SpriteSizeY;
     
     /**
      * construtor da entidade, numa posição predeterminada
@@ -40,4 +42,12 @@ public abstract class GameEntity extends GameObject{
         if (position.y < 0) position.y = 0;
         else if (position.y > Constants.WORLD_HEIGHT) position.y = Constants.WORLD_HEIGHT;
     }
+
+    public void setSpriteSizeX(int SpriteSizeX) { this.SpriteSizeX = SpriteSizeX; }
+
+    public void setSpriteSizeY(int SpriteSizeY) { this.SpriteSizeY = SpriteSizeY; }
+
+    public int getSpriteSizeX() { return SpriteSizeX; }
+
+    public int getSpriteSizeY() { return SpriteSizeY; }
 }

@@ -3,14 +3,10 @@ package game_entity.weapons;
 import game_entity.GameEntity;
 import game_entity.Vector;
 import gameloop.Constants;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ClusterBullet extends Projectile{
     BufferedImage image;
@@ -18,14 +14,18 @@ public class ClusterBullet extends Projectile{
     int counter = 0;
     int numberProjectiles;
     ProjectileFactory subProjectileFactory;
-    public ClusterBullet(float posX, float posY, int velocity, Vector direction,
+
+    public ClusterBullet (float posX, float posY, int velocity, Vector direction,
                          int timeUntilExplode, int numeroProjeteis,
-                         ProjectileFactory subProjectileFactory) {
+                         ProjectileFactory subProjectileFactory,
+                         BufferedImage image) {
         super(posX, posY, velocity, direction);
         this.timeUntilExplode = timeUntilExplode;
         this.numberProjectiles = numeroProjeteis;
         this.subProjectileFactory = subProjectileFactory;
-        getImage();
+        this.image = image;
+        this.setSpriteSizeX(13 * 3);
+        this.setSpriteSizeY(5 * 3);
     }
 
     @Override
@@ -37,24 +37,28 @@ public class ClusterBullet extends Projectile{
     @Override
     public void tick(Vector direction) {}
 
+    /**
+     * Método responsável por desenhar ClusterBullet na tela
+     * @param g2d Ferramenta gráfica
+     * @param entity  Entidade que ClusterBullet está atrelada
+     */
     @Override
     public void draw (Graphics2D g2d, GameEntity entity) {
         AffineTransform original = g2d.getTransform();
-        g2d.translate(this.getWorldPosX() - entity.getWorldPosX() + Constants.WIDTH/2.0 , this.getWorldPosY() - entity.getWorldPosY()+ Constants.HEIGHT/2.0);
+        g2d.translate (
+                this.getWorldPosX() - entity.getWorldPosX() + entity.getScreenX() + (double) entity.getSpriteSizeX() / 2,
+                16 + this.getWorldPosY() - entity.getWorldPosY() + entity.getScreenY() + (double) entity.getSpriteSizeX() / 2
+        );
         g2d.rotate(Vector.getDegree(this.direction));
-        g2d.drawImage(image, 0, 0,  3* 13,   3 * 5, null);
-        /* g2d.setColor(Color.RED);
-        g2d.fillOval(0,  0, 8, 8);*/
+        g2d.drawImage (
+                this.image,
+                -this.getSpriteSizeX() / 2,
+                -this.getSpriteSizeY() / 2,
+                this.getSpriteSizeX(),
+                this.getSpriteSizeY(),
+                null
+        );
         g2d.setTransform(original);
-    }
-
-    private void getImage () {
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Arrow.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override

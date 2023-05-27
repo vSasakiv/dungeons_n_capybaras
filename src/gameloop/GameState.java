@@ -39,8 +39,8 @@ public class GameState {
      */
     public void tick() {
         player.tick(player.updateDirection(keyHandler)); //Atualiza as informações do player
+        player.updateWeapon(mouseHandler);
         projectiles.addAll(player.updateShoot(mouseHandler));
-        System.out.println(projectiles);
 
         for (Projectile p : projectiles){
             p.tick();
