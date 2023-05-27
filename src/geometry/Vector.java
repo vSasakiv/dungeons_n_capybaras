@@ -238,4 +238,14 @@ public class Vector {
         float newY = (float) (v.x*Math.sin(angle) + v.y*Math.cos(angle));
         return new Vector(newX, newY);
     }
+
+    public static Vector projection(Vector v, Vector direction) {
+        Vector proj = new Vector(direction.x, direction.y);
+        float dotProd = dotProduct(v, direction);
+        float directionNorm = direction.getModulus();
+
+        proj.scale(dotProd/(directionNorm*directionNorm));
+
+        return proj;
+    }
 }
