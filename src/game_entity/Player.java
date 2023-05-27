@@ -93,8 +93,8 @@ public class Player extends GameEntity{
     public ArrayList<Projectile> updateShoot(MouseHandler mouseHandler){
         if (mouseHandler.isMousePress() && this.weapon.canShoot()) {
             Vector direction = new Vector (
-                    mouseHandler.getMouseX() - (float) (this.getScreenX() + this.getSpriteSizeX() / 2),
-                    mouseHandler.getMouseY() - (float) (this.getScreenY() + this.getSpriteSizeY() / 2)
+                    mouseHandler.getMouseX() - (this.getScreenX() + (float) this.getSpriteSizeX() / 2),
+                    mouseHandler.getMouseY() - (this.getScreenY() + (float) this.getSpriteSizeY() / 2)
             );
             direction = Vector.unitVector(direction);
             return this.weapon.shoot(
@@ -184,9 +184,10 @@ public class Player extends GameEntity{
      * Alterna os sprites, para fins de animação
      */
     private void spriteCounterUpdate() {
-        /**
-         * Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
-         * alternando entre 0 e 1 (indica dois sprites diferentes)
+
+        /*
+          Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
+          alternando entre 0 e 1 (indica dois sprites diferentes)
          */
         spriteCounter++;
         if (spriteCounter >= 10) {
