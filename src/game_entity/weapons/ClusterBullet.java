@@ -1,11 +1,19 @@
 package game_entity.weapons;
 
+import game_entity.GameEntity;
 import game_entity.Vector;
 import gameloop.Constants;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ClusterBullet extends Projectile{
+    BufferedImage image;
     int timeUntilExplode;
     int counter = 0;
     int numberProjectiles;
@@ -17,6 +25,7 @@ public class ClusterBullet extends Projectile{
         this.timeUntilExplode = timeUntilExplode;
         this.numberProjectiles = numeroProjeteis;
         this.subProjectileFactory = subProjectileFactory;
+        getImage();
     }
 
     @Override
@@ -27,6 +36,26 @@ public class ClusterBullet extends Projectile{
 
     @Override
     public void tick(Vector direction) {}
+
+    @Override
+    public void draw (Graphics2D g2d, GameEntity entity) {
+        AffineTransform original = g2d.getTransform();
+        g2d.translate(this.getWorldPosX() - entity.getWorldPosX() + Constants.WIDTH/2.0 , this.getWorldPosY() - entity.getWorldPosY()+ Constants.HEIGHT/2.0);
+        g2d.rotate(Vector.getDegree(this.direction));
+        g2d.drawImage(image, 0, 0,  3* 13,   3 * 5, null);
+        /* g2d.setColor(Color.RED);
+        g2d.fillOval(0,  0, 8, 8);*/
+        g2d.setTransform(original);
+    }
+
+    private void getImage () {
+        try {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Arrow.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public boolean shouldDelete() {
