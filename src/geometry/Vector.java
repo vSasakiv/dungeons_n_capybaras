@@ -157,8 +157,11 @@ public class Vector {
      * @param angle ângulo de rotação, no sentido anti-horário
      */
     public void rotate(float angle) {
-        this.x = (float) (this.x*Math.cos(angle) - this.y*Math.sin(angle));
-        this.y = (float) (this.x*Math.sin(angle) + this.y*Math.cos(angle));
+        float newX = (float) (this.x*Math.cos(angle) - this.y*Math.sin(angle));
+        float newY = (float) (this.x*Math.sin(angle) + this.y*Math.cos(angle));
+
+        this.x = newX;
+        this.y = newY;
     }
 
     /**
