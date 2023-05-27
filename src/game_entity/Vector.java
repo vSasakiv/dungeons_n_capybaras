@@ -59,9 +59,8 @@ public class Vector {
      * @return O ângulo que esse vetor forma com o eixo x
      */
     public static double getDegree (Vector a) {
-       double tan =  a.y / a.x;
-       if (a.x >= 0) return Math.atan(tan);
-       else return Math.atan(tan) + Math.PI;
+       double cosine =  a.x / a.module();
+       return Math.acos(cosine);
     }
     /**
      * @param a Vetor a ser transformado

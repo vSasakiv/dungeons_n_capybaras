@@ -2,7 +2,9 @@ package gameloop;
 
 import game_entity.weapons.Projectile;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
@@ -64,9 +66,10 @@ public class GameFrame extends JFrame {
         gameState.tileManager.draw(g2d);
 
         for (Projectile p : gameState.getProjectiles()){
-            p.draw(g2d, gameState.player);
+            g2d.setColor(Color.RED);
+            g2d.fillOval((int) ( p.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH/2),  (int) ( p.getWorldPosY() - gameState.player.getWorldPosY() + Constants.HEIGHT/2), 8, 8);
         }
 
         gameState.player.draw(g2d);
-    }
+    } 
 }
