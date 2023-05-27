@@ -1,8 +1,10 @@
 package game_entity.weapons;
 
+import game_entity.GameEntity;
 import game_entity.Vector;
 import gameloop.Constants;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class ClusterBullet extends Projectile{
@@ -27,6 +29,11 @@ public class ClusterBullet extends Projectile{
 
     @Override
     public void tick(Vector direction) {}
+
+    @Override
+    public void draw(Graphics2D g2d, GameEntity entity) {
+
+    }
 
     @Override
     public boolean shouldDelete() {
