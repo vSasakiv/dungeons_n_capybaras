@@ -81,7 +81,9 @@ public class Vector {
                 theta = 0;
             }
         } else {
-            float phi = (float) Math.atan(this.y/this.x); // ângulo auxiliar
+            float delta_x = Math.abs(this.x); // módulo da componente x
+            float delta_y = Math.abs(this.y); // módulo da componente y
+            float phi = (float) Math.atan(delta_y/delta_x); // ângulo auxiliar
 
             if(this.x > 0 && this.y >= 0) {
                 // primeiro quadrante
@@ -232,8 +234,8 @@ public class Vector {
      * @return vetor rotacionado
      */
     public static Vector rotation(Vector v, float angle) {
-        float newX = v.x = (float) (v.x*Math.cos(angle) - v.y*Math.sin(angle));
-        float newY = v.y = (float) (v.x*Math.sin(angle) + v.y*Math.cos(angle));
+        float newX = (float) (v.x*Math.cos(angle) - v.y*Math.sin(angle));
+        float newY = (float) (v.x*Math.sin(angle) + v.y*Math.cos(angle));
         return new Vector(newX, newY);
     }
 }
