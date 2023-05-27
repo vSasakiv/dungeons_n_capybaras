@@ -52,14 +52,14 @@ public class Player extends GameEntity{
     }
 
     /**
-     * atualiza a direção do movimento do player, com base no input do teclado
+     * Atualiza a direção do movimento do player, com base no input do teclado
      * @param keyHandler Inputs do teclado
      * @return um vetor correspondente à nova direção
      */
     public Vector updateDirection(KeyHandler keyHandler) {
         Vector direction = Constants.NULL_VECTOR;
 
-        //SpriteCounter só é atualizado se alguma tecla esta sendo pressionada
+        //SpriteCounter só é atualizado se alguma tecla está sendo pressionada
         if (keyHandler.isPressed())
             spriteCounterUpdate();
 
@@ -186,8 +186,8 @@ public class Player extends GameEntity{
     private void spriteCounterUpdate() {
 
         /*
-          Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
-          alternando entre 0 e 1 (indica dois sprites diferentes)
+         * Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
+         * alternando entre 0 e 1 (indica dois sprites diferentes)
          */
         spriteCounter++;
         if (spriteCounter >= 10) {
@@ -249,7 +249,7 @@ public class Player extends GameEntity{
     }
 
     /**
-     * define arma do player
+     * Define arma do player
      * @param weapon arma
      */
     public void setWeapon(Weapon weapon) {

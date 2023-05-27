@@ -12,7 +12,7 @@ public abstract class GameEntity extends GameObject{
     private int SpriteSizeY;
     
     /**
-     * construtor da entidade, numa posição predeterminada
+     * Construtor da entidade, numa posição predeterminada
      * @param worldPosX coordenada x inicial, em relação ao mundo
      * @param worldPosY coordenada y inicial, em relação ao mundo
      * @param velocity velocidade
@@ -23,18 +23,18 @@ public abstract class GameEntity extends GameObject{
     }
 
     /**
-     * atualiza a entidade a cada pulso (tempo discretizado)
+     * Atualiza a entidade a cada pulso (tempo discretizado)
      */
     public abstract void tick();
 
     /**
-     * atualiza a entidade a cada pulso (tempo discretizado)
+     * Atualiza a entidade a cada pulso (tempo discretizado)
      * @param direction direção a ser considerada na atualização
      */
     public abstract void tick(Vector direction);
 
     /**
-     * impede que entidade ultrapasse borda do mundo
+     * Impede que entidade ultrapasse borda do mundo
      */
     protected void checkWindowBorder(){
         if (position.x < 0) position.x = 0;

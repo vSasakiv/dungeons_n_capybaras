@@ -26,7 +26,7 @@ public class GameState {
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
-        player.setWeapon(new Shotgun(5, 2, factory, 30, 3));
+        player.setWeapon(new MultiShotWeapon(5, 2, factory, 30, 3));
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
