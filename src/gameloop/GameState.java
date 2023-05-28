@@ -1,6 +1,9 @@
 package gameloop;
 
 import game_entity.Player;
+import game_entity.Vector;
+import game_entity.mobs.Enemy;
+import game_entity.mobs.PassiveEnemy;
 import game_entity.weapons.*;
 import tile.TileManager;
 import java.awt.event.KeyListener;
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 public class GameState {
 
     public final Player player;
+    public final Enemy testEnemy;
     public final TileManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
@@ -23,10 +27,12 @@ public class GameState {
      */
     public GameState() {
         player = new Player(150, 150, 4);
+        testEnemy = new PassiveEnemy(200, 200, 3);
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
         player.setWeapon(new MultiShotWeapon(5, 2, factory, 30, 3));
+        testEnemy.setWeapon(new AutomaticWeapon(2, 2, subSubFactory));
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
@@ -40,7 +46,8 @@ public class GameState {
     public void tick() {
         player.tick(player.updateDirection(keyHandler)); //Atualiza as informações do player
         projectiles.addAll(player.updateShoot(mouseHandler));
-        System.out.println(projectiles);
+        testEnemy.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
+        projectiles.addAll(testEnemy.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY())));
 
         for (Projectile p : projectiles){
             p.tick();

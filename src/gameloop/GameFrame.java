@@ -68,5 +68,10 @@ public class GameFrame extends JFrame {
         }
 
         gameState.player.draw(g2d);
+        g2d.setColor(Color.red);
+        g2d.fillOval(
+                (int) (gameState.testEnemy.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH/2.0),
+                (int) (gameState.testEnemy.getWorldPosY() - gameState.player.getWorldPosY()+ Constants.HEIGHT/2.0),
+                10, 10);
     }
 }
