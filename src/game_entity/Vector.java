@@ -1,7 +1,7 @@
 package game_entity;
 
 public class Vector {
-    float x, y;
+    public float x, y;
 
     /**
      * @param x primeira componente do vetor
@@ -90,5 +90,10 @@ public class Vector {
      */
     public static boolean vectorEquals(Vector a, Vector b){
         return (a.x == b.x && a.y == b.y);
+    }
+
+    public static Vector randomUnitVector() {
+        Vector v = new Vector((float) (Math.random() * 2.0 - 1.0), (float)(Math.random() * 2.0 - 1.0));
+        return Vector.unitVector(v);
     }
 }
