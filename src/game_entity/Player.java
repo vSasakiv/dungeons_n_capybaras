@@ -25,6 +25,7 @@ public class Player extends GameEntity{
     private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
 
     private Weapon weapon;
+    public final Hitbox hitbox;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
@@ -38,6 +39,7 @@ public class Player extends GameEntity{
         this.setSpriteSizeY(Constants.TILE_SIZE * 2);
         this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
+        this.hitbox = new Hitbox(50, 50, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.getImage();
     }
 
@@ -49,6 +51,7 @@ public class Player extends GameEntity{
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
         this.weapon.tick();
         this.checkWindowBorder();
+        this.hitbox.setPosition(this.position);
     }
 
     /**
@@ -104,6 +107,10 @@ public class Player extends GameEntity{
             );
         } 
         else return new ArrayList<>();
+    }
+
+    public void gotHit(){
+        System.out.println("Ouch");
     }
 
     /**

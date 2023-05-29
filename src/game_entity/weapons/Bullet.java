@@ -33,6 +33,9 @@ public class Bullet extends Projectile{
     @Override
     public void tick(Vector direction) {}
 
+    /**
+     * @return true caso a bala esteja fora do mapa e deva ser deletada
+     */
     @Override
     public boolean shouldDelete() {
         return  this.getWorldPosX() < 0 ||
@@ -50,7 +53,7 @@ public class Bullet extends Projectile{
         AffineTransform original = g2d.getTransform();
         g2d.translate(
                 this.getWorldPosX() - entity.getWorldPosX() + entity.getScreenX() + (double) entity.getSpriteSizeX() / 2,
-                16 + this.getWorldPosY() - entity.getWorldPosY() + entity.getScreenY() + (double) entity.getSpriteSizeX() / 2
+                16 + this.getWorldPosY() - entity.getWorldPosY() + entity.getScreenY() + (double) entity.getSpriteSizeY() / 2
         );
         g2d.rotate(Vector.getDegree(this.direction));
         g2d.drawImage(

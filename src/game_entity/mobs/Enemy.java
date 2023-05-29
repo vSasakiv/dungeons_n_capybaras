@@ -1,6 +1,7 @@
 package game_entity.mobs;
 
 import game_entity.GameEntity;
+import game_entity.Hitbox;
 import game_entity.Vector;
 import game_entity.weapons.Projectile;
 import game_entity.weapons.Weapon;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public abstract class Enemy extends GameEntity {
     protected Weapon weapon;
     protected EnemyState state;
+    public Hitbox hitbox;
 
     /**
      * Construtor da entidade, numa posição predeterminada

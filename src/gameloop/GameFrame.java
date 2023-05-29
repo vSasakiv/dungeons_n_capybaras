@@ -70,8 +70,19 @@ public class GameFrame extends JFrame {
         gameState.player.draw(g2d);
         g2d.setColor(Color.red);
         g2d.fillOval(
-                (int) (gameState.testEnemy.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH/2.0),
-                (int) (gameState.testEnemy.getWorldPosY() - gameState.player.getWorldPosY()+ Constants.HEIGHT/2.0),
+                (int) (gameState.testEnemy.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH/2.0 - 5),
+                (int) (gameState.testEnemy.getWorldPosY() - gameState.player.getWorldPosY() + Constants.HEIGHT/2.0 - 5),
                 10, 10);
+        g2d.draw(new Rectangle(
+                (int) (gameState.testEnemy.getScreenX(gameState.player) - gameState.testEnemy.hitbox.getWidth()/2),
+                (int) (gameState.testEnemy.getScreenY(gameState.player) - gameState.testEnemy.hitbox.getHeight()/2),
+                (int) gameState.testEnemy.hitbox.getWidth(),
+                (int) gameState.testEnemy.hitbox.getHeight()));
+
+        g2d.draw(new Rectangle(
+                (int) (gameState.player.SCREEN_X - gameState.player.hitbox.getWidth()/2),
+                (int) (gameState.player.SCREEN_Y - gameState.player.hitbox.getHeight()/2),
+                (int) gameState.player.hitbox.getWidth(),
+                (int) gameState.player.hitbox.getHeight()));
     }
 }

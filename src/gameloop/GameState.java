@@ -1,5 +1,6 @@
 package gameloop;
 
+import game_entity.Hitbox;
 import game_entity.Player;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
@@ -27,7 +28,8 @@ public class GameState {
      */
     public GameState() {
         player = new Player(150, 150, 4);
-        testEnemy = new PassiveEnemy(200, 200, 3);
+        Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
+        testEnemy = new PassiveEnemy(200, 200, 3, enemyHitbox);
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
@@ -57,6 +59,9 @@ public class GameState {
         }
 
         projectiles.addAll(subProjectiles);
+        if (testEnemy.hitbox.isHitting(player.hitbox))
+            player.gotHit();
+
         projectiles.removeIf(Projectile::shouldDelete);
         subProjectiles.clear();
     }
