@@ -1,15 +1,15 @@
 package game_entity.weapons;
 
+import game_entity.Counter;
 import game_entity.GameEntity;
 import game_entity.Vector;
 import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Weapon {
-    protected int fireRate;
+
     protected int damage;
-    protected float coolDown = 0;
-    private final int fixedCoolDown = 300;
+    protected Counter coolDownCounter;
     private Vector direction;
     private int SpriteSizeX;
     private int SpriteSizeY;
@@ -19,23 +19,23 @@ public abstract class Weapon {
      * @param damage dano de cada projétil da arma
      */
     public Weapon(int fireRate, int damage) {
-        this.fireRate = fireRate;
+        this.coolDownCounter = new Counter(300, fireRate);
         this.damage = damage;
+        coolDownCounter.start();
     }
 
     /**
      * A cada tick do jogo, também devemos atualizar o cool down de ataque da arma
      */
     public void tick(){
-        if (this.coolDown < fixedCoolDown)
-            this.coolDown += fireRate;
+        coolDownCounter.tick();
     }
 
     /**
      * @return retorna true caso a arma não esteja em cool down
      */
     public boolean canShoot(){
-        return this.coolDown >= fixedCoolDown;
+        return coolDownCounter.isZero();
     }
 
     /**

@@ -42,7 +42,7 @@ public class MultiShotWeapon extends Weapon{
     @Override
     public ArrayList<Projectile> shoot(int posX, int posY, Vector direction) {
         int metade = numeroProjeteis/2;
-        this.coolDown = 0;
+        this.coolDownCounter.start();
         ArrayList<Projectile> projectiles = new ArrayList<>();
         for (int i = 0; i < numeroProjeteis; i++)
             projectiles.add(projectileFactory.criaProjetil(

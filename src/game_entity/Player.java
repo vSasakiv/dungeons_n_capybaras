@@ -24,8 +24,10 @@ public class Player extends GameEntity{
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
     private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
 
+    private final Counter invincibilityCounter;
+    private Attributes attributes;
     private Weapon weapon;
-    public final Hitbox hitbox;
+    private final Hitbox hitbox;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
@@ -40,6 +42,8 @@ public class Player extends GameEntity{
         this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
         this.hitbox = new Hitbox(50, 50, new Vector(this.getWorldPosX(), this.getWorldPosY()));
+        this.invincibilityCounter = new Counter(30, 1);
+        this.attributes = new Attributes(10, 10, 200);
         this.getImage();
     }
 
@@ -47,9 +51,14 @@ public class Player extends GameEntity{
     public void tick() {}
 
     @Override
-    public void tick(Vector direction) {
+    public void tick(Vector direction) {}
+
+    public void tick(KeyHandler keyHandler, MouseHandler mouseHandler) {
+        Vector direction = this.updateDirection(keyHandler);
+        this.invincibilityCounter.tick();
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
         this.weapon.tick();
+        this.updateWeapon(mouseHandler);
         this.checkWindowBorder();
         this.hitbox.setPosition(this.position);
     }
@@ -59,7 +68,7 @@ public class Player extends GameEntity{
      * @param keyHandler Inputs do teclado
      * @return um vetor correspondente à nova direção
      */
-    public Vector updateDirection(KeyHandler keyHandler) {
+    private Vector updateDirection(KeyHandler keyHandler) {
         Vector direction = Constants.NULL_VECTOR;
 
         //SpriteCounter só é atualizado se alguma tecla está sendo pressionada
@@ -109,8 +118,11 @@ public class Player extends GameEntity{
         else return new ArrayList<>();
     }
 
-    public void gotHit(){
-        System.out.println("Ouch");
+    public void gotHit(int damage){
+        if (invincibilityCounter.isZero()){
+            this.attributes.takeDamage(damage);
+            invincibilityCounter.start();
+        }
     }
 
     /**
@@ -148,7 +160,7 @@ public class Player extends GameEntity{
      * Atualiza direção da arma conforme a posição do mouse
      * @param mouseHandler input do mouse
      */
-    public void updateWeapon(MouseHandler mouseHandler) {
+    private void updateWeapon(MouseHandler mouseHandler) {
         this.weapon.setDirection (
                 new Vector(
                 mouseHandler.getMouseX() - (this.getScreenX() + (float) this.getSpriteSizeX() / 2) ,
@@ -261,5 +273,19 @@ public class Player extends GameEntity{
      */
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    /**
+     * @return hitbox do player
+     */
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
+
+    /**
+     * @return atributos do player
+     */
+    public Attributes getAttributes() {
+        return attributes;
     }
 }

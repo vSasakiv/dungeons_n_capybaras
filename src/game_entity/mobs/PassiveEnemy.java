@@ -1,5 +1,6 @@
 package game_entity.mobs;
 
+import game_entity.Counter;
 import game_entity.Hitbox;
 import game_entity.Vector;
 import game_entity.weapons.Projectile;
@@ -9,9 +10,8 @@ import java.util.ArrayList;
 public class PassiveEnemy extends Enemy{
 
     // contadores de State do inimigo
-    private int patrolCoolDownCounter = 0;
-    private int patrolCounter = 0;
-
+    private Counter patrolCounter;
+    private Counter patrolCoolDownCounter;
     private boolean shouldShoot;
     private Vector direction;
 
@@ -27,6 +27,10 @@ public class PassiveEnemy extends Enemy{
         this.state = EnemyState.PATROL;
         this.shouldShoot = false;
         this.direction = new Vector(0, 0);
+        this.patrolCounter = new Counter(30, 1);
+        this.patrolCounter.resetCounter();
+        this.patrolCoolDownCounter = new Counter(60, 1);
+        this.patrolCoolDownCounter.resetCounter();
     }
     @Override
     public void tick() {}
@@ -43,6 +47,8 @@ public class PassiveEnemy extends Enemy{
             case ACTIVE -> this.active(distanceVector);
         }
         this.hitbox.setPosition(this.position);
+        this.patrolCounter.tick();
+        this.patrolCoolDownCounter.tick();
     }
 
     /**
@@ -56,28 +62,25 @@ public class PassiveEnemy extends Enemy{
     }
     private void patrol(){
         this.shouldShoot = false; // não deve atirar no modo patrulha
-        int patrolTime = 30; // tempo que passa se deslocando em uma patrulha
-        int patrolCoolDown = 60; // tempo entre patrulhas
-        if (patrolCoolDownCounter < patrolCoolDown) patrolCoolDownCounter += 1;
-        else if (patrolCounter == 0) {
+        if (patrolCoolDownCounter.isZero() && this.patrolCounter.isZero()) {
             this.direction = Vector.randomUnitVector(); // caso devemos patrulhar, geramos uma direção aleatória
             this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
             this.checkWindowBorder();
-            this.patrolCounter += 1;
+            this.patrolCounter.start(); // iniciamos o contador da patrulha
+            this.patrolCoolDownCounter.start(); // iniciamos o contador do cooldown da patrulha
         }
-        else if (patrolCounter < patrolTime) {
+        else if (patrolCounter.isCounting()) { // caso o contador da patrulha esteja contando
             this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
+            // somamos na posição, a direção (gerada anteriormente) multiplicado pela velocidade
             this.checkWindowBorder();
-            this.patrolCounter += 1;
+            this.patrolCoolDownCounter.stop();
+            // paramos o contador do cooldown da patrulha para diferir de 1, e possamos separar os períodos
         }
-        else{
-            this.patrolCounter = 0;
-            this.patrolCoolDownCounter = 0;
-        }
+        else {patrolCoolDownCounter.start();}
     }
 
     /**
-     * @param distance Vetor distância entre o player e o inimigo
+     * @param distance vetor distância entro o inimigo e o player
      */
     private void active(Vector distance){
         int safeDistance = 150; // O inimigo sempre tenta manter uma distância mínima do player

@@ -46,9 +46,9 @@ public class GameState {
      * Método chamado a cada tick do GameLoop, onde devemos atualizar os estados do GameState
      */
     public void tick() {
-        player.tick(player.updateDirection(keyHandler)); //Atualiza as informações do player
-        player.updateWeapon(mouseHandler);
+        player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
         projectiles.addAll(player.updateShoot(mouseHandler));
+
         testEnemy.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
         projectiles.addAll(testEnemy.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY())));
 
@@ -59,8 +59,8 @@ public class GameState {
         }
 
         projectiles.addAll(subProjectiles);
-        if (testEnemy.hitbox.isHitting(player.hitbox))
-            player.gotHit();
+        if (testEnemy.hitbox.isHitting(player.getHitbox()))
+            player.gotHit(1);
 
         projectiles.removeIf(Projectile::shouldDelete);
         subProjectiles.clear();

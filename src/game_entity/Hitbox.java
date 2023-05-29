@@ -1,5 +1,7 @@
 package game_entity;
 
+import gameloop.Constants;
+
 import java.awt.*;
 
 public class Hitbox {
@@ -65,11 +67,43 @@ public class Hitbox {
         this.position = position;
     }
 
-    public float getWidth() {
-        return width;
+    /**
+     * @return obtém posição em x da hitbox no mundo (canto superior esquerdo do retângulo)
+     */
+    public float getWorldPosX(){ return this.position.x; }
+    /**
+     * @return obtém posição em y da hitbox no mundo (canto superior esquerdo do retângulo)
+     */
+    public float getWorldPosY(){ return this.position.y; }
+
+    /**
+     * @param object entidade
+     * @return posição x na tela em relação à entidade
+     */
+    public float getScreenX (GameObject object) {
+        return this.getWorldPosX() - object.getWorldPosX() + (float) Constants.WIDTH /2;
     }
 
-    public float getHeight() {
-        return height;
+    /**
+     * @param object entidade
+     * @return posição y na tela em relação à entidade
+     */
+    public float getScreenY (GameObject object){
+        return this.getWorldPosY() - object.getWorldPosY() + (float) Constants.HEIGHT /2;
+    }
+
+    /**
+     * Desenha hitbox como um retângulo vermelho na tela
+     * @param g2d Objeto Graphics2D para desenharmos
+     * @param entity entidade que possui a hitbox
+     */
+    public void draw(Graphics2D g2d, GameEntity entity){
+        g2d.setColor(Color.RED);
+        g2d.drawRect(
+                (int) (this.getScreenX(entity) - this.width/2),
+                (int) (this.getScreenY(entity) - this.height/2),
+                (int) this.width,
+                (int) this.height
+        );
     }
 }
