@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class PassiveEnemy extends Enemy{
 
     // contadores de State do inimigo
-    private Counter patrolCounter;
-    private Counter patrolCoolDownCounter;
+    private final Counter patrolCounter;
+    private final Counter patrolCoolDownCounter;
     private boolean shouldShoot;
     private Vector direction;
 

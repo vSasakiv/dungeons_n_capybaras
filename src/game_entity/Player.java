@@ -25,7 +25,7 @@ public class Player extends GameEntity{
     private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
 
     private final Counter invincibilityCounter;
-    private Attributes attributes;
+    private final Attributes attributes;
     private Weapon weapon;
     private final Hitbox hitbox;
 

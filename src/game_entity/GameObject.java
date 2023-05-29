@@ -9,7 +9,7 @@ import gameloop.Constants;
 public class GameObject {
     protected Vector position;
 
-    private Vector screenPosition;
+    private final Vector screenPosition;
     /**
      * @param worldPosX coordenadas da posição inicial x do objeto no mundo
      * @param worldPosY coordenadas da posição inicial y do objeto no mundo
