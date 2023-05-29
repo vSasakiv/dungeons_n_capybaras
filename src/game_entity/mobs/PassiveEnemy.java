@@ -1,5 +1,6 @@
 package game_entity.mobs;
 
+import game_entity.Attributes;
 import game_entity.Counter;
 import game_entity.Hitbox;
 import game_entity.Vector;
@@ -21,9 +22,11 @@ public class PassiveEnemy extends Enemy{
      * @param velocity velocidade do inimigo
      * @param hitbox hitbox do inimigo
      */
-    public PassiveEnemy(float worldPosX, float worldPosY, int velocity, Hitbox hitbox) {
+    public PassiveEnemy(float worldPosX, float worldPosY, int velocity, Hitbox hitbox, Attributes attributes) {
         super(worldPosX, worldPosY, velocity);
         this.hitbox = hitbox;
+        this.attributes = attributes;
+        this.invincibilityCounter = new Counter(30, 1);
         this.state = EnemyState.PATROL;
         this.shouldShoot = false;
         this.direction = new Vector(0, 0);
@@ -37,6 +40,7 @@ public class PassiveEnemy extends Enemy{
     @Override
     public void tick(Vector playerPos){
         this.weapon.tick();
+        this.invincibilityCounter.tick();
         // obtemos distância do inimigo até o player
         Vector distanceVector = new Vector(
                 playerPos.x - this.getWorldPosX(),

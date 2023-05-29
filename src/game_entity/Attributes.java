@@ -32,6 +32,9 @@ public class Attributes {
         else this.currentArmor -= damage;
     }
 
+    public boolean isDead(){
+        return this.currentHealth == 0;
+    }
     /**
      * @param g2d Desenha barras de vida, armadura e mana no canto da tela
      */

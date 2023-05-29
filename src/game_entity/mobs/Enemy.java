@@ -1,8 +1,6 @@
 package game_entity.mobs;
 
-import game_entity.GameEntity;
-import game_entity.Hitbox;
-import game_entity.Vector;
+import game_entity.*;
 import game_entity.weapons.Projectile;
 import game_entity.weapons.Weapon;
 
@@ -11,6 +9,9 @@ import java.util.ArrayList;
 public abstract class Enemy extends GameEntity {
     protected Weapon weapon;
     protected EnemyState state;
+    protected Attributes attributes;
+
+    protected Counter invincibilityCounter;
     public Hitbox hitbox;
 
     /**
@@ -36,4 +37,13 @@ public abstract class Enemy extends GameEntity {
         return weapon;
     }
 
+    public Attributes getAttributes() { return attributes; }
+
+    public void gotHit(int damage) {
+        if (invincibilityCounter.isZero()){
+            this.attributes.takeDamage(damage);
+            invincibilityCounter.start();
+        }
+    };
+    public boolean isDead() { return this.attributes.isDead(); }
 }

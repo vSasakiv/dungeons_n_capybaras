@@ -1,5 +1,6 @@
 package gameloop;
 
+import game_entity.mobs.Enemy;
 import game_entity.weapons.Projectile;
 
 import java.awt.*;
@@ -69,11 +70,14 @@ public class GameFrame extends JFrame {
 
         gameState.player.draw(g2d);
         g2d.setColor(Color.red);
-        g2d.fillOval(
-                (int) (gameState.testEnemy.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH/2.0 - 5),
-                (int) (gameState.testEnemy.getWorldPosY() - gameState.player.getWorldPosY() + Constants.HEIGHT/2.0 - 5),
-                10, 10);
-        gameState.testEnemy.hitbox.draw(g2d, gameState.player);
+        for (Enemy e: gameState.getEnemies()) {
+            g2d.fillOval(
+                    (int) (e.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH / 2.0 - 5),
+                    (int) (e.getWorldPosY() - gameState.player.getWorldPosY() + Constants.HEIGHT / 2.0 - 5),
+                    10, 10);
+            e.hitbox.draw(g2d, gameState.player);
+        }
+
         gameState.player.getHitbox().draw(g2d, gameState.player);
         gameState.player.getAttributes().draw(g2d);
     }

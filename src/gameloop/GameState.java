@@ -1,5 +1,6 @@
 package gameloop;
 
+import game_entity.Attributes;
 import game_entity.Hitbox;
 import game_entity.Player;
 import game_entity.Vector;
@@ -16,12 +17,12 @@ import java.util.ArrayList;
 public class GameState {
 
     public final Player player;
-    public final Enemy testEnemy;
     public final TileManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Projectile> projectiles;
     private final ArrayList<Projectile> subProjectiles;
+    private final ArrayList<Enemy> enemies;
 
     /**
      * Construtor que inicia o GameState, onde são criados players, os handlers e o tileManager.
@@ -29,7 +30,8 @@ public class GameState {
     public GameState() {
         player = new Player(150, 150, 4);
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
-        testEnemy = new PassiveEnemy(200, 200, 3, enemyHitbox);
+        Attributes enemyAttributes = new Attributes(5, 0, 0);
+        Enemy testEnemy = new PassiveEnemy(200, 200, 3, enemyHitbox, enemyAttributes);
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
@@ -39,6 +41,8 @@ public class GameState {
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
         subProjectiles = new ArrayList<>();
+        enemies = new ArrayList<>();
+        enemies.add(testEnemy);
         tileManager = new TileManager(this);
     }
 
@@ -49,8 +53,10 @@ public class GameState {
         player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
         projectiles.addAll(player.updateShoot(mouseHandler));
 
-        testEnemy.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
-        projectiles.addAll(testEnemy.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY())));
+        for (Enemy e: enemies) {
+            e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
+            projectiles.addAll(e.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY())));
+        }
 
         for (Projectile p : projectiles){
             p.tick();
@@ -59,9 +65,12 @@ public class GameState {
         }
 
         projectiles.addAll(subProjectiles);
-        if (testEnemy.hitbox.isHitting(player.getHitbox()))
-            player.gotHit(1);
-
+        for (Enemy e: enemies)
+            if (e.hitbox.isHitting(player.getHitbox())) {
+                player.gotHit(1);
+                e.gotHit(1);
+            }
+        enemies.removeIf(Enemy::isDead);
         projectiles.removeIf(Projectile::shouldDelete);
         subProjectiles.clear();
     }
@@ -72,6 +81,10 @@ public class GameState {
      */
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
     /**
