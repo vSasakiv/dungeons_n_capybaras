@@ -4,7 +4,7 @@ import gameloop.Constants;
 
 import java.awt.*;
 
-public class Hitbox implements Cloneable{
+public class Hitbox {
     // Implementação para uma região retangular
 
     private Vector position;

@@ -5,7 +5,6 @@ import game_entity.Hitbox;
 import game_entity.Player;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
-import game_entity.mobs.PassiveEnemy;
 import game_entity.mobs.PassiveEnemyFactory;
 import game_entity.weapons.*;
 import tile.TileManager;
