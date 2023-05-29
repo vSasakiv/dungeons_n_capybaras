@@ -44,6 +44,6 @@ public abstract class Enemy extends GameEntity {
             this.attributes.takeDamage(damage);
             invincibilityCounter.start();
         }
-    };
+    }
     public boolean isDead() { return this.attributes.isDead(); }
 }
