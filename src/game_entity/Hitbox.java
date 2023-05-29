@@ -4,7 +4,7 @@ import gameloop.Constants;
 
 import java.awt.*;
 
-public class Hitbox {
+public class Hitbox implements Cloneable{
     // Implementação para uma região retangular
 
     private Vector position;
@@ -21,6 +21,16 @@ public class Hitbox {
         this.position = position;
         this.width = width;
         this.height =  height;
+    }
+
+    /**
+     * Copy constructor para clonarmos uma hitbox para cada inimigo
+     * @param hitbox hitbox a ser clonada
+     */
+    public Hitbox(Hitbox hitbox){
+        this.position = hitbox.position;
+        this.width = hitbox.width;
+        this.height = hitbox.height;
     }
 
     /**

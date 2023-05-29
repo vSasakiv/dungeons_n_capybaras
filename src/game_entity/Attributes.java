@@ -6,8 +6,8 @@ import java.awt.*;
  * Classe que guarda todos os atributos pertinentes a inimigos e outras gameEntities
  */
 public class Attributes {
-    int currentHealth, currentArmor, currentMana;
-    int maxHealth, maxArmor, maxMana;
+    private int currentHealth, currentArmor, currentMana;
+    private int maxHealth, maxArmor, maxMana;
 
     /**
      * @param health pontos de vida da entidade
@@ -21,6 +21,19 @@ public class Attributes {
         this.currentArmor = armor;
         this.maxMana = mana;
         this.currentMana = mana;
+    }
+
+    /**
+     * Copy constructor para clonarmos atributos para cada inimigo
+     * @param attributes atributos a serem clonados
+     */
+    public Attributes(Attributes attributes){
+        this.maxHealth = attributes.maxHealth;
+        this.currentHealth = attributes.currentHealth;
+        this.maxArmor = attributes.maxArmor;
+        this.currentArmor = attributes.currentArmor;
+        this.maxMana = attributes.maxMana;
+        this.currentMana = attributes.currentMana;
     }
 
     /**

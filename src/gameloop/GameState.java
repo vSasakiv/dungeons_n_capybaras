@@ -6,6 +6,7 @@ import game_entity.Player;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
 import game_entity.mobs.PassiveEnemy;
+import game_entity.mobs.PassiveEnemyFactory;
 import game_entity.weapons.*;
 import tile.TileManager;
 import java.awt.event.KeyListener;
@@ -31,18 +32,27 @@ public class GameState {
         player = new Player(150, 150, 4);
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
         Attributes enemyAttributes = new Attributes(5, 0, 0);
-        Enemy testEnemy = new PassiveEnemy(200, 200, 3, enemyHitbox, enemyAttributes);
+
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
         player.setWeapon(new MultiShotWeapon(5, 2, factory, 30, 3));
-        testEnemy.setWeapon(new AutomaticWeapon(2, 2, subSubFactory));
+        PassiveEnemyFactory enemyFactory = new PassiveEnemyFactory(
+                4,
+                enemyAttributes,
+                enemyHitbox,
+                new AutomaticWeapon(2, 2, subSubFactory));
+
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
         subProjectiles = new ArrayList<>();
         enemies = new ArrayList<>();
-        enemies.add(testEnemy);
+
+        enemies.add(enemyFactory.criaEnemy(200, 200));
+        enemies.add(enemyFactory.criaEnemy(500, 500));
+        enemies.add(enemyFactory.criaEnemy(1200, 100));
+
         tileManager = new TileManager(this);
     }
 

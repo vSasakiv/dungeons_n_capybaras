@@ -5,6 +5,7 @@ import game_entity.Counter;
 import game_entity.Hitbox;
 import game_entity.Vector;
 import game_entity.weapons.Projectile;
+import game_entity.weapons.Weapon;
 
 import java.util.ArrayList;
 
@@ -22,10 +23,11 @@ public class PassiveEnemy extends Enemy{
      * @param velocity velocidade do inimigo
      * @param hitbox hitbox do inimigo
      */
-    public PassiveEnemy(float worldPosX, float worldPosY, int velocity, Hitbox hitbox, Attributes attributes) {
+    public PassiveEnemy(float worldPosX, float worldPosY, int velocity, Hitbox hitbox, Attributes attributes, Weapon weapon) {
         super(worldPosX, worldPosY, velocity);
         this.hitbox = hitbox;
         this.attributes = attributes;
+        this.weapon = weapon;
         this.invincibilityCounter = new Counter(30, 1);
         this.state = EnemyState.PATROL;
         this.shouldShoot = false;
