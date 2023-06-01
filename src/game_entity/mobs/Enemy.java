@@ -1,10 +1,8 @@
 package game_entity.mobs;
 
 import game_entity.*;
-import game_entity.weapons.Projectile;
+import game_entity.weapons.AttackResults;
 import game_entity.weapons.Weapon;
-
-import java.util.ArrayList;
 
 public abstract class Enemy extends GameEntity {
     protected Weapon weapon;
@@ -31,7 +29,7 @@ public abstract class Enemy extends GameEntity {
         this.weapon = weapon;
     }
 
-    public abstract ArrayList<Projectile> updateShoot(Vector playerPos);
+    public abstract AttackResults updateShoot(Vector playerPos);
 
     public Weapon getWeapon() {
         return weapon;

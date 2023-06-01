@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.imageio.ImageIO;
+
+import game_entity.weapons.AttackResults;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
-import game_entity.weapons.Projectile;
 import game_entity.weapons.Weapon;
 
 public class Player extends GameEntity{
@@ -20,9 +21,9 @@ public class Player extends GameEntity{
     //Sprites
     private BufferedImage standFront, standBack;
     private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
-    private String spriteDirection; // Indica a orientação do sprite
+    private String spriteDirection; // Indicã a orientação do sprite
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
-    private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
+    private int spriteNumber = 0; // Indicã qual sprite está sendo renderizado, no caso de um array
 
     private final Counter invincibilityCounter;
     private final Attributes attributes;
@@ -102,20 +103,20 @@ public class Player extends GameEntity{
      * @param mouseHandler Inputs do mouse
      * @return uma lista contendo todos os projéteis gerados, podendo ser vazia.
      */
-    public ArrayList<Projectile> updateShoot(MouseHandler mouseHandler){
+    public AttackResults updateAttack(MouseHandler mouseHandler){
         if (mouseHandler.isMousePress() && this.weapon.canShoot()) {
             Vector direction = new Vector (
                     mouseHandler.getMouseX() - (this.getScreenX() + (float) this.getSpriteSizeX() / 2),
                     mouseHandler.getMouseY() - (this.getScreenY() + (float) this.getSpriteSizeY() / 2)
             );
             direction = Vector.unitVector(direction);
-            return this.weapon.shoot(
+            return this.weapon.attack(
                     (int) this.getWorldPosX(),
                     (int) this.getWorldPosY(),
                     direction
             );
         } 
-        else return new ArrayList<>();
+        else return new AttackResults(null, null);
     }
 
     public void gotHit(int damage){

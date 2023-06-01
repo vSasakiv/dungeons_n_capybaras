@@ -6,8 +6,12 @@ import java.awt.*;
  * Classe que guarda todos os atributos pertinentes a inimigos e outras gameEntities
  */
 public class Attributes {
-    private int currentHealth, currentArmor, currentMana;
-    private int maxHealth, maxArmor, maxMana;
+    private int currentHealth;
+    private int currentArmor;
+    private final int currentMana;
+    private final int maxHealth;
+    private final int maxArmor;
+    private final int maxMana;
 
     /**
      * @param health pontos de vida da entidade
@@ -46,7 +50,7 @@ public class Attributes {
     }
 
     public boolean isDead(){
-        return this.currentHealth == 0;
+        return this.currentHealth <= 0;
     }
     /**
      * @param g2d Desenha barras de vida, armadura e mana no canto da tela

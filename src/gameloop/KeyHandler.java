@@ -24,7 +24,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * atualiza o status de ativação de cada tecla
+     * Atualiza o estado de ativação de cada tecla
      * @param e o evento de KeyPressed
      */
     @Override
@@ -38,7 +38,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * atualiza o status de ativação de cada tecla
+     * Atualiza o estado de ativação de cada tecla
      * @param e o evento de KeyReleased
      */
     @Override
@@ -52,7 +52,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * verifica se W está sendo pressionado
+     * Verifica se W está sendo pressionado
      * @return true, caso esteja; false, caso contrário
      */
     public boolean isKeyW() {
@@ -60,7 +60,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * verifica se A está sendo pressionado
+     * Verifica se A está sendo pressionado
      * @return true, caso esteja; false, caso contrário
      */
     public boolean isKeyA() {
@@ -68,7 +68,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * verifica se S está sendo pressionado
+     * Verifica se S está sendo pressionado
      * @return true, caso esteja; false, caso contrário
      */
     public boolean isKeyS() {
@@ -76,7 +76,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * verifica se D está sendo pressionado
+     * Verifica se D está sendo pressionado
      * @return true, caso esteja; false, caso contrário
      */
     public boolean isKeyD() {
@@ -84,7 +84,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     /**
-     * verifica se alguma tecla está sendo pressionada
+     * Verifica se alguma tecla está sendo pressionada
      * @return true, caso esteja; false, caso contrário
      */
     public boolean isPressed() {

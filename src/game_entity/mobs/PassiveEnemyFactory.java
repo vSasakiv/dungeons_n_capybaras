@@ -20,7 +20,13 @@ public class PassiveEnemyFactory implements EnemyFactory{
 
     @Override
     public Enemy criaEnemy(float posX, float posY) {
-        return new PassiveEnemy(posX, posY, this.velocity, new Hitbox(this.hitbox), new Attributes(this.attributes), this.weapon);
+        return new PassiveEnemy(
+                posX,
+                posY,
+                this.velocity,
+                new Hitbox(this.hitbox),
+                new Attributes(this.attributes),
+                this.weapon);
     }
 
 }

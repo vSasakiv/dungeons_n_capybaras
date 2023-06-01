@@ -1,5 +1,6 @@
 package gameloop;
 
+import game_entity.Hitbox;
 import game_entity.mobs.Enemy;
 import game_entity.weapons.Projectile;
 
@@ -31,7 +32,7 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * renderiza todos os objetos em tela, a cada atualização de tick
+     * Renderiza todos os objetos em tela, a cada atualização de tick
      * @param gameState gameState atual
      */
     public void render(GameState gameState) {
@@ -77,7 +78,8 @@ public class GameFrame extends JFrame {
                     10, 10);
             e.hitbox.draw(g2d, gameState.player);
         }
-
+        for (Hitbox h: gameState.getWeaponHitbox())
+            h.draw(g2d, gameState.player);
         gameState.player.getHitbox().draw(g2d, gameState.player);
         gameState.player.getAttributes().draw(g2d);
     }

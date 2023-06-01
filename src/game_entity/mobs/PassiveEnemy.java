@@ -4,10 +4,8 @@ import game_entity.Attributes;
 import game_entity.Counter;
 import game_entity.Hitbox;
 import game_entity.Vector;
-import game_entity.weapons.Projectile;
+import game_entity.weapons.AttackResults;
 import game_entity.weapons.Weapon;
-
-import java.util.ArrayList;
 
 public class PassiveEnemy extends Enemy{
 
@@ -105,18 +103,18 @@ public class PassiveEnemy extends Enemy{
     }
 
     @Override
-    public ArrayList<Projectile> updateShoot(Vector playerPos) {
+    public AttackResults updateShoot(Vector playerPos) {
         if (shouldShoot && this.weapon.canShoot()){
             Vector direction = Vector.unitVector(
                     new Vector(
                             playerPos.x - this.getWorldPosX(),
                             playerPos.y - this.getWorldPosY())
             );
-            return this.weapon.shoot(
+            return this.weapon.attack(
                     (int) this.getWorldPosX(),
                     (int) this.getWorldPosY(),
                     direction);
         }
-        else return new ArrayList<>();
+        else return new AttackResults(null, null);
     }
 }
