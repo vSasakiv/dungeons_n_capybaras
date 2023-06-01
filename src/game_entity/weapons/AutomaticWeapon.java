@@ -32,11 +32,11 @@ public class AutomaticWeapon extends Weapon{
      * @return um ArrayList contendo apenas um projétil gerado pela arma
      */
     @Override
-    public ArrayList<Projectile> shoot(int posX, int posY, Vector direction) {
+    public AttackResults attack(int posX, int posY, Vector direction) {
         this.coolDownCounter.start();
         ArrayList<Projectile> projectiles = new ArrayList<>();
         projectiles.add(projectileFactory.criaProjetil(posX, posY, direction));
-        return projectiles;
+        return new AttackResults(projectiles, null);
     }
 
     /**

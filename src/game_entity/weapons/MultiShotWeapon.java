@@ -40,7 +40,7 @@ public class MultiShotWeapon extends Weapon{
      * @return ArrayList de tamanho numeroProjeteis contendo todos os projéteis gerados.
      */
     @Override
-    public ArrayList<Projectile> shoot(int posX, int posY, Vector direction) {
+    public AttackResults attack(int posX, int posY, Vector direction) {
         int metade = numeroProjeteis/2;
         this.coolDownCounter.start();
         ArrayList<Projectile> projectiles = new ArrayList<>();
@@ -50,7 +50,7 @@ public class MultiShotWeapon extends Weapon{
                     posY,
                     Vector.rotateVector(direction, (metade - i) * angulo)
             ));
-        return projectiles;
+        return new AttackResults(projectiles, null);
     }
 
     /**

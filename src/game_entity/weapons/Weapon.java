@@ -4,7 +4,6 @@ import game_entity.Counter;
 import game_entity.GameEntity;
 import game_entity.Vector;
 import java.awt.*;
-import java.util.ArrayList;
 
 public abstract class Weapon {
 
@@ -44,7 +43,7 @@ public abstract class Weapon {
      * @param direction Direção do projétil
      * @return um ArrayList contendo todos os projéteis gerados
      */
-    public abstract ArrayList<Projectile> shoot(int posX, int posY, Vector direction);
+    public abstract AttackResults attack(int posX, int posY, Vector direction);
 
     /**
      * Método responsável por desenhar componentes na tela
