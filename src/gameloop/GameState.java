@@ -68,16 +68,13 @@ public class GameState {
         player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
         playerAttackResults = player.updateAttack(mouseHandler);
 
-        if (playerAttackResults.getProjectiles() != null)
-            projectiles.addAll(playerAttackResults.getProjectiles());
-        if (playerAttackResults.getHitbox() != null)
-            weaponHitbox.add(playerAttackResults.getHitbox());
+        projectiles.addAll(playerAttackResults.getProjectiles());
+        weaponHitbox.addAll(playerAttackResults.getHitboxes());
 
         for (Enemy e: enemies) {
             e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
             enemyAttackResults = e.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY()));
-            if (enemyAttackResults.getProjectiles() != null)
-                projectiles.addAll(enemyAttackResults.getProjectiles());
+            projectiles.addAll(enemyAttackResults.getProjectiles());
         }
 
         for (Projectile p : projectiles){

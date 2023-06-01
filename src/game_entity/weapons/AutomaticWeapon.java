@@ -36,7 +36,7 @@ public class AutomaticWeapon extends Weapon{
         this.coolDownCounter.start();
         ArrayList<Projectile> projectiles = new ArrayList<>();
         projectiles.add(projectileFactory.criaProjetil(posX, posY, direction));
-        return new AttackResults(projectiles, null);
+        return new AttackResults(projectiles, new ArrayList<>());
     }
 
     /**

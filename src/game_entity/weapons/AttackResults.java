@@ -3,18 +3,16 @@ import java.util.ArrayList;
 
 public class AttackResults {
     ArrayList<Projectile> projectiles;
-    MeleeWeaponAttack hitbox;
+    ArrayList<MeleeWeaponAttack> hitboxes;
 
-    public AttackResults(ArrayList<Projectile> projectiles, MeleeWeaponAttack hitbox) {
+    public AttackResults(ArrayList<Projectile> projectiles, ArrayList<MeleeWeaponAttack> hitboxes) {
         this.projectiles = projectiles;
-        this.hitbox = hitbox;
+        this.hitboxes = hitboxes;
     }
 
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
 
-    public MeleeWeaponAttack getHitbox() {
-        return hitbox;
-    }
+    public ArrayList<MeleeWeaponAttack> getHitboxes() { return hitboxes; }
 }

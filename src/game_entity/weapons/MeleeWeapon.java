@@ -5,6 +5,7 @@ import game_entity.GameEntity;
 import game_entity.Hitbox;
 import game_entity.Vector;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MeleeWeapon extends Weapon{
 
@@ -21,6 +22,7 @@ public class MeleeWeapon extends Weapon{
 
     @Override
     public AttackResults attack(int posX, int posY, Vector direction) {
+        ArrayList<MeleeWeaponAttack> attacks = new ArrayList<>();
         this.coolDownCounter.start();
         MeleeWeaponAttack attack = new MeleeWeaponAttack(
                 new Hitbox(
@@ -29,7 +31,8 @@ public class MeleeWeapon extends Weapon{
                         new Vector(posX + this.hitboxWidth * direction.x, posY + this.hitboxHeight * direction.y)),
                 this.damage,
                 new Counter(this.attack_duration, 1));
-        return new AttackResults(null, attack);
+        attacks.add(attack);
+        return new AttackResults(new ArrayList<>(), attacks);
     }
     @Override
     public void draw(Graphics2D g2d, GameEntity entity) {}

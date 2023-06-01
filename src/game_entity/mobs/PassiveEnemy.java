@@ -7,6 +7,8 @@ import game_entity.Vector;
 import game_entity.weapons.AttackResults;
 import game_entity.weapons.Weapon;
 
+import java.util.ArrayList;
+
 public class PassiveEnemy extends Enemy{
 
     // contadores de State do inimigo
@@ -115,6 +117,6 @@ public class PassiveEnemy extends Enemy{
                     (int) this.getWorldPosY(),
                     direction);
         }
-        else return new AttackResults(null, null);
+        else return new AttackResults(new ArrayList<>(), new ArrayList<>());
     }
 }

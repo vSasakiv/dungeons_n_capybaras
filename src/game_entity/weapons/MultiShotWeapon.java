@@ -50,7 +50,7 @@ public class MultiShotWeapon extends Weapon{
                     posY,
                     Vector.rotateVector(direction, (metade - i) * angulo)
             ));
-        return new AttackResults(projectiles, null);
+        return new AttackResults(projectiles, new ArrayList<>());
     }
 
     /**

@@ -116,7 +116,7 @@ public class Player extends GameEntity{
                     direction
             );
         } 
-        else return new AttackResults(null, null);
+        else return new AttackResults(new ArrayList<>(), new ArrayList<>());
     }
 
     public void gotHit(int damage){
