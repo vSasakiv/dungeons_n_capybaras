@@ -48,14 +48,13 @@ public class GameState {
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
         subProjectiles = new ArrayList<>();
+        tileManager = new TileManager(this, "/src/resources/maps/teste2.xml", "/resources/Tiles/TilesetFloor.png");
         enemies = new ArrayList<>();
         weaponHitbox = new ArrayList<>();
 
         enemies.add(enemyFactory.criaEnemy(200, 200));
         enemies.add(enemyFactory.criaEnemy(500, 500));
         enemies.add(enemyFactory.criaEnemy(1200, 100));
-
-        tileManager = new TileManager(this);
     }
 
     /**
@@ -120,7 +119,7 @@ public class GameState {
     }
 
     /**
-     * Obtém o KeyListener utilizado no GameState, para inclusão no GameFrame.
+     * obtém o KeyListener utilizado no GameState, para inclusão no GameFrame.
      * @return o KeyListener 
      */
     public KeyListener getKeyHandler() {

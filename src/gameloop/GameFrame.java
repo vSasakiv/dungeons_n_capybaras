@@ -64,6 +64,7 @@ public class GameFrame extends JFrame {
         g2d.setColor(Color.BLACK);
 
         gameState.tileManager.draw(g2d);
+        //gameState.tm.render(g2d);
 
         for (Projectile p : gameState.getProjectiles()){
             p.draw(g2d, gameState.player);
