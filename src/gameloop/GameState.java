@@ -16,7 +16,7 @@ public class GameState {
 
     public final Player player;
     public final Enemy testEnemy;
-    public final TileManager tileManager;
+    public TileManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Projectile> projectiles;
@@ -37,7 +37,7 @@ public class GameState {
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
         subProjectiles = new ArrayList<>();
-        tileManager = new TileManager(this);
+        tileManager = new TileManager(this, "/src/resources/maps/teste2.xml", "/resources/Tiles/TilesetFloor.png");
     }
 
     /**
