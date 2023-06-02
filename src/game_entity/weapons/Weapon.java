@@ -45,12 +45,14 @@ public abstract class Weapon {
      */
     public abstract AttackResults attack(int posX, int posY, Vector direction);
 
+    public abstract Weapon clone();
     /**
      * Método responsável por desenhar componentes na tela
      * @param g2d Ferramenta gráfica
      * @param entity Entidade que weapon está atrelada
      */
     public abstract void draw (Graphics2D g2d, GameEntity entity);
+
 
     public void setDirection(Vector direction) {
         this.direction = direction;

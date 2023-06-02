@@ -37,7 +37,8 @@ public class GameState {
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
-        player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
+        //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
+        player.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
         PassiveEnemyFactory enemyFactory = new PassiveEnemyFactory(
                 4,
                 enemyAttributes,
@@ -119,7 +120,7 @@ public class GameState {
     }
 
     /**
-     * obtém o KeyListener utilizado no GameState, para inclusão no GameFrame.
+     * Obtém o KeyListener utilizado no GameState, para inclusão no GameFrame.
      * @return o KeyListener 
      */
     public KeyListener getKeyHandler() {
@@ -127,7 +128,7 @@ public class GameState {
     }
 
     /**
-     * obtém o MouseListener
+     * Obtém o MouseListener
      * @return MouseHandler
      */
     public MouseHandler getMouseListener() {
@@ -135,7 +136,7 @@ public class GameState {
     }
 
     /**
-     * obtém o MouseHandler
+     * Obtém o MouseHandler
      * @return MouseHandler
      */
     public MouseHandler getMouseMotionListener() {

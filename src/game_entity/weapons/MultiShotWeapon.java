@@ -53,6 +53,17 @@ public class MultiShotWeapon extends Weapon{
         return new AttackResults(projectiles, new ArrayList<>());
     }
 
+    @Override
+    public Weapon clone() {
+        return new MultiShotWeapon(
+              this.coolDownCounter.getIncrement(),
+              this.damage,
+              this.projectileFactory,
+              this.angulo,
+              this.numeroProjeteis
+        );
+    }
+
     /**
      * Método responsável por desenhar Shotgun na tela
      * @param g2d Ferramenta gráfica

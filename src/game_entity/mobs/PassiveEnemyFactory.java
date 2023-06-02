@@ -26,7 +26,7 @@ public class PassiveEnemyFactory implements EnemyFactory{
                 this.velocity,
                 new Hitbox(this.hitbox),
                 new Attributes(this.attributes),
-                this.weapon);
+                this.weapon.clone());
     }
 
 }

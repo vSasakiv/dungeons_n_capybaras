@@ -39,6 +39,15 @@ public class AutomaticWeapon extends Weapon{
         return new AttackResults(projectiles, new ArrayList<>());
     }
 
+    @Override
+    public Weapon clone() {
+        return new AutomaticWeapon(
+                this.coolDownCounter.getIncrement(),
+                this.damage,
+                this.projectileFactory
+        );
+    }
+
     /**
      * Método responsável por desenhar AutomaticWeapon na tela
      * @param g2d Ferramenta gráfica

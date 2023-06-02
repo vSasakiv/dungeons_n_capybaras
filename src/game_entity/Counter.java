@@ -19,7 +19,6 @@ public class Counter {
         this.threshold = threshold;
         this.increment = increment;
     }
-
     /**
      * Adiciona o incremento ao contador, desde que o mesmo seja menor que o limite
      */
@@ -82,6 +81,11 @@ public class Counter {
      */
     public boolean isZero(){
         return this.counter == 0;
+    }
+
+
+    public int getIncrement() {
+        return increment;
     }
 
     /**

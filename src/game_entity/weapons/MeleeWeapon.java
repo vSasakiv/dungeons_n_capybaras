@@ -34,6 +34,18 @@ public class MeleeWeapon extends Weapon{
         attacks.add(attack);
         return new AttackResults(new ArrayList<>(), attacks);
     }
+
+    @Override
+    public Weapon clone() {
+        return new MeleeWeapon(
+                this.coolDownCounter.getIncrement(),
+                this.damage,
+                this.hitboxWidth,
+                this.hitboxHeight,
+                this.attack_duration
+        );
+    }
+
     @Override
     public void draw(Graphics2D g2d, GameEntity entity) {}
 }
