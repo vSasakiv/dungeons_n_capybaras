@@ -2,13 +2,13 @@ package tile;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
+
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.File;
+
+import java.util.ArrayList;
+
 import gameloop.Constants;
 import gameloop.GameState;
 
@@ -18,12 +18,12 @@ import gameloop.GameState;
  */
 public class TileManager {
 
-    int[][] TileNumber; //Matriz que contém, em cada posição, o número tile que a representa
+    ArrayList<int[][]> tileNumber = new ArrayList<>(); //Matriz que contém, em cada posição, o número tile que a representa
     int WorldRolls;// Número de linhas no mundo
     int WorldColumns; //Número de colunas no mundo
     GameState gameState;
-    BufferedImage[] tiles; //Vetor com os tiles do mapa
-    Sprite sprite;
+    ArrayList<BufferedImage[]> tiles; //Vetor com os tiles do mapa
+    ArrayList<Sprite> sprites;
 
 
     /**
@@ -31,11 +31,10 @@ public class TileManager {
      * Adiciona um mapa e carrega os tiles
      * @param gameState Estado do jogo
      * @param path Caminho do arquivo de mapa
-     * @param imagePath Caminho do spritesheet
      */
-    public TileManager (GameState gameState, String path, String imagePath) {
+    public TileManager (GameState gameState, String path) {
         this.gameState = gameState;
-        addTileMap(path, imagePath);
+        addTileMap(path);
         loadTiles();
     }
 
@@ -43,10 +42,8 @@ public class TileManager {
      * @param g2d Ferramenta que desenha as imagens na tela
      */
     public void draw (Graphics2D g2d) {
-        int number;
         for (int worldRow = 0; worldRow < WorldRolls; worldRow++) {
             for (int worldColumn = 0; worldColumn < WorldColumns; worldColumn++) {
-                number = TileNumber[worldRow][worldColumn];
                 int worldX = worldColumn * Constants.TILE_SIZE;
                 int worldY = worldRow * Constants.TILE_SIZE;
                 int screenX = worldX - (int)gameState.player.getWorldPosX() + gameState.player.SCREEN_X;
@@ -57,13 +54,17 @@ public class TileManager {
                     worldX - Constants.TILE_SIZE< gameState.player.getWorldPosX() + gameState.player.SCREEN_X &&
                     worldY + Constants.TILE_SIZE> gameState.player.getWorldPosY() - gameState.player.SCREEN_Y &&
                     worldY - Constants.TILE_SIZE< gameState.player.getWorldPosY() + gameState.player.SCREEN_Y) {
-                    g2d.drawImage(
-                            tiles[number - 1],
-                            screenX, screenY,
-                            Constants.TILE_SIZE,
-                            Constants.TILE_SIZE,
-                            null
-                    );
+                    for (int i = 0; i < tileNumber.size(); i++) {
+                        if (tileNumber.get(i)[worldRow][worldColumn] >= 0)
+                            g2d.drawImage(
+                                    tiles.get(i)[tileNumber.get(i)[worldRow][worldColumn]],
+                                    screenX, screenY,
+                                    Constants.TILE_SIZE,
+                                    Constants.TILE_SIZE,
+                                    null
+                            );
+                    }
+
                 }
             }
         }
@@ -72,55 +73,60 @@ public class TileManager {
     /**
      * Método responsável por ler mapas
      * @param path Caminho do arquivo de mapa
-     * @param imagePath Caminho do spritesheet
      */
-    public void addTileMap (String path, String imagePath) {
+    public void addTileMap (String path) {
+        sprites = new ArrayList<>();
         int height = 0;
         int width = 0;
-        int tileWidth;
-        int tileHeight;
-        int layers;
-        String[] data = new String[10];
-        String[][] block = new String[10][];
-
-        //Pega caminho que o programa está rodando
-        String CurrentDirectoryPath = System.getProperty("user.dir");
-        File CurrentDirectory = new File(CurrentDirectoryPath);
-        String AbsolutePath = CurrentDirectory.getAbsolutePath();
+        ArrayList<String[]> data = new ArrayList<>();
+        ArrayList<TilesetDocument> tilesetDocuments = new ArrayList<>();
+        NodeList list;
+        Node node;
+        Element element;
 
         try {
-            File inputFile = new File(AbsolutePath + path);
-            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder DocumentBuilder = builderFactory.newDocumentBuilder();
-            Document doc = DocumentBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-
-            NodeList list = doc.getElementsByTagName("tileset");
-            Node node = list.item(0);
-            Element eElement = (Element) node;
-
-            tileWidth = Integer.parseInt(eElement.getAttribute("tilewidth"));
-            tileHeight = Integer.parseInt(eElement.getAttribute("tileheight"));
-
-            this.sprite = new Sprite(imagePath, tileWidth, tileHeight);
-
-            list = doc.getElementsByTagName("layer");
-            layers = list.getLength();
-
-            for (int i = 0; i < layers; i++) {
-                node = list.item(i);
-                eElement = (Element) node;
-                if (i <= 0) {
-                    width = Integer.parseInt(eElement.getAttribute("width"));
-                    height = Integer.parseInt(eElement.getAttribute("height"));
+            MapDocument map = new MapDocument(path);
+            list = map.getListByTag("tileset");
+            for (int temp = 0; temp < list.getLength(); temp++) {
+                node = list.item(temp);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    element = (Element) node;
+                    System.out.println("atributos: " + element.getAttribute("firstgid") + ", " + element.getAttribute("source"));
+                    tilesetDocuments.add(new TilesetDocument(
+                            "/" + element.getAttribute("source"),
+                            Integer.parseInt(element.getAttribute("firstgid")))
+                    );
+                    sprites.add(new Sprite(
+                            tilesetDocuments.get(temp).getImagePath(),
+                            tilesetDocuments.get(temp).getTileWidth(),
+                            tilesetDocuments.get(temp).getTileHeight())
+                    );
                 }
-                data[i] = eElement.getElementsByTagName("data").item(0).getTextContent().replaceAll("\\s+", "");
-                block[i] = data[i].split(",");
-
-                this.WorldColumns = width;
-                this.WorldRolls = height;
-                loadTileNumbers(block, width, height);
             }
+
+            list = map.getListByTag("layer");
+            //list = doc.getElementsByTagName("layer");
+            //layers = list.getLength();
+            for (int i = 0; i < list.getLength(); i++) {
+                node = list.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    element = (Element) node;
+                    if (i == 0) {
+                        width = Integer.parseInt(element.getAttribute("width"));
+                        height = Integer.parseInt(element.getAttribute("height"));
+                    }
+                    data.add(element.getElementsByTagName("data").item(0).getTextContent().replaceAll("\\s+", "").split(","));
+                    System.out.println(data);
+                    tileNumber.add(loadTileNumbers(
+                            data.get(i),
+                            width,
+                            height,
+                            tilesetDocuments.get(i).getFirstGrid()
+                    ));
+                }
+            }
+            this.WorldColumns = width;
+            this.WorldRolls = height;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,31 +134,34 @@ public class TileManager {
 
     /**
      * Carrega a matriz de números do mapa
-     * @param block Sequência de números, para cada layer
+     * @param data Sequência de números, para cada layer
      * @param width largura da matriz
      * @param height altura da matriz
      */
-    private void loadTileNumbers (String[][] block, int width, int height) {
-        TileNumber = new int[height][width];
+    private int[][] loadTileNumbers (String[] data, int width, int height, int fistGrid) {
+        int [][] tileNumbers = new int[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                this.TileNumber[i][j] = Integer.parseInt(block[0][i * width + j]);
+                tileNumbers[i][j] = Integer.parseInt(data[i * width + j]) - fistGrid;
             }
         }
+        return tileNumbers;
     }
 
     /**
      * Carrega vetor de tiles para dado spritesheet
      */
     private void loadTiles () {
-        int height = sprite.getSpriteHeight();
-        int width = sprite.getSpriteWidth();
-        this.tiles = new BufferedImage[height * width];
-
-        //O tile número "x" estará na posição x do vetor
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                this.tiles[i * width + j] = sprite.getSprite(i, j);
+        this.tiles = new ArrayList<>();
+        for (int layer = 0; layer < sprites.size(); layer++) {
+            int height = sprites.get(layer).getSpriteHeight();
+            int width = sprites.get(layer).getSpriteWidth();
+            //O tile número "x" estará na posição x do vetor
+            this.tiles.add(new BufferedImage[height * width]);
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    this.tiles.get(layer)[i * width + j] = sprites.get(layer).getSprite(i, j);
+                }
             }
         }
     }

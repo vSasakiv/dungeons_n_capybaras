@@ -49,7 +49,7 @@ public class GameState {
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
         subProjectiles = new ArrayList<>();
-        tileManager = new TileManager(this, "/src/resources/maps/teste2.xml", "/resources/Tiles/TilesetFloor.png");
+        tileManager = new TileManager(this, "/src/resources/maps/mapaTeste.xml");
         enemies = new ArrayList<>();
         weaponHitbox = new ArrayList<>();
 
