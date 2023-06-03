@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Sprite {
-    private BufferedImage SPRITESHEET;
+    private BufferedImage Spritesheet;
     public int width;
     public int height;
     private int SpriteWidth;
@@ -14,9 +14,9 @@ public class Sprite {
     public Sprite(String file, int width, int height) {
         this.width = width;
         this.height = height;
-        SPRITESHEET = loadSprite(file);
-        SpriteWidth = SPRITESHEET.getWidth() / width;
-        SpriteHeight = SPRITESHEET.getHeight() / height;
+        Spritesheet = loadSprite(file);
+        SpriteWidth = Spritesheet.getWidth() / width;
+        SpriteHeight = Spritesheet.getHeight() / height;
     }
 
     private BufferedImage loadSprite (String file) {
@@ -31,8 +31,8 @@ public class Sprite {
         return sprite;
     }
 
-    public BufferedImage getSprite (int linha, int coluna) {
-        return SPRITESHEET.getSubimage(coluna * width, linha * height , width, height);
+    public BufferedImage getSprite (int row, int column) {
+        return Spritesheet.getSubimage(column * width, row * height , width, height);
     }
 
     public int getSpriteWidth() {

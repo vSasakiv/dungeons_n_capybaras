@@ -2,16 +2,14 @@ package game_entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.imageio.ImageIO;
-
 import game_entity.weapons.AttackResults;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import game_entity.weapons.Weapon;
+import tile.AnimationSprite;
 
 public class Player extends GameEntity{
     //Posições fixas do player: centrado na tela
@@ -20,10 +18,12 @@ public class Player extends GameEntity{
 
     //Sprites
     private BufferedImage standFront, standBack;
-    private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
+    //private ArrayList<BufferedImage> up, up_left, up_right, down, down_left, down_right, right, left;
+    //private BufferedImage[] UP;
     private String spriteDirection; // Indicã a orientação do sprite
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
     private int spriteNumber = 0; // Indicã qual sprite está sendo renderizado, no caso de um array
+    private AnimationSprite up, upLeft, upRight, down, downLeft, downRight, right, left;
 
     private final Counter invincibilityCounter;
     private final Attributes attributes;
@@ -45,7 +45,7 @@ public class Player extends GameEntity{
         this.hitbox = new Hitbox(50, 50, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.invincibilityCounter = new Counter(30, 1);
         this.attributes = new Attributes(10, 10, 200);
-        this.getImage();
+        this.loadSprites();
     }
 
     @Override
@@ -135,14 +135,14 @@ public class Player extends GameEntity{
         switch (spriteDirection) {
             case "STAND_FRONT" -> playerImage = standFront;
             case "STAND_BACK" -> playerImage = standBack;
-            case "UP" -> playerImage = up.get(spriteNumber);
-            case "UP_LEFT" -> playerImage = up_left.get(spriteNumber);
-            case "UP_RIGHT" -> playerImage = up_right.get(spriteNumber);
-            case "DOWN" -> playerImage = down.get(spriteNumber);
-            case "DOWN_LEFT" -> playerImage = down_left.get(spriteNumber);
-            case "DOWN_RIGHT" -> playerImage = down_right.get(spriteNumber);
-            case "RIGHT" -> playerImage = right.get(spriteNumber);
-            case "LEFT" -> playerImage = left.get(spriteNumber);
+            case "UP" -> playerImage = up.getSpriteArray()[spriteNumber];
+            case "UP_LEFT" -> playerImage = upLeft.getSpriteArray()[spriteNumber];
+            case "UP_RIGHT" -> playerImage = upRight.getSpriteArray()[spriteNumber];
+            case "DOWN" -> playerImage = down.getSpriteArray()[spriteNumber];
+            case "DOWN_LEFT" -> playerImage = downLeft.getSpriteArray()[spriteNumber];
+            case "DOWN_RIGHT" -> playerImage = downRight.getSpriteArray()[spriteNumber];
+            case "RIGHT" -> playerImage = right.getSpriteArray()[spriteNumber];
+            case "LEFT" -> playerImage = left.getSpriteArray()[spriteNumber];
         }
         //Desenha o player
         g2d.drawImage(
@@ -211,7 +211,7 @@ public class Player extends GameEntity{
          */
         spriteCounter++;
         if (spriteCounter >= 10) {
-            spriteNumber = (spriteNumber + 1) % 3;
+            spriteNumber = (spriteNumber + 1) % 4;
             spriteCounter = 0;
         }
     }
@@ -219,7 +219,7 @@ public class Player extends GameEntity{
     /**
      * Carrega as imagens dos sprites
      */
-    private void getImage() {
+    /*private void getImage() {
         this.up = new ArrayList<>();
         this.up_left = new ArrayList<>();
         this.up_right = new ArrayList<>();
@@ -266,6 +266,21 @@ public class Player extends GameEntity{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }*/
+
+    private void loadSprites () {
+        int width = 32;
+        int height = 32;
+        this.up = new AnimationSprite("/resources/player/Character_Up.png", width, height, 0, 0, 4);
+        this.upLeft = new AnimationSprite("/resources/player/Character_UpLeft.png", width, height, 0, 0, 4);
+        this.upRight = new AnimationSprite("/resources/player/Character_UpRight.png", width, height, 0, 0, 4);
+        this.down = new AnimationSprite("/resources/player/Character_Down.png", width, height, 0, 0, 4);
+        this.downLeft = new AnimationSprite("/resources/player/Character_DownLeft.png", width, height, 0, 0, 4);
+        this.downRight = new AnimationSprite("/resources/player/Character_DownRight.png", width, height, 0, 0, 4);
+        this.right = new AnimationSprite("/resources/player/Character_Right.png", width, height, 0, 0, 4);
+        this.left = new AnimationSprite("/resources/player/Character_Left.png", width, height, 0, 0, 4);
+        standBack = up.getSpriteArray()[0];
+        standFront = down.getSpriteArray()[0];
     }
 
     /**
