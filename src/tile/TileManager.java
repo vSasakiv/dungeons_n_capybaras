@@ -1,13 +1,13 @@
 package tile;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
+import java.awt.*;
+import game_entity.Player;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import gameloop.Constants;
 import gameloop.GameState;
@@ -17,14 +17,11 @@ import gameloop.GameState;
  * Classe que decide qual mapa seguir, carrega as imagens dos tiles e os desenha na janela do jogo 
  */
 public class TileManager {
-
-    ArrayList<int[][]> tileNumber = new ArrayList<>(); //Matriz que contém, em cada posição, o número tile que a representa
+    ArrayList<Layer> layers = new ArrayList<>();
     int WorldRolls;// Número de linhas no mundo
     int WorldColumns; //Número de colunas no mundo
     GameState gameState;
-    ArrayList<BufferedImage[]> tiles; //Vetor com os tiles do mapa
-    ArrayList<Sprite> sprites;
-
+    Player player;
 
     /**
      * Construtor da classe TileManager
@@ -32,10 +29,12 @@ public class TileManager {
      * @param gameState Estado do jogo
      * @param path Caminho do arquivo de mapa
      */
-    public TileManager (GameState gameState, String path) {
+    public TileManager (GameState gameState, String path, Player player) {
         this.gameState = gameState;
         addTileMap(path);
-        loadTiles();
+        setLayerCollision("TilesetWater");
+        setLayerCollision("TilesetNature");
+        this.player = player;
     }
 
     /** Este método é responsável por implementar a lógica para a renderização dos tiles
@@ -50,19 +49,27 @@ public class TileManager {
                 int screenY = worldY - (int)gameState.player.getWorldPosY() + gameState.player.SCREEN_Y;
                 
                 //Somente desenha na tela se a posição do tile estiver dentro dos limites da tela (mais uma borda de tamanho TILE_SIZE)
-                if (worldX + Constants.TILE_SIZE> gameState.player.getWorldPosX() - gameState.player.SCREEN_X &&
-                    worldX - Constants.TILE_SIZE< gameState.player.getWorldPosX() + gameState.player.SCREEN_X &&
-                    worldY + Constants.TILE_SIZE> gameState.player.getWorldPosY() - gameState.player.SCREEN_Y &&
-                    worldY - Constants.TILE_SIZE< gameState.player.getWorldPosY() + gameState.player.SCREEN_Y) {
-                    for (int i = 0; i < tileNumber.size(); i++) {
-                        if (tileNumber.get(i)[worldRow][worldColumn] >= 0)
+                if (worldX + Constants.TILE_SIZE > gameState.player.getWorldPosX() - gameState.player.SCREEN_X &&
+                    worldX - Constants.TILE_SIZE < gameState.player.getWorldPosX() + gameState.player.SCREEN_X &&
+                    worldY + Constants.TILE_SIZE > gameState.player.getWorldPosY() - gameState.player.SCREEN_Y &&
+                    worldY - Constants.TILE_SIZE < gameState.player.getWorldPosY() + gameState.player.SCREEN_Y) {
+                    for (Layer layer : layers) {
+                        if (layer.getTileMap()[worldRow][worldColumn] != null)
                             g2d.drawImage(
-                                    tiles.get(i)[tileNumber.get(i)[worldRow][worldColumn]],
+                                    layer.getTileMap()[worldRow][worldColumn].getImage(),
                                     screenX, screenY,
                                     Constants.TILE_SIZE,
                                     Constants.TILE_SIZE,
                                     null
                             );
+                        if (layer.getTileMap()[worldRow][worldColumn] != null && layer.getTileMap()[worldRow][worldColumn].getHitbox() != null) {
+
+                            if (layer.getTileMap()[worldRow][worldColumn].getHitbox().isHitting(player.getHitbox()))
+                                layer.getTileMap()[worldRow][worldColumn].getHitbox().draw(g2d, screenX, screenY, Color.RED);
+                            else
+                                layer.getTileMap()[worldRow][worldColumn].getHitbox().draw(g2d, screenX, screenY, Color.BLUE);
+                        }
+
                     }
 
                 }
@@ -75,7 +82,7 @@ public class TileManager {
      * @param path Caminho do arquivo de mapa
      */
     public void addTileMap (String path) {
-        sprites = new ArrayList<>();
+        ArrayList<Sprite> sprites = new ArrayList<>();
         int height = 0;
         int width = 0;
         ArrayList<String[]> data = new ArrayList<>();
@@ -103,10 +110,7 @@ public class TileManager {
                     );
                 }
             }
-
             list = map.getListByTag("layer");
-            //list = doc.getElementsByTagName("layer");
-            //layers = list.getLength();
             for (int i = 0; i < list.getLength(); i++) {
                 node = list.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -116,13 +120,14 @@ public class TileManager {
                         height = Integer.parseInt(element.getAttribute("height"));
                     }
                     data.add(element.getElementsByTagName("data").item(0).getTextContent().replaceAll("\\s+", "").split(","));
-                    System.out.println(data);
-                    tileNumber.add(loadTileNumbers(
+                    layers.add(new Layer(
                             data.get(i),
                             width,
                             height,
-                            tilesetDocuments.get(i).getFirstGrid()
-                    ));
+                            tilesetDocuments.get(i).getFirstGrid(),
+                            sprites.get(i),
+                            element.getAttribute("name"))
+                    );
                 }
             }
             this.WorldColumns = width;
@@ -132,38 +137,15 @@ public class TileManager {
         }
     }
 
-    /**
-     * Carrega a matriz de números do mapa
-     * @param data Sequência de números, para cada layer
-     * @param width largura da matriz
-     * @param height altura da matriz
-     */
-    private int[][] loadTileNumbers (String[] data, int width, int height, int fistGrid) {
-        int [][] tileNumbers = new int[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                tileNumbers[i][j] = Integer.parseInt(data[i * width + j]) - fistGrid;
-            }
-        }
-        return tileNumbers;
-    }
-
-    /**
-     * Carrega vetor de tiles para dado spritesheet
-     */
-    private void loadTiles () {
-        this.tiles = new ArrayList<>();
-        for (int layer = 0; layer < sprites.size(); layer++) {
-            int height = sprites.get(layer).getSpriteHeight();
-            int width = sprites.get(layer).getSpriteWidth();
-            //O tile número "x" estará na posição x do vetor
-            this.tiles.add(new BufferedImage[height * width]);
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    this.tiles.get(layer)[i * width + j] = sprites.get(layer).getSprite(i, j);
-                }
+    public void setLayerCollision (String layerName) {
+        for (Layer layer: layers) {
+            if (Objects.equals(layer.getName(), layerName)) {
+                layer.activateCollision(true);
             }
         }
     }
 
+    public ArrayList<Layer> getLayers() {
+        return layers;
+    }
 }
