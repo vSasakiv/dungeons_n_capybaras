@@ -7,6 +7,8 @@ import game_entity.Vector;
 import game_entity.mobs.Enemy;
 import game_entity.mobs.PassiveEnemyFactory;
 import game_entity.weapons.*;
+
+import tile.Layer;
 import tile.TileManager;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class GameState {
         mouseHandler = new MouseHandler();
         projectiles = new ArrayList<>();
         subProjectiles = new ArrayList<>();
-        tileManager = new TileManager(this, "/src/resources/maps/mapaTeste.xml");
+        tileManager = new TileManager(this, "/src/resources/maps/mapaTeste.xml", player);
         enemies = new ArrayList<>();
         weaponHitbox = new ArrayList<>();
 
@@ -70,7 +72,12 @@ public class GameState {
 
         projectiles.addAll(playerAttackResults.getProjectiles());
         weaponHitbox.addAll(playerAttackResults.getHitboxes());
-
+        for (Layer l: tileManager.getLayers()) {
+            if (l.isCollision()) {
+                l.collisionDetector(player);
+                //player.setPosition(new Vector (150, 150));
+            }
+        }
         for (Enemy e: enemies) {
             e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
             enemyAttackResults = e.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY()));

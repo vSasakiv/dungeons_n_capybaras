@@ -30,6 +30,7 @@ public class Player extends GameEntity{
     private Weapon weapon;
     private final Hitbox hitbox;
 
+
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
      * @param posX coordenada x de nascimento
@@ -42,7 +43,7 @@ public class Player extends GameEntity{
         this.setSpriteSizeY(Constants.TILE_SIZE * 2);
         this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
-        this.hitbox = new Hitbox(50, 50, new Vector(this.getWorldPosX(), this.getWorldPosY()));
+        this.hitbox = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.invincibilityCounter = new Counter(30, 1);
         this.attributes = new Attributes(10, 10, 200);
         this.loadSprites();
@@ -216,58 +217,6 @@ public class Player extends GameEntity{
         }
     }
 
-    /**
-     * Carrega as imagens dos sprites
-     */
-    /*private void getImage() {
-        this.up = new ArrayList<>();
-        this.up_left = new ArrayList<>();
-        this.up_right = new ArrayList<>();
-        this.down = new ArrayList<>();
-        this.down_left = new ArrayList<>();
-        this.down_right = new ArrayList<>();
-        this.right = new ArrayList<>();
-        this.left = new ArrayList<>();
-
-        try {
-            standBack = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_01.png")));
-            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_02.png"))));
-            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_03.png"))));
-            up.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up/Character_Up_04.png"))));
-
-            up_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_left/Character_UpLeft_02.png"))));
-            up_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_left/Character_UpLeft_03.png"))));
-            up_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_left/Character_UpLeft_04.png"))));
-
-            up_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_right/Character_UpRight_02.png"))));
-            up_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_right/Character_UpRight_03.png"))));
-            up_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/up_right/Character_UpRight_04.png"))));
-
-            standFront = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_01.png")));
-            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_02.png"))));
-            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_03.png"))));
-            down.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down/Character_Down_04.png"))));
-
-            down_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_left/Character_DownLeft_02.png"))));
-            down_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_left/Character_DownLeft_03.png"))));
-            down_left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_left/Character_DownLeft_04.png"))));
-
-            down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_02.png"))));
-            down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_03.png"))));
-            down_right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/down_right/Character_DownRight_04.png"))));
-
-            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_02.png"))));
-            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_03.png"))));
-            right.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/right/Character_Right_04.png"))));
-
-            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_02.png"))));
-            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_03.png"))));
-            left.add(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/player/left/Character_Left_04.png"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     private void loadSprites () {
         int width = 32;
         int height = 32;
@@ -296,6 +245,10 @@ public class Player extends GameEntity{
      */
     public Hitbox getHitbox() {
         return hitbox;
+    }
+
+    public String getSpriteDirection() {
+        return spriteDirection;
     }
 
     /**
