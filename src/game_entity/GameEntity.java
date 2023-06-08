@@ -23,17 +23,6 @@ public abstract class GameEntity extends GameObject{
     }
 
     /**
-     * Atualiza a entidade a cada pulso (tempo discretizado)
-     */
-    public abstract void tick();
-
-    /**
-     * Atualiza a entidade a cada pulso (tempo discretizado)
-     * @param direction direção a ser considerada na atualização
-     */
-    public abstract void tick(Vector direction);
-
-    /**
      * Impede que entidade ultrapasse borda do mundo
      */
     protected void checkWindowBorder(){
