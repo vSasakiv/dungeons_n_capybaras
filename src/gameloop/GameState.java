@@ -5,7 +5,8 @@ import game_entity.Hitbox;
 import game_entity.Player;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
-import game_entity.mobs.PassiveEnemyFactory;
+import game_entity.mobs.EnemyStrategy;
+import game_entity.mobs.PassiveStrategy;
 import game_entity.weapons.*;
 import tile.TileManager;
 import java.awt.event.KeyListener;
@@ -20,87 +21,59 @@ public class GameState {
     public final TileManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
-    private final ArrayList<Projectile> projectiles;
-    private final ArrayList<Projectile> subProjectiles;
     private final ArrayList<Enemy> enemies;
-
-    private final ArrayList<MeleeWeaponAttack> weaponHitbox;
 
     /**
      * Construtor que inicia o GameState, onde são criados players, os handlers e o tileManager.
      */
     public GameState() {
         player = new Player(150, 150, 4);
+
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
         Attributes enemyAttributes = new Attributes(5, 0, 0);
+        EnemyStrategy enemyStrategy = new PassiveStrategy(500, 200, 150, 30, 60);
+        Enemy enemyTemplate = new Enemy(200, 200, 4, enemyStrategy);
 
         ProjectileFactory subSubFactory = new BulletFactory(4);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
-        //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
-        player.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
-        PassiveEnemyFactory enemyFactory = new PassiveEnemyFactory(
-                4,
-                enemyAttributes,
-                enemyHitbox,
-                new AutomaticWeapon(2, 2, subSubFactory));
+        player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
+        //player.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
+
+        enemyTemplate.setWeapon(new AutomaticWeapon(5, 4, subSubFactory));
+        enemyTemplate.setHitbox(enemyHitbox);
+        enemyTemplate.setAttributes(enemyAttributes);
 
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
-        projectiles = new ArrayList<>();
-        subProjectiles = new ArrayList<>();
         tileManager = new TileManager(this, "/src/resources/maps/teste2.xml", "/resources/Tiles/TilesetFloor.png");
         enemies = new ArrayList<>();
-        weaponHitbox = new ArrayList<>();
+        enemies.add(enemyTemplate.clone(200, 200));
+        enemies.add(enemyTemplate.clone(500, 500));
 
-        enemies.add(enemyFactory.criaEnemy(200, 200));
-        enemies.add(enemyFactory.criaEnemy(500, 500));
-        enemies.add(enemyFactory.criaEnemy(1200, 100));
     }
 
     /**
      * Método chamado a cada tick do GameLoop, onde devemos atualizar os estados do GameState
      */
     public void tick() {
-        AttackResults playerAttackResults;
-        AttackResults enemyAttackResults;
-
         player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
-        playerAttackResults = player.updateAttack(mouseHandler);
 
-        projectiles.addAll(playerAttackResults.getProjectiles());
-        weaponHitbox.addAll(playerAttackResults.getHitboxes());
-
-        for (Enemy e: enemies) {
+        for (Enemy e: enemies)
             e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
-            enemyAttackResults = e.updateShoot(new Vector(player.getWorldPosX(), player.getWorldPosY()));
-            projectiles.addAll(enemyAttackResults.getProjectiles());
-        }
 
-        for (Projectile p : projectiles){
-            p.tick();
-            if (p.shouldDelete())
-                subProjectiles.addAll(p.subProjectiles());
-        }
 
-        projectiles.addAll(subProjectiles);
         for (Enemy e: enemies) {
             if (e.hitbox.isHitting(player.getHitbox())) {
                 player.gotHit(1);
                 e.gotHit(1);
             }
-            for (MeleeWeaponAttack hitbox: weaponHitbox)
+            for (MeleeWeaponAttack hitbox: player.getMeleeAttacks())
                 if (e.hitbox.isHitting(hitbox))
                     e.gotHit(hitbox.getDamage());
         }
+
         enemies.removeIf(Enemy::isDead);
-        projectiles.removeIf(Projectile::shouldDelete);
-
-        for (MeleeWeaponAttack hitbox : weaponHitbox)
-            hitbox.tick();
-
-        weaponHitbox.removeIf(MeleeWeaponAttack::isFinished);
-        subProjectiles.clear();
     }
 
     /**
@@ -108,6 +81,9 @@ public class GameState {
      * @return array list tipo <Projectile>
      */
     public ArrayList<Projectile> getProjectiles() {
+        ArrayList<Projectile> projectiles = new ArrayList<>(this.player.getRangedAttacks());
+        for (Enemy e: enemies)
+            projectiles.addAll(e.getRangedAttacks());
         return projectiles;
     }
 
@@ -116,7 +92,10 @@ public class GameState {
     }
 
     public ArrayList<MeleeWeaponAttack> getWeaponHitbox() {
-        return weaponHitbox;
+        ArrayList<MeleeWeaponAttack> attacks = new ArrayList<>(this.player.getMeleeAttacks());
+        for (Enemy e: enemies)
+            attacks.addAll(e.getMeleeAttacks());
+        return attacks;
     }
 
     /**
