@@ -30,8 +30,6 @@ public class Bullet extends Projectile{
     public void tick() {
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
     }
-    @Override
-    public void tick(Vector direction) {}
 
     /**
      * @return true caso a bala esteja fora do mapa e deva ser deletada

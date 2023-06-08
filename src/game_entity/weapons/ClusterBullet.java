@@ -34,9 +34,6 @@ public class ClusterBullet extends Projectile{
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
     }
 
-    @Override
-    public void tick(Vector direction) {}
-
     /**
      * Método responsável por desenhar ClusterBullet na tela
      * @param g2d Ferramenta gráfica

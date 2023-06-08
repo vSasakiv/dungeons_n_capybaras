@@ -13,11 +13,7 @@ public abstract class Projectile extends GameEntity {
         this.direction = direction;
     }
 
-    @Override
     public abstract void tick();
-    @Override
-    public abstract void tick(Vector direction);
-
     public abstract void draw(Graphics2D g2d, GameEntity entity);
 
     /**
