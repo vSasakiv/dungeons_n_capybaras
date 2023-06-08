@@ -78,6 +78,11 @@ public class Hitbox {
     }
 
     /**
+     * @return posição da hitbox
+     */
+    public Vector getPosition() { return position;}
+
+    /**
      * @return obtém posição em x da hitbox no mundo (canto superior esquerdo do retângulo)
      */
     public float getWorldPosX(){ return this.position.x; }

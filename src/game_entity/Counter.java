@@ -88,6 +88,10 @@ public class Counter {
         return increment;
     }
 
+    public int getThreshold() {
+        return threshold;
+    }
+
     /**
      * @param threshold novo threshold do contador
      */
