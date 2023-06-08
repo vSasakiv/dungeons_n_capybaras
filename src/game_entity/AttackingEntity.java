@@ -1,7 +1,7 @@
 package game_entity;
 
 import game_entity.weapons.MeleeWeaponAttack;
-import game_entity.weapons.Projectile;
+import game_entity.weapons.projectiles.Projectile;
 import game_entity.weapons.Weapon;
 
 import java.util.ArrayList;

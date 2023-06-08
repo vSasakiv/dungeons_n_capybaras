@@ -1,4 +1,4 @@
-package game_entity.weapons;
+package game_entity.weapons.projectiles;
 
 import game_entity.Vector;
 import javax.imageio.ImageIO;
@@ -11,15 +11,17 @@ public class ClusterBulletFactory implements ProjectileFactory{
     int timeUntilExplode;
     int numberProjectiles;
     ProjectileFactory subProjectileFactory;
+    float hitboxRadius;
 
     BufferedImage image;
 
     public ClusterBulletFactory(int velocity, int timeUntilExplode,
-                                int numberProjectiles,
+                                int numberProjectiles, float hitboxRadius,
                                 ProjectileFactory subProjectileFactory) {
         this.velocity = velocity;
         this.timeUntilExplode = timeUntilExplode;
         this.numberProjectiles = numberProjectiles;
+        this.hitboxRadius = hitboxRadius;
         this.subProjectileFactory = subProjectileFactory;
         this.getImage();
     }
@@ -31,6 +33,7 @@ public class ClusterBulletFactory implements ProjectileFactory{
                 posY,
                 this.velocity,
                 direction,
+                new ProjectileHitbox(new Vector(posX, posY), this.hitboxRadius),
                 this.timeUntilExplode,
                 this.numberProjectiles,
                 this.subProjectileFactory,

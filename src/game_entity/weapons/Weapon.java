@@ -70,4 +70,7 @@ public abstract class Weapon {
 
     public int getSpriteSizeY() { return SpriteSizeY; }
 
+    public int getDamage() {
+        return damage;
+    }
 }

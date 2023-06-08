@@ -2,7 +2,7 @@ package gameloop;
 
 import game_entity.Hitbox;
 import game_entity.mobs.Enemy;
-import game_entity.weapons.Projectile;
+import game_entity.weapons.projectiles.Projectile;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -68,6 +68,7 @@ public class GameFrame extends JFrame {
 
         for (Projectile p : gameState.getProjectiles()){
             p.draw(g2d, gameState.player);
+            p.getHitbox().draw(g2d, gameState.player);
         }
 
         gameState.player.draw(g2d);

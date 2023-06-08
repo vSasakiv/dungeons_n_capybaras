@@ -1,4 +1,4 @@
-package game_entity.weapons;
+package game_entity.weapons.projectiles;
 
 import game_entity.Vector;
 import javax.imageio.ImageIO;
@@ -8,16 +8,24 @@ import java.util.Objects;
 
 public class BulletFactory implements ProjectileFactory {
     int velocity;
+    float hitboxRadius;
     BufferedImage image;
 
-    public BulletFactory(int velocity) {
+    public BulletFactory(int velocity, float hitboxRadius) {
         this.velocity = velocity;
+        this.hitboxRadius = hitboxRadius;
         this.getImage();
     }
 
     @Override
     public Projectile criaProjetil(float posX, float posY, Vector direction) {
-        return new Bullet(posX, posY, this.velocity, direction, this.image);
+        return new Bullet(
+                posX,
+                posY,
+                this.velocity,
+                direction,
+                new ProjectileHitbox(new Vector(posX, posY), this.hitboxRadius),
+                this.image);
     }
 
     /**

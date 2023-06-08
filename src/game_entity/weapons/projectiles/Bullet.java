@@ -1,4 +1,4 @@
-package game_entity.weapons;
+package game_entity.weapons.projectiles;
 
 import game_entity.GameEntity;
 import game_entity.Vector;
@@ -19,8 +19,8 @@ public class Bullet extends Projectile{
      * @param direction direção da trajetória
      * @param image sprite
      */
-    public Bullet(float posX, float posY, int velocity, Vector direction, BufferedImage image) {
-        super(posX, posY, velocity, direction);
+    public Bullet(float posX, float posY, int velocity, Vector direction, ProjectileHitbox hitbox, BufferedImage image) {
+        super(posX, posY, velocity, direction, hitbox);
         this.image = image;
         this.setSpriteSizeX(13 * 3);
         this.setSpriteSizeY(5 * 3);
@@ -29,6 +29,7 @@ public class Bullet extends Projectile{
     @Override
     public void tick() {
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
+        this.hitbox.setPosition(this.position);
     }
 
     /**
@@ -39,7 +40,8 @@ public class Bullet extends Projectile{
         return  this.getWorldPosX() < 0 ||
                 this.getWorldPosX() > Constants.WORLD_WIDTH ||
                 this.getWorldPosY() < 0 ||
-                this.getWorldPosY() > Constants.WORLD_HEIGHT;
+                this.getWorldPosY() > Constants.WORLD_HEIGHT ||
+                this.collided;
     }
 
     /**
@@ -64,6 +66,7 @@ public class Bullet extends Projectile{
         );
         g2d.setTransform(original);
     }
+
     @Override
     public ArrayList<Projectile> subProjectiles() {
         return new ArrayList<>();

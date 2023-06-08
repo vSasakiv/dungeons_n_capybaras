@@ -1,4 +1,6 @@
 package game_entity.weapons;
+import game_entity.weapons.projectiles.Projectile;
+
 import java.util.ArrayList;
 
 public class AttackResults {

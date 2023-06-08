@@ -1,4 +1,4 @@
-package game_entity.weapons;
+package game_entity.weapons.projectiles;
 
 import game_entity.Vector;
  public interface ProjectileFactory {

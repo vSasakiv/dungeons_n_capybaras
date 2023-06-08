@@ -1,4 +1,4 @@
-package game_entity.weapons;
+package game_entity.weapons.projectiles;
 
 import game_entity.GameEntity;
 import game_entity.Vector;
@@ -16,10 +16,11 @@ public class ClusterBullet extends Projectile{
     ProjectileFactory subProjectileFactory;
 
     public ClusterBullet (float posX, float posY, int velocity, Vector direction,
+                         ProjectileHitbox hitbox,
                          int timeUntilExplode, int numeroProjeteis,
                          ProjectileFactory subProjectileFactory,
                          BufferedImage image) {
-        super(posX, posY, velocity, direction);
+        super(posX, posY, velocity, direction, hitbox);
         this.timeUntilExplode = timeUntilExplode;
         this.numberProjectiles = numeroProjeteis;
         this.subProjectileFactory = subProjectileFactory;
@@ -32,6 +33,7 @@ public class ClusterBullet extends Projectile{
     public void tick() {
         counter += 1;
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
+        this.hitbox.setPosition(this.position);
     }
 
     /**

@@ -8,6 +8,7 @@ import game_entity.mobs.Enemy;
 import game_entity.mobs.EnemyStrategy;
 import game_entity.mobs.PassiveStrategy;
 import game_entity.weapons.*;
+import game_entity.weapons.projectiles.*;
 import tile.TileManager;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -34,11 +35,12 @@ public class GameState {
         EnemyStrategy enemyStrategy = new PassiveStrategy(500, 200, 150, 30, 60);
         Enemy enemyTemplate = new Enemy(200, 200, 4, enemyStrategy);
 
-        ProjectileFactory subSubFactory = new BulletFactory(4);
-        ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, subSubFactory);
-        ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, subFactory);
-        player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
-        //player.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
+
+        ProjectileFactory subSubFactory = new BulletFactory(4, 6);
+        ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory );
+        ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, 6, subFactory);
+        //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
+        player.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
 
         enemyTemplate.setWeapon(new AutomaticWeapon(5, 4, subSubFactory));
         enemyTemplate.setHitbox(enemyHitbox);
@@ -50,7 +52,6 @@ public class GameState {
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));
-
     }
 
     /**
@@ -59,18 +60,27 @@ public class GameState {
     public void tick() {
         player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        for (Enemy e: enemies)
-            e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
-
-
         for (Enemy e: enemies) {
+            e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
             if (e.hitbox.isHitting(player.getHitbox())) {
                 player.gotHit(1);
                 e.gotHit(1);
             }
+            for (Projectile p: e.getRangedAttacks()){
+                if (p.getHitbox().isHitting(player.getHitbox())) {
+                    player.gotHit(e.getWeapon().getDamage());
+                    p.setCollided(true);
+                }
+            }
             for (MeleeWeaponAttack hitbox: player.getMeleeAttacks())
                 if (e.hitbox.isHitting(hitbox))
                     e.gotHit(hitbox.getDamage());
+            for (Projectile p: player.getRangedAttacks()){
+                if (p.getHitbox().isHitting(e.hitbox)){
+                    e.gotHit(player.getWeapon().getDamage());
+                    p.setCollided(true);
+                }
+            }
         }
 
         enemies.removeIf(Enemy::isDead);

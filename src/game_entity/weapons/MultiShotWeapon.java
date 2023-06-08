@@ -2,6 +2,9 @@ package game_entity.weapons;
 
 import game_entity.GameEntity;
 import game_entity.Vector;
+import game_entity.weapons.projectiles.Projectile;
+import game_entity.weapons.projectiles.ProjectileFactory;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;

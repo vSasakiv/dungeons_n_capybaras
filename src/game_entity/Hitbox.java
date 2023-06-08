@@ -106,6 +106,15 @@ public class Hitbox {
     public float getScreenY (GameObject object){
         return this.getWorldPosY() - object.getWorldPosY() + (float) Constants.HEIGHT /2;
     }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
     /**
      * Desenha hitbox como um retângulo vermelho na tela
      * @param g2d Objeto Graphics2D para desenharmos

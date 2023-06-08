@@ -1,4 +1,4 @@
-package game_entity.weapons;
+package game_entity.weapons.projectiles;
 
 import game_entity.GameEntity;
 import game_entity.Vector;
@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 public abstract class Projectile extends GameEntity {
     Vector direction;
-    public Projectile(float posX, float posY, int velocity, Vector direction) {
+    ProjectileHitbox hitbox;
+    boolean collided = false;
+    public Projectile(float posX, float posY, int velocity, Vector direction, ProjectileHitbox hitbox) {
         super(posX, posY, velocity);
         this.direction = direction;
+        this.hitbox = hitbox;
     }
 
     public abstract void tick();
@@ -22,4 +25,12 @@ public abstract class Projectile extends GameEntity {
     public abstract boolean shouldDelete();
 
     public abstract ArrayList<Projectile> subProjectiles();
+
+    public ProjectileHitbox getHitbox() {
+        return hitbox;
+    }
+
+    public void setCollided(boolean collided) {
+        this.collided = collided;
+    }
 }
