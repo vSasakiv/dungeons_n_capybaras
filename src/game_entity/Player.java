@@ -48,7 +48,7 @@ public class Player extends AttackingEntity{
         this.invincibilityCounter.tick();
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.getWeapon().tick();
-        this.tickAttacks(direction);
+        this.tickAttacks(this.getDirection());
         this.updateAttack(mouseHandler);
         this.updateWeapon(mouseHandler);
         this.checkWindowBorder();
