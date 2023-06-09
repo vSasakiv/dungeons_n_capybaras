@@ -38,4 +38,13 @@ public class GameObject {
 
     public float getScreenX () { return this.screenPosition.x; }
     public float getScreenY () { return this.screenPosition.y; }
+
+
+    public void setPosition(Vector position) {
+        this.position = position;
+    }
+
+    public Vector getPosition() {
+        return position;
+    }
 }

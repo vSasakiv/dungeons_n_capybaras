@@ -8,6 +8,7 @@ import game_entity.mobs.Enemy;
 import game_entity.mobs.EnemyStrategy;
 import game_entity.mobs.PassiveStrategy;
 import game_entity.weapons.*;
+import tile.Layer;
 import game_entity.weapons.projectiles.*;
 import tile.TileManager;
 import java.awt.event.KeyListener;
@@ -48,7 +49,7 @@ public class GameState {
 
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
-        tileManager = new TileManager(this, "/src/resources/maps/teste2.xml", "/resources/Tiles/TilesetFloor.png");
+        tileManager = new TileManager(this, "/src/resources/maps/mapaTeste.xml", player);
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));
@@ -60,6 +61,11 @@ public class GameState {
     public void tick() {
         player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
+        for (Layer l: tileManager.getLayers()) {
+            if (l.getCollision()) {
+                l.collisiondetector(player);
+            }
+        }
         for (Enemy e: enemies) {
             e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
             if (e.hitbox.isHitting(player.getHitbox())) {
