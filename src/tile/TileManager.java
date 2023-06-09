@@ -1,7 +1,7 @@
 package tile;
 
 import java.awt.*;
-import game_entity.Player;
+import game_entity.GameEntity;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import gameloop.Constants;
-import gameloop.GameState;
 
 
 /**
@@ -20,17 +19,14 @@ public class TileManager {
     ArrayList<Layer> layers = new ArrayList<>();
     int WorldRolls;// Número de linhas no mundo
     int WorldColumns; //Número de colunas no mundo
-    GameState gameState;
-    Player player;
+    GameEntity player;
 
     /**
      * Construtor da classe TileManager
      * Adiciona um mapa e carrega os tiles
-     * @param gameState Estado do jogo
      * @param path Caminho do arquivo de mapa
      */
-    public TileManager (GameState gameState, String path, Player player) {
-        this.gameState = gameState;
+    public TileManager (String path, GameEntity player) {
         addTileMap(path);
         setLayerCollision("Collision");
         this.player = player;
@@ -44,14 +40,14 @@ public class TileManager {
             for (int worldColumn = 0; worldColumn < WorldColumns; worldColumn++) {
                 int worldX = worldColumn * Constants.TILE_SIZE;
                 int worldY = worldRow * Constants.TILE_SIZE;
-                int screenX = worldX - (int)gameState.player.getWorldPosX() + gameState.player.SCREEN_X;
-                int screenY = worldY - (int)gameState.player.getWorldPosY() + gameState.player.SCREEN_Y;
+                int screenX = worldX - (int)this.player.getWorldPosX() + Constants.WIDTH/2;
+                int screenY = worldY - (int)this.player.getWorldPosY() + Constants.HEIGHT/2;
                 
                 //Somente desenha na tela se a posição do tile estiver dentro dos limites da tela (mais uma borda de tamanho TILE_SIZE)
-                if (worldX + Constants.TILE_SIZE > gameState.player.getWorldPosX() - gameState.player.SCREEN_X &&
-                    worldX - Constants.TILE_SIZE < gameState.player.getWorldPosX() + gameState.player.SCREEN_X &&
-                    worldY + Constants.TILE_SIZE > gameState.player.getWorldPosY() - gameState.player.SCREEN_Y &&
-                    worldY - Constants.TILE_SIZE < gameState.player.getWorldPosY() + gameState.player.SCREEN_Y) {
+                if (worldX + Constants.TILE_SIZE > this.player.getWorldPosX() - (float) Constants.WIDTH /2 &&
+                    worldX - Constants.TILE_SIZE < this.player.getWorldPosX() + (float) Constants.WIDTH /2 &&
+                    worldY + Constants.TILE_SIZE > this.player.getWorldPosY() - (float) Constants.HEIGHT /2 &&
+                    worldY - Constants.TILE_SIZE < this.player.getWorldPosY() + (float) Constants.HEIGHT /2) {
                     for (Layer layer : layers) {
                         if (layer.getTileMap()[worldRow][worldColumn] != null && !Objects.equals(layer.getName(), "Collision"))
                             g2d.drawImage(

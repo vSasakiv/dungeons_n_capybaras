@@ -10,7 +10,7 @@ import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import tile.AnimationSprite;
 
-public class Player extends AttackingEntity{
+public class DungeonPlayer extends AttackingEntity{
     //Posições fixas do player: centrado na tela
     public final int SCREEN_X = Constants.WIDTH / 2;
     public final int SCREEN_Y = Constants.HEIGHT / 2;
@@ -31,7 +31,7 @@ public class Player extends AttackingEntity{
      * @param posY coordenada y de nascimento
      * @param velocity velocidade
      */
-    public Player(int posX, int posY, int velocity) {
+    public DungeonPlayer(int posX, int posY, int velocity) {
         super(posX, posY, velocity);
         this.setSpriteSizeX(Constants.TILE_SIZE * 2);
         this.setSpriteSizeY(Constants.TILE_SIZE * 2);
