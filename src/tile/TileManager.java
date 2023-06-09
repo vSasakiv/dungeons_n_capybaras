@@ -32,8 +32,7 @@ public class TileManager {
     public TileManager (GameState gameState, String path, Player player) {
         this.gameState = gameState;
         addTileMap(path);
-        setLayerCollision("TilesetWater");
-        setLayerCollision("TilesetNature");
+        setLayerCollision("Collision");
         this.player = player;
     }
 
@@ -54,7 +53,7 @@ public class TileManager {
                     worldY + Constants.TILE_SIZE > gameState.player.getWorldPosY() - gameState.player.SCREEN_Y &&
                     worldY - Constants.TILE_SIZE < gameState.player.getWorldPosY() + gameState.player.SCREEN_Y) {
                     for (Layer layer : layers) {
-                        if (layer.getTileMap()[worldRow][worldColumn] != null)
+                        if (layer.getTileMap()[worldRow][worldColumn] != null && !Objects.equals(layer.getName(), "Collision"))
                             g2d.drawImage(
                                     layer.getTileMap()[worldRow][worldColumn].getImage(),
                                     screenX, screenY,
@@ -62,14 +61,6 @@ public class TileManager {
                                     Constants.TILE_SIZE,
                                     null
                             );
-                        if (layer.getTileMap()[worldRow][worldColumn] != null && layer.getTileMap()[worldRow][worldColumn].getHitbox() != null) {
-
-                            if (layer.getTileMap()[worldRow][worldColumn].getHitbox().isHitting(player.getHitbox()))
-                                layer.getTileMap()[worldRow][worldColumn].getHitbox().draw(g2d, screenX, screenY, Color.RED);
-                            else
-                                layer.getTileMap()[worldRow][worldColumn].getHitbox().draw(g2d, screenX, screenY, Color.BLUE);
-                        }
-
                     }
 
                 }
@@ -140,7 +131,7 @@ public class TileManager {
     public void setLayerCollision (String layerName) {
         for (Layer layer: layers) {
             if (Objects.equals(layer.getName(), layerName)) {
-                layer.activateCollision(true);
+                layer.setCollision(true);
             }
         }
     }

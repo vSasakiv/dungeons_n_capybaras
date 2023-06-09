@@ -56,9 +56,9 @@ public class Player extends GameEntity{
     public void tick(Vector direction) {}
 
     public void tick(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        Vector direction = this.updateDirection(keyHandler);
+        this.setDirection(this.updateDirection(keyHandler));
         this.invincibilityCounter.tick();
-        this.position = Vector.add(this.position, Vector.scalarMultiply(direction, velocity));
+        this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.weapon.tick();
         this.updateWeapon(mouseHandler);
         this.checkWindowBorder();
@@ -245,10 +245,6 @@ public class Player extends GameEntity{
      */
     public Hitbox getHitbox() {
         return hitbox;
-    }
-
-    public String getSpriteDirection() {
-        return spriteDirection;
     }
 
     /**

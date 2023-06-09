@@ -28,6 +28,7 @@ public class Vector {
         return (float) Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
+
     /**
      * @param factor fator de aumento
      *               Modifica módulo de um vetor pelo fator escalar, de modo a

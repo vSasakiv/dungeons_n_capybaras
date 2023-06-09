@@ -10,7 +10,9 @@ public abstract class GameEntity extends GameObject{
     protected int velocity;
     private int SpriteSizeX;
     private int SpriteSizeY;
-    
+
+    private Vector direction = null;
+
     /**
      * Construtor da entidade, numa posição predeterminada
      * @param worldPosX coordenada x inicial, em relação ao mundo
@@ -50,4 +52,15 @@ public abstract class GameEntity extends GameObject{
     public int getSpriteSizeX() { return SpriteSizeX; }
 
     public int getSpriteSizeY() { return SpriteSizeY; }
+
+    public Vector getDirection() {
+        return direction;
+    }
+    public void setDirection(Vector direction) {
+        this.direction = direction;
+    }
+
+    public int getVelocity() {
+        return velocity;
+    }
 }

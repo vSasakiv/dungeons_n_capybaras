@@ -73,9 +73,8 @@ public class GameState {
         projectiles.addAll(playerAttackResults.getProjectiles());
         weaponHitbox.addAll(playerAttackResults.getHitboxes());
         for (Layer l: tileManager.getLayers()) {
-            if (l.isCollision()) {
-                l.collisionDetector(player);
-                //player.setPosition(new Vector (150, 150));
+            if (l.getCollision()) {
+                l.collisiondetector(player);
             }
         }
         for (Enemy e: enemies) {
