@@ -20,12 +20,12 @@ public class EstacionamentoStrategy extends ChangeTileStrategy {
         int index = changePosition(player.getPosition());
         if (index != -1) {
             switch (index) {
-                case 0 -> {
+                case 1 -> {
                     player.setPosition(new Vector(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47));
-                    //return 2;
+                    //return 1;
                     return mapNum;
                 }
-                case 1 -> {
+                case 0 -> {
                     player.setPosition(new Vector(Constants.TILE_SIZE * 39, Constants.TILE_SIZE * 3));
                     return 1;
                 }
