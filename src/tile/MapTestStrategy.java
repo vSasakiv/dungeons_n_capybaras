@@ -1,6 +1,6 @@
 package tile;
 
-import game_entity.Player;
+import game_entity.GameEntity;
 import game_entity.Vector;
 import gameloop.Constants;
 
@@ -14,7 +14,7 @@ public class MapTestStrategy extends ChangeTileStrategy{
 
     }
 
-    public int changeMap (Player player, int mapNum) {
+    public int changeMap (GameEntity player, int mapNum) {
         int index = changePosition(player.getPosition());
         if (index != -1) {
             player.setPosition(new Vector (42 * Constants.TILE_SIZE, 2 * Constants.TILE_SIZE));

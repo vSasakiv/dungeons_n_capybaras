@@ -27,7 +27,7 @@ public class TileManager {
      * Adiciona um mapa e carrega os tiles
      * @param path Caminho do arquivo de mapa
      */
-    public TileManager (String path, GameEntity player) {
+    public TileManager (String path, GameEntity player, ChangeTileStrategy strategy) {
         addTileMap(path);
         setLayerCollision("Collision");
         this.player = player;

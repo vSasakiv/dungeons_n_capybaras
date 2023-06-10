@@ -18,6 +18,7 @@ import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import tile.Layer;
+import tile.MapTestStrategy;
 import tile.TileManager;
 
 import java.awt.*;
@@ -54,7 +55,7 @@ public class DungeonState implements State{
 
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
-        tileManager = new TileManager("/src/resources/maps/mapaTeste.xml", dungeonPlayer);
+        tileManager = new TileManager("/src/resources/maps/mapaTeste/mapaTeste.xml", dungeonPlayer, new MapTestStrategy());
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));
@@ -63,11 +64,11 @@ public class DungeonState implements State{
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        for (Layer l: tileManager.getLayers())
-            if (l.getCollision())
-                l.collisiondetector(dungeonPlayer);
+        Layer layer = tileManager.getCollisionLayer();
+        layer.collisiondetector(dungeonPlayer);
 
         for (Enemy e: enemies) {
+            layer.collisiondetector(e);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);

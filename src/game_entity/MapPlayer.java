@@ -40,7 +40,6 @@ public class MapPlayer extends GameEntity{
     public void tick(KeyHandler keyHandler) {
         this.setDirection(this.updateDirection(keyHandler));
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
-        this.checkWindowBorder();
         this.hitbox.setPosition(this.position);
     }
 

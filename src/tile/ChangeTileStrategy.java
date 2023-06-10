@@ -1,13 +1,14 @@
 package tile;
 
-import game_entity.Player;
+
+import game_entity.GameEntity;
 import game_entity.Vector;
 import java.util.ArrayList;
 
 public abstract class ChangeTileStrategy {
     ArrayList<int[]> regions;
 
-    public abstract int changeMap (Player player, int mapNum);
+    public abstract int changeMap (GameEntity player, int mapNum);
 
     public int changePosition (Vector position) {
         for (int i = 0; i < regions.size(); i++) {
