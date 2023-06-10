@@ -32,9 +32,6 @@ public class Layer {
         this.collision = collision;
     }
 
-    public boolean getCollision() {
-        return this.collision;
-    }
 
     /**
      * Carrega vetor de tiles para dado spritesheet
@@ -68,7 +65,6 @@ public class Layer {
         int difY = (int) Math.abs(tileX * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosY());
         if (tileMap[tileX][tileY] != null) {
             if (difX <= Constants.TILE_SIZE &&  difY <= Constants.TILE_SIZE) {
-                System.out.println("dif x: " + Math.abs( (tileY * Constants.TILE_SIZE)  + (float) Constants.TILE_SIZE /2 - entity.getWorldPosX()) +  ",dify: " + Math.abs( (tileX * Constants.TILE_SIZE) + (float) Constants.TILE_SIZE /2 - entity.getWorldPosY()));
                 if (difX < difY) {
                     if (entity.getWorldPosY() <= tileX * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0) {
                         entity.setPosition(Vector.add(entity.getPosition(), Vector.scalarMultiply(Constants.DIRECTION_UP, entity.getVelocity())));

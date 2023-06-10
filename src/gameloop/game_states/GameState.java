@@ -1,5 +1,6 @@
 package gameloop.game_states;
 
+import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import java.awt.event.KeyListener;
@@ -34,16 +35,21 @@ public class GameState {
         this.stateList[currentState.estadoAtual].tick();
     }
 
-    /**
-     * Atualiza o estado o gameState caso alguma tecla tenha sido pressionada
-     */
-    private void updateState(){
-        switch (currentState){
+    private void updateState() {
+        switch (currentState) {
             case mapState -> {
-                if (this.keyHandler.isKeyP()) this.currentState = StateEnum.dungeonState;
+                if (stateList[0].getMapNum() == -1) {
+                    this.currentState = StateEnum.dungeonState;
+                    stateList[0].setMapNum(0);
+                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
+                }
             }
             case dungeonState -> {
-                if (this.keyHandler.isKeyQ()) this.currentState = StateEnum.mapState;
+                if (stateList[1].getMapNum() == -1) {
+                    this.currentState = StateEnum.mapState;
+                    stateList[1].setMapNum(0);
+                    stateList[currentState.estadoAtual].setDefaultPosition(42 * Constants.TILE_SIZE, 2 * Constants.TILE_SIZE);
+                }
             }
         }
     }

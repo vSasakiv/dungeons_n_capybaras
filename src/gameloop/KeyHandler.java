@@ -12,8 +12,6 @@ public class KeyHandler extends KeyAdapter {
     private boolean keyA; // true se tecla A está pressionada
     private boolean keyS; // true se tecla S está pressionada
     private boolean keyD; // true se tecla D está pressionada
-    private boolean keyP; // true se tecla P está pressionada
-    private boolean keyQ;
     private boolean keyN;
 
     /**
@@ -24,8 +22,6 @@ public class KeyHandler extends KeyAdapter {
         this.keyA = false;
         this.keyS = false;
         this.keyD = false;
-        this.keyP = false;
-        this.keyQ = false;
         this.keyN = false;
     }
 
@@ -40,8 +36,6 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_A -> keyA = true;
             case KeyEvent.VK_S -> keyS = true;
             case KeyEvent.VK_D -> keyD = true;
-            case KeyEvent.VK_P -> keyP = true;
-            case KeyEvent.VK_Q -> keyQ = true;
             case KeyEvent.VK_N -> keyN = true;
         }
     }
@@ -57,8 +51,7 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_A -> keyA = false;
             case KeyEvent.VK_S -> keyS = false;
             case KeyEvent.VK_D -> keyD = false;
-            case KeyEvent.VK_P -> keyP = false;
-            case KeyEvent.VK_Q -> keyQ = false;
+            case KeyEvent.VK_N -> keyN = false;
         }
     }
 
@@ -94,17 +87,6 @@ public class KeyHandler extends KeyAdapter {
         return keyD;
     }
 
-    /**
-     * Verifica se P está sendo pressionado
-     * @return true, caso esteja; false, caso contrário
-     */
-    public boolean isKeyP() { return keyP; }
-
-    /**
-     * Verifica se Q está sendo pressionado
-     * @return true, caso esteja; false, caso contrário
-     */
-    public boolean isKeyQ() { return keyQ; }
 
     public boolean isKeyN() {
         return keyN;

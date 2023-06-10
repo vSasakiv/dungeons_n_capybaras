@@ -34,6 +34,9 @@ public class DungeonState implements State{
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
 
+    private int mapNum;
+
+
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
         dungeonPlayer = new DungeonPlayer(150, 150, 4);
 
@@ -91,6 +94,8 @@ public class DungeonState implements State{
                 }
         }
         enemies.removeIf(Enemy::isDead);
+
+        mapNum = this.tileManager.changeStrategy.changeMap(dungeonPlayer, mapNum);
     }
 
     @Override
@@ -123,6 +128,7 @@ public class DungeonState implements State{
         this.dungeonPlayer.getAttributes().draw(g2d);
     }
 
+
     /**
      * obtém os projéteis
      * @return array list tipo <Projectile>
@@ -141,4 +147,14 @@ public class DungeonState implements State{
         return attacks;
     }
 
+    public int getMapNum() {
+        return mapNum;
+    }
+    public void setMapNum(int mapNum) {
+        this.mapNum = mapNum;
+    }
+
+    public void setDefaultPosition(int x, int y) {
+        this.dungeonPlayer.setPosition(new Vector(x, y));
+    }
 }

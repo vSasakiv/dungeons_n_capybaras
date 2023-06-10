@@ -8,4 +8,7 @@ import java.awt.*;
 public interface State {
     void tick();
     void draw(Graphics2D g2d);
+    int getMapNum();
+    void setMapNum(int mapNum);
+    void setDefaultPosition(int x, int y);
 }
