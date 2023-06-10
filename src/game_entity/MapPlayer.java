@@ -13,6 +13,7 @@ public class MapPlayer extends GameEntity{
     public final int SCREEN_X = Constants.WIDTH / 2;
     public final int SCREEN_Y = Constants.HEIGHT / 2;
 
+    private MapPlayerStateEnum currentState;
     //Sprites
     private BufferedImage standFront, standBack;
     private String spriteDirection; // Indicã a orientação do sprite
@@ -33,11 +34,13 @@ public class MapPlayer extends GameEntity{
         this.setSpriteSizeY(Constants.TILE_SIZE * 2);
         this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
+        this.currentState = MapPlayerStateEnum.DEFAULT;
         this.hitbox = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.loadSprites();
     }
 
     public void tick(KeyHandler keyHandler) {
+        updateState(keyHandler);
         this.setDirection(this.updateDirection(keyHandler));
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.hitbox.setPosition(this.position);
@@ -166,6 +169,17 @@ public class MapPlayer extends GameEntity{
         this.left = new AnimationSprite("/resources/player/Character_Left.png", width, height, 0, 0, 4);
         standBack = up.getSpriteArray()[0];
         standFront = down.getSpriteArray()[0];
+    }
+
+    private void updateState(KeyHandler keyHandler){
+        if (keyHandler.isKeyN()) {
+            keyHandler.setKeyN(false);
+            switch (this.currentState) {
+                case DEFAULT -> this.currentState = MapPlayerStateEnum.NINJA;
+                case NINJA -> this.currentState = MapPlayerStateEnum.DEFAULT;
+            }
+        }
+        this.velocity = this.currentState.estadoAtual;
     }
 
     /**
