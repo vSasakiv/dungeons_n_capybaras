@@ -1,8 +1,7 @@
 package gameloop;
 
-import game_entity.Hitbox;
-import game_entity.mobs.Enemy;
-import game_entity.weapons.projectiles.Projectile;
+import gameloop.game_states.GameState;
+import gameloop.game_states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -58,31 +57,7 @@ public class GameFrame extends JFrame {
      */
     private void doRendering(Graphics2D g2d, GameState gameState) {
         // RENDERIZA O QUE PRECISAR
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
-        // exemplo
-        g2d.setColor(Color.BLACK);
-
-        gameState.maps.get(gameState.mapNum).draw(g2d);
-        //gameState.tm.render(g2d);
-
-        for (Projectile p : gameState.getProjectiles()){
-            p.draw(g2d, gameState.player);
-            p.getHitbox().draw(g2d, gameState.player);
-        }
-
-        gameState.player.draw(g2d);
-        g2d.setColor(Color.red);
-        for (Enemy e: gameState.getEnemies()) {
-            g2d.fillOval(
-                    (int) (e.getWorldPosX() - gameState.player.getWorldPosX() + Constants.WIDTH / 2.0 - 5),
-                    (int) (e.getWorldPosY() - gameState.player.getWorldPosY() + Constants.HEIGHT / 2.0 - 5),
-                    10, 10);
-            e.hitbox.draw(g2d, gameState.player);
-        }
-        for (Hitbox h: gameState.getWeaponHitbox())
-            h.draw(g2d, gameState.player);
-        gameState.player.getHitbox().draw(g2d, gameState.player);
-        gameState.player.getAttributes().draw(g2d);
+        State atual = gameState.getActualState();
+        atual.draw(g2d);
     }
 }
