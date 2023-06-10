@@ -51,7 +51,6 @@ public class Player extends AttackingEntity{
         this.tickAttacks(this.getDirection());
         this.updateAttack(mouseHandler);
         this.updateWeapon(mouseHandler);
-        this.checkWindowBorder();
         this.hitbox.setPosition(this.position);
     }
 

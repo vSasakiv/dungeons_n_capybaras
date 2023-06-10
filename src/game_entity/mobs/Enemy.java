@@ -46,7 +46,6 @@ public class Enemy extends AttackingEntity {
         this.invincibilityCounter.tick();
         Vector direction = estrategia.newDirection(this.position, playerPos);
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
-        this.checkWindowBorder();
         this.getWeapon().tick();
         this.updateShoot(playerPos);
         this.tickAttacks(direction);

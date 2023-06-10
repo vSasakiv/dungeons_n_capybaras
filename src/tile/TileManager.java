@@ -17,6 +17,7 @@ import gameloop.GameState;
  * Classe que decide qual mapa seguir, carrega as imagens dos tiles e os desenha na janela do jogo 
  */
 public class TileManager {
+    public ChangeTileStrategy changeStrategy;
     ArrayList<Layer> layers = new ArrayList<>();
     int WorldRolls;// Número de linhas no mundo
     int WorldColumns; //Número de colunas no mundo
@@ -29,11 +30,12 @@ public class TileManager {
      * @param gameState Estado do jogo
      * @param path Caminho do arquivo de mapa
      */
-    public TileManager (GameState gameState, String path, Player player) {
+    public TileManager (GameState gameState, String path, Player player, ChangeTileStrategy strategy) {
         this.gameState = gameState;
         addTileMap(path);
         setLayerCollision("Collision");
         this.player = player;
+        this.changeStrategy = strategy;
     }
 
     /** Este método é responsável por implementar a lógica para a renderização dos tiles
@@ -136,7 +138,8 @@ public class TileManager {
         }
     }
 
-    public ArrayList<Layer> getLayers() {
-        return layers;
+    public Layer getCollisionLayer () {
+        return this.layers.get(this.layers.size() - 1);
     }
+
 }

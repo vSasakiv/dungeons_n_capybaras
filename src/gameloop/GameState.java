@@ -8,9 +8,9 @@ import game_entity.mobs.Enemy;
 import game_entity.mobs.EnemyStrategy;
 import game_entity.mobs.PassiveStrategy;
 import game_entity.weapons.*;
-import tile.Layer;
+import tile.*;
 import game_entity.weapons.projectiles.*;
-import tile.TileManager;
+
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
@@ -20,7 +20,8 @@ import java.util.ArrayList;
 public class GameState {
 
     public final Player player;
-    public final TileManager tileManager;
+    public ArrayList<TileManager> maps;
+    public int mapNum = 0;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
@@ -29,8 +30,8 @@ public class GameState {
      * Construtor que inicia o GameState, onde são criados players, os handlers e o tileManager.
      */
     public GameState() {
-        player = new Player(150, 150, 4);
-
+        player = new Player(300, 2000, 4);
+        maps = new ArrayList<>();
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
         Attributes enemyAttributes = new Attributes(5, 0, 0);
         EnemyStrategy enemyStrategy = new PassiveStrategy(500, 200, 150, 30, 60);
@@ -41,7 +42,7 @@ public class GameState {
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory );
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, 6, subFactory);
         //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
-        player.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
+        player.setWeapon(new MultiShotWeapon(5, 4, subSubFactory, 30, 1));
 
         enemyTemplate.setWeapon(new AutomaticWeapon(5, 4, subSubFactory));
         enemyTemplate.setHitbox(enemyHitbox);
@@ -49,7 +50,9 @@ public class GameState {
 
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
-        tileManager = new TileManager(this, "/src/resources/maps/mapaTeste.xml", player);
+        maps.add( new TileManager(this, "/src/resources/maps/estacionamento/estacionamento.xml", player, new EstacionamentoStrategy()));
+        maps.add( new TileManager(this, "/src/resources/maps/mapaTeste/mapaTeste.xml", player, new MapTestStrategy()));
+        maps.add( new TileManager(this, "/src/resources/maps/BienioSup/BienioSup.xml", player, new BienioSupStrategy()));
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));
@@ -61,12 +64,11 @@ public class GameState {
     public void tick() {
         player.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        for (Layer l: tileManager.getLayers()) {
-            if (l.getCollision()) {
-                l.collisiondetector(player);
-            }
-        }
+        Layer collisionLayer = maps.get(mapNum).getCollisionLayer();
+        collisionLayer.collisiondetector(player);
+
         for (Enemy e: enemies) {
+            //collisionLayer.collisiondetector(e);
             e.tick(new Vector(player.getWorldPosX(), player.getWorldPosY()));
             if (e.hitbox.isHitting(player.getHitbox())) {
                 player.gotHit(1);
@@ -87,6 +89,9 @@ public class GameState {
                     p.setCollided(true);
                 }
             }
+        }
+        if (maps.get(mapNum).changeStrategy.changePosition(player.getPosition()) != -1) {
+            mapNum  = maps.get(mapNum).changeStrategy.changeMap(player, mapNum);
         }
 
         enemies.removeIf(Enemy::isDead);
