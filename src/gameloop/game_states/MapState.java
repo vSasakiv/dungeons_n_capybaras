@@ -35,26 +35,7 @@ public class MapState implements State{
         Layer layer = maps.get(mapNum).getCollisionLayer();
         layer.collisiondetector(mapPlayer);
         mapNum = this.maps.get(mapNum).changeStrategy.changeMap(mapPlayer, mapNum);
-        updatePlayerState();
         this.mapPlayer.setVelocity(currentState.estadoAtual);
-    }
-
-    void updatePlayerState() {
-        switch (currentState) {
-            case DEFAULT -> {
-                if (this.keyHandler.isKeyN()) {
-                    this.currentState = MapPlayerStateEnum.NINJA;
-                    this.mapPlayer.playerSelected = 1;
-                }
-            }
-            case NINJA -> {
-                if (this.keyHandler.isKeyN()) {
-                    this.currentState = MapPlayerStateEnum.DEFAULT;
-                    this.mapPlayer.playerSelected = 0;
-                }
-            }
-        }
-        keyHandler.setKeyN(false);
     }
 
     @Override

@@ -218,8 +218,14 @@ public class MapPlayer extends GameEntity{
         if (keyHandler.isKeyN()) {
             keyHandler.setKeyN(false);
             switch (this.currentState) {
-                case DEFAULT -> this.currentState = MapPlayerStateEnum.NINJA;
-                case NINJA -> this.currentState = MapPlayerStateEnum.DEFAULT;
+                case DEFAULT -> {
+                    this.currentState = MapPlayerStateEnum.NINJA;
+                    this.playerSelected = 1;
+                }
+                case NINJA -> {
+                    this.currentState = MapPlayerStateEnum.DEFAULT;
+                    this.playerSelected = 0;
+                }
             }
         }
         this.velocity = this.currentState.estadoAtual;
