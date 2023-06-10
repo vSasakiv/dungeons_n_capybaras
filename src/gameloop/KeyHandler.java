@@ -14,6 +14,7 @@ public class KeyHandler extends KeyAdapter {
     private boolean keyD; // true se tecla D está pressionada
     private boolean keyP; // true se tecla P está pressionada
     private boolean keyQ;
+    private boolean keyN;
 
     /**
      * Construtor padrão, que inicializa os atributos boolean como falsos
@@ -25,6 +26,7 @@ public class KeyHandler extends KeyAdapter {
         this.keyD = false;
         this.keyP = false;
         this.keyQ = false;
+        this.keyN = false;
     }
 
     /**
@@ -39,7 +41,8 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_S -> keyS = true;
             case KeyEvent.VK_D -> keyD = true;
             case KeyEvent.VK_P -> keyP = true;
-            case KeyEvent.VK_Q -> keyQ= true;
+            case KeyEvent.VK_Q -> keyQ = true;
+            case KeyEvent.VK_N -> keyN = true;
         }
     }
 
@@ -102,6 +105,14 @@ public class KeyHandler extends KeyAdapter {
      * @return true, caso esteja; false, caso contrário
      */
     public boolean isKeyQ() { return keyQ; }
+
+    public boolean isKeyN() {
+        return keyN;
+    }
+
+    public void setKeyN(boolean keyN) {
+        this.keyN = keyN;
+    }
 
     /**
      * Verifica se alguma tecla está sendo pressionada
