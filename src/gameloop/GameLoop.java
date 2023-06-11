@@ -1,5 +1,7 @@
 package gameloop;
 
+import gameloop.game_states.GameState;
+
 public class GameLoop implements Runnable {
 
     /*

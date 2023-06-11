@@ -6,8 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 class App {
-  public static void main(String[] args) {
 
+  public static void runGame () {
     EventQueue.invokeLater(() -> {
       GameFrame frame = new GameFrame(Constants.WIDTH, Constants.HEIGHT);
       frame.setLocationRelativeTo(null); // inicia o game-loop
@@ -18,5 +18,9 @@ class App {
       GameLoop game = new GameLoop(frame);
       game.start();
     });
+  }
+
+  public static void main(String[] args) {
+    App.runGame();
   }
 }

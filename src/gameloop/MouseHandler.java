@@ -2,11 +2,13 @@ package gameloop;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
-class MouseHandler extends MouseAdapter {
+public class MouseHandler extends MouseAdapter implements MouseMotionListener {
 
     private int mouseX, mouseY;
     private boolean mousePress;
+    
     @Override
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
@@ -20,6 +22,11 @@ class MouseHandler extends MouseAdapter {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+
+    public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
     }

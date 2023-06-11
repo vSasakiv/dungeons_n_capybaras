@@ -1,10 +1,10 @@
 package geometry;
 
+import geometry.primitives.Point;
+
 public class Vector {
-    private float x;  // coordenada x
-    private float y;  // coordenada y
-    private float radius;  // coordenada radial
-    private float theta;  // coordenada angular, em radianos
+    private float x; // coordenada x
+    private float y; // coordenada y
 
     /**
      * construtor vazio do vetor, que cria o vetor nulo
@@ -12,8 +12,6 @@ public class Vector {
     public Vector() {
         this.x = 0;
         this.y = 0;
-        this.radius = 0;
-        this.theta = 0;
     }
 
     /**
@@ -24,7 +22,25 @@ public class Vector {
     public Vector(float x, float y) {
         this.x = x;
         this.y = y;
-        computePolarCoordinates();
+    }
+
+    /**
+     * construtor do vetor, definido por dois pontos A e B (V = B - A)
+     * @param A
+     * @param B
+     */
+    public Vector(Point A, Point B) {
+        this.x = B.getX() - A.getX();
+        this.y = B.getY() - A.getY();
+    }
+
+    /**
+     * construtor do vetor a partir de um já existente
+     * @param V
+     */
+    public Vector(Vector V) {
+        this.x = V.getX();
+        this.y = V.getY();
     }
 
     /**
@@ -32,7 +48,7 @@ public class Vector {
      */
     public String toString() {
         return "(x,y) = (" + this.x + ", " + this.y + ")" + 
-        "\n" + "(radius,theta) = (" + this.radius + ", " + this.theta + ")\n";
+        "\n" + "(radius,theta) = (" + this.getModulus() + ", " + this.getTheta() + ")\n";
     }
 
     /**
@@ -43,18 +59,6 @@ public class Vector {
     public void setCartesianCoordinates(float x, float y) {
         this.x = x;
         this.y = y;
-        computePolarCoordinates();
-    }
-
-    /**
-     * redefine as coordenadas polares (radius,theta)
-     * @param radius novo valor de raio
-     * @param theta novo valor de ângulo
-     */
-    public void setPolarCoordinates(float radius, float theta) {
-        this.radius = radius;
-        this.theta = theta;
-        computeCartesianCoordinates();
     }
 
     /**
@@ -74,19 +78,50 @@ public class Vector {
     }
 
     /**
-     * componente radial do vetor
-     * @return valor de radius
+     * módulo do vetor
+     * @return módulo do vetor
      */
-    public float getRadius() {
-        return this.radius;
+    public float getModulus() {
+        return (float) Math.sqrt((x*x) + (y*y));
     }
 
     /**
-     * componente angular do vetor
-     * @return valor de theta
+     * ângulo do vetor com eixo Ox, orientado no sentido anti-horário
+     * @return valor do ângulo
      */
     public float getTheta() {
-        return this.theta;
+        float theta = 0; // ângulo real
+
+        if(this.x == 0) {
+            // casos em que o vetor é vertical
+            if(this.y > 0){
+                theta = (float) Math.PI/2;
+            } else if(this.y < 0){
+                theta = (float) -Math.PI/2;
+            } else {
+                theta = 0;
+            }
+        } else {
+            float delta_x = Math.abs(this.x); // módulo da componente x
+            float delta_y = Math.abs(this.y); // módulo da componente y
+            float phi = (float) Math.atan(delta_y/delta_x); // ângulo auxiliar
+
+            if(this.x > 0 && this.y >= 0) {
+                // primeiro quadrante
+                theta = phi;
+            } else if(this.x < 0 && this.y >= 0) {
+                // segundo quadrante
+                theta = (float) Math.PI - phi;
+            } else if(this.x < 0 && this.y < 0){
+                // terceiro quadrante
+                theta = (float) Math.PI + phi;
+            } else if(this.x > 0 && this.y < 0) {
+                // quarto quadrante
+                theta = (float) (2*Math.PI - phi);
+            }
+        }
+
+        return theta;
     }
 
     /**
@@ -95,7 +130,6 @@ public class Vector {
      */
     public void setX(float newX) {
         this.x = newX;
-        computePolarCoordinates();
     }
 
     /**
@@ -104,16 +138,15 @@ public class Vector {
      */
     public void setY(float newY) {
         this.y = newY;
-        computePolarCoordinates();
     }
 
     /**
      * redefine raio do vetor
      * @param newRadius novo valor para radius
      */
-    public void setRadius(float newRadius) {
-        this.radius = newRadius;
-        computeCartesianCoordinates();
+    public void setModulus(float newRadius) {
+        this.x *= newRadius/(getModulus());
+        this.y *= newRadius/(getModulus());
     }
 
     /**
@@ -121,38 +154,16 @@ public class Vector {
      * @param newTheta novo valor para theta
      */
     public void setTheta(float newTheta) {
-        this.theta = newTheta;
-        computeCartesianCoordinates();
-    }
-
-    /**
-     * computa as coordeanas cartesianas a partir das polares
-     */
-    private void computeCartesianCoordinates() {
-        this.x = (float) ((float) this.radius*Math.cos(theta));
-        this.y = (float) ((float) this.radius*Math.sin(theta));
-    }
-
-    /**
-     * computa as coordenadas polares a partir das cartesianas
-     */
-    private void computePolarCoordinates() {
-        this.radius = (float) Math.sqrt((x*x) + (y*y));
-        
-        if(this.x > 0) {
-            this.theta = (float) Math.atan(this.y/this.x);
-        } else if(this.x < 0) {
-            this.theta = (float) ((2*Math.PI) - Math.atan(this.y/this.x));
-        } else {
-            this.theta = 0;
-        }
+        float modulus = getModulus();
+        this.x = (float) (modulus*Math.cos(newTheta));
+        this.y = (float) (modulus*Math.sin(newTheta));
     }
 
     /**
      * normaliza o vetor, deixando seu módulo unitário
      */
     public void normalize() {
-        setRadius(1);
+        setModulus(1);
     }
 
     /**
@@ -162,7 +173,6 @@ public class Vector {
     public void scale(float factor) {
         this.x *= factor;
         this.y *= factor;
-        computePolarCoordinates();
     }
 
     /**
@@ -170,9 +180,11 @@ public class Vector {
      * @param angle ângulo de rotação, no sentido anti-horário
      */
     public void rotate(float angle) {
-        this.x = (float) (this.x*Math.cos(angle) - this.y*Math.sin(angle));
-        this.y = (float) (this.x*Math.sin(angle) + this.y*Math.cos(angle));
-        this.computePolarCoordinates();
+        float newX = (float) (this.x*Math.cos(angle) - this.y*Math.sin(angle));
+        float newY = (float) (this.x*Math.sin(angle) + this.y*Math.cos(angle));
+
+        this.x = newX;
+        this.y = newY;
     }
 
     /**
@@ -233,7 +245,7 @@ public class Vector {
      * @return ângulo entre os vetores, em radianos
      */
     public static float angleBetween(Vector a, Vector b) {
-        return (float) Math.acos(dotProduct(a, b)/(a.getRadius()*b.getRadius()));
+        return (float) Math.acos(dotProduct(a, b)/(a.getModulus()*b.getModulus()));
     }
 
     /**
@@ -243,8 +255,18 @@ public class Vector {
      * @return vetor rotacionado
      */
     public static Vector rotation(Vector v, float angle) {
-        float newX = v.x = (float) (v.x*Math.cos(angle) - v.y*Math.sin(angle));
-        float newY = v.y = (float) (v.x*Math.sin(angle) + v.y*Math.cos(angle));
+        float newX = (float) (v.x*Math.cos(angle) - v.y*Math.sin(angle));
+        float newY = (float) (v.x*Math.sin(angle) + v.y*Math.cos(angle));
         return new Vector(newX, newY);
+    }
+
+    public static Vector projection(Vector v, Vector direction) {
+        Vector proj = new Vector(direction.x, direction.y);
+        float dotProd = dotProduct(v, direction);
+        float directionNorm = direction.getModulus();
+
+        proj.scale(dotProd/(directionNorm*directionNorm));
+
+        return proj;
     }
 }

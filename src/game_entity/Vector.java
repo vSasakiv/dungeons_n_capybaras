@@ -1,7 +1,7 @@
 package game_entity;
 
 public class Vector {
-    float x, y;
+    public float x, y;
 
     /**
      * @param x primeira componente do vetor
@@ -28,6 +28,7 @@ public class Vector {
         return (float) Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
+
     /**
      * @param factor fator de aumento
      *               Modifica módulo de um vetor pelo fator escalar, de modo a
@@ -46,11 +47,54 @@ public class Vector {
     public static Vector scalarMultiply(Vector a, int b){
         return new Vector (a.x * b, a.y * b);
     }
+
+    /**
+     * @param a primeiro vetor
+     * @param b segundo vetor
+     * @return o produto escalar entre os vetores a e b
+     */
+    public static float innerProduct (Vector a, Vector b) { return (a.x * b.x) + (a.y * b.y); }
+
+    /**
+     * @param a Vetor 
+     * @return O ângulo que esse vetor forma com o eixo x
+     */
+    public static double getDegree (Vector a) {
+       double tan =  a.y / a.x;
+       if (a.x >= 0) return Math.atan(tan);
+       else return Math.atan(tan) + Math.PI;
+    }
+    /**
+     * @param a Vetor a ser transformado
+     * @return um vetor de mesma direção e sentido, mas de módulo 1
+     */
     public static Vector unitVector(Vector a){
         return new Vector (a.x/a.module(), a.y/a.module());
     }
 
+    /**
+     * @param a Vetor a ser transformado
+     * @param degrees Angulo em graus
+     * @return Vetor rotacionado degrees graus na direção anti horária
+     */
+    public static Vector rotateVector(Vector a, int degrees){
+        double angle = degrees * 2 * Math.PI / 360.0;
+        return new Vector(
+                (float) (Math.cos(angle)*a.x - Math.sin(angle)*a.y),
+                (float) (Math.sin(angle)*a.x + Math.cos(angle)*a.y));
+    }
+
+    /**
+     * @param a Vetor a ser comparado
+     * @param b Vetor a ser comparado
+     * @return true caso o Vetor a seja igual a b, ou seja, suas componentes sejam as mesmas.
+     */
     public static boolean vectorEquals(Vector a, Vector b){
         return (a.x == b.x && a.y == b.y);
+    }
+
+    public static Vector randomUnitVector() {
+        Vector v = new Vector((float) (Math.random() * 2.0 - 1.0), (float)(Math.random() * 2.0 - 1.0));
+        return Vector.unitVector(v);
     }
 }

@@ -1,10 +1,8 @@
 package gameloop;
 
-import game_entity.Projectile;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
+import gameloop.game_states.GameState;
+import gameloop.game_states.State;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
@@ -13,17 +11,18 @@ public class GameFrame extends JFrame {
     private BufferStrategy bufferStrategy;
 
     /**
-     * Construtor que apenas cria a janela
+     * Construtor do GameFrame, com tamanho determinado
+     * @param width largura da janela em pixels
+     * @param height altura da janela em pixels
      */
     public GameFrame(int width, int height) {
         super("Dungeons n Capybaras");
         setResizable(false);
         setSize(width, height);
-
     }
 
     /**
-     * Função que inicia a estratégia de buffering
+     * Inicia a estratégia de buffering
      */
     public void initBufferStrategy() {
         createBufferStrategy(3);
@@ -31,10 +30,8 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * @param gameState gameState atual, para ser possível renderização de entidades
-     *                  Método chamada toda vez que há alguma atualização de tick,
-     *                  que renderiza os
-     *                  todos os objetos necessários na tela
+     * Renderiza todos os objetos em tela, a cada atualização de tick
+     * @param gameState gameState atual
      */
     public void render(GameState gameState) {
         do {
@@ -53,25 +50,13 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * @param g2d       instância do objeto Graphics2D, utilizado para desenhar
-     *                  coisas na tela
-     * @param gameState Estado atual do game, para ser possível desenhar os objetos
-     *                  presentes.
+     * Renderiza um gráfico em particular
+     * @param g2d gráfico a ser desenhado
+     * @param gameState Estado atual do game
      */
     private void doRendering(Graphics2D g2d, GameState gameState) {
         // RENDERIZA O QUE PRECISAR
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
-        // exemplo
-        g2d.setColor(Color.BLACK);
-
-        gameState.tileManager.draw(g2d);
-
-        for (Projectile p : gameState.getProjectiles()){
-            g2d.setColor(Color.RED);
-            g2d.fillOval((int) p.getWorldPosX(), (int) p.getWorldPosY(), 8, 8);
-        }
-
-        gameState.player.draw(g2d);
+        State atual = gameState.getActualState();
+        atual.draw(g2d);
     }
 }
