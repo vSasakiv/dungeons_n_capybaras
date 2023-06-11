@@ -8,6 +8,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * Classe especializada em um tipo de projétil: Bullet: um projétil simples que apenas mantém a direção
+ * após atirado, e não possui nenhuma característica especial.
+ */
 public class Bullet extends Projectile{
     BufferedImage image;
 
@@ -17,6 +21,7 @@ public class Bullet extends Projectile{
      * @param posY y da posição no mundo
      * @param velocity velocidade do projétil
      * @param direction direção da trajetória
+     * @param hitbox hitbox do projétil
      * @param image sprite
      */
     public Bullet(float posX, float posY, int velocity, Vector direction, ProjectileHitbox hitbox, BufferedImage image) {
@@ -26,6 +31,9 @@ public class Bullet extends Projectile{
         this.setSpriteSizeY(5 * 3);
     }
 
+    /**
+     * Atualiza posição e a hitbox do projétil
+     */
     @Override
     public void tick() {
         this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
@@ -67,6 +75,10 @@ public class Bullet extends Projectile{
         g2d.setTransform(original);
     }
 
+    /**
+     * @return Novo array list contendo sub-projéteis, no caso de uma bala normal, não há sub-projéteis,
+     * então é apenas retornado um ArrayList vazio
+     */
     @Override
     public ArrayList<Projectile> subProjectiles() {
         return new ArrayList<>();

@@ -7,12 +7,22 @@ import game_entity.Vector;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Classe para representar uma arma corpo a corpo.
+ */
 public class MeleeWeapon extends Weapon{
 
-    private final float hitboxWidth;
-    private final float hitboxHeight;
-    private final int attack_duration;
+    private final float hitboxWidth; // largura da hitbox quando se realiza um ataque
+    private final float hitboxHeight; // altura da hitbox quando se realiza um ataque
+    private final int attack_duration; // duração da hitbox do ataque
 
+    /**
+     * @param fireRate taxa de disparo da arma (quanto maior mais rápida é a arma)
+     * @param damage dano infligido a um inimigo caso cruze a hitbox
+     * @param hitboxWidth largura da hitbox quando se realiza um ataque
+     * @param hitboxHeight altura da hitbox quando se realiza um ataque
+     * @param attack_duration duração da hitbox do ataque
+     */
     public MeleeWeapon(int fireRate, int damage, float hitboxWidth, float hitboxHeight, int attack_duration) {
         super(fireRate, damage);
         this.hitboxWidth = hitboxWidth;
@@ -20,6 +30,12 @@ public class MeleeWeapon extends Weapon{
         this.attack_duration = attack_duration;
     }
 
+    /**
+     * @param posX      Posição x de onde o ataque foi feito
+     * @param posY      Posição y de onde o ataque foi feito
+     * @param direction Direção do ataque
+     * @return objeto AttackResults contendo todas as hitbox e projéteis gerados
+     */
     @Override
     public AttackResults attack(int posX, int posY, Vector direction) {
         ArrayList<MeleeWeaponAttack> attacks = new ArrayList<>();

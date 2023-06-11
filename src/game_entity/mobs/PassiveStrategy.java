@@ -78,6 +78,9 @@ public class PassiveStrategy implements EnemyStrategy{
         else if (distance >= this.forgetDistance) this.state = EnemyState.PATROL;
     }
 
+    /**
+     * Algoritmo para controlar o inimigo durante a patrulha
+     */
     private void patrol(){
         if (patrolCDCounter.isZero() && this.patrolCounter.isZero()) {
             this.direction = Vector.randomUnitVector(); // caso devemos patrulhar, geramos uma direção aleatória
@@ -92,6 +95,11 @@ public class PassiveStrategy implements EnemyStrategy{
         }
         this.shouldShoot = false; // não deve atirar durante a patrulha
     }
+
+    /**
+     * Algoritmo para controlar o player no estado ativo
+     * @param distanceVector Vetor distância do inimigo até o player.
+     */
     private void active(Vector distanceVector){
         this.shouldShoot = false; // não deve atirar se estiver fugindo
         // Caso o player chegue muito perto, o inimigo tenta fugir para a direção oposta
@@ -103,6 +111,10 @@ public class PassiveStrategy implements EnemyStrategy{
             this.shouldShoot = true;
         }
     }
+
+    /**
+     * @return true caso o inimigo deva atirar
+     */
     @Override
     public boolean shouldShoot() {
         return this.shouldShoot;

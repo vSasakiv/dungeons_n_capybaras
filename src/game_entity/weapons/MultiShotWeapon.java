@@ -14,10 +14,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
+/**
+ * Classe para implementar uma arma de tiro múltiplo, isto é, a cada ataque, podem ser gerados mais de 1 projétil
+ */
 public class MultiShotWeapon extends Weapon{
-    private final ProjectileFactory projectileFactory;
-    BufferedImage image;
-    int angulo, numeroProjeteis;
+    private final ProjectileFactory projectileFactory; // fábrica de projéteis
+    BufferedImage image; // sprite da arma
+    int angulo; // ângulo a partir da direção de cada novo projétil
+    int numeroProjeteis; // número de projéteis por ataque
 
     /**
      * @param fireRate velocidade de ataque da arma

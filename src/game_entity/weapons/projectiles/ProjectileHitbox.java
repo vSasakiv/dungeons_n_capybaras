@@ -8,15 +8,26 @@ import gameloop.Constants;
 
 import java.awt.*;
 
+/**
+ * Classe para a hitbox de um projétil, sendo ela uma hitbox redonda
+ */
 public class ProjectileHitbox {
-    private Vector position;
-    private final float radius;
+    private Vector position; // posição da hitbox, deve ser a mesma do projétil
+    private final float radius; // raio da hitbox
 
+    /**
+     * @param position posição da hitbox
+     * @param radius raio da hitbox
+     */
     public ProjectileHitbox(Vector position, float radius) {
         this.position = position;
         this.radius = radius;
     }
 
+    /**
+     * @param hitbox Hitbox padrão para entidades (retangular)
+     * @return true caso esteja colidindo
+     */
     public boolean isHitting(Hitbox hitbox){
         float testX = position.x;
         float testY = position.y;
@@ -33,6 +44,9 @@ public class ProjectileHitbox {
         return dist.module() <= radius;
     }
 
+    /**
+     * @param position nova posição da hitbox
+     */
     public void setPosition(Vector position) {
         this.position = position;
     }
@@ -62,6 +76,11 @@ public class ProjectileHitbox {
         return this.getWorldPosY() - object.getWorldPosY() + (float) Constants.HEIGHT /2;
     }
 
+    /**
+     * Método para testes
+     * @param g2d Graphics2D java
+     * @param entity entidade a partir da qual será desenhado a hitbox
+     */
     public void draw(Graphics2D g2d, GameEntity entity){
         g2d.setColor(Color.RED);
         g2d.drawOval(

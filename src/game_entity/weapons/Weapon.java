@@ -5,6 +5,9 @@ import game_entity.GameEntity;
 import game_entity.Vector;
 import java.awt.*;
 
+/**
+ * Classe abstrata para representar uma arma
+ */
 public abstract class Weapon {
 
     protected int damage;
@@ -70,7 +73,5 @@ public abstract class Weapon {
 
     public int getSpriteSizeY() { return SpriteSizeY; }
 
-    public int getDamage() {
-        return damage;
-    }
+    public int getDamage() { return damage; }
 }

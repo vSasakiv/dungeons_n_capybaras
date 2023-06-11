@@ -14,12 +14,18 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Classe para geração de armas automáticas, ou seja, armas que apenas atiram
+ * Classe para geração de armas automáticas, ou seja, armas que atiram
  * um projétil por tiro.
  */
 public class AutomaticWeapon extends Weapon{
-    BufferedImage image;
-    private final ProjectileFactory projectileFactory;
+    BufferedImage image; // sprite da arma
+    private final ProjectileFactory projectileFactory; // fábrica de projéteis para gerar novos projéteis a cada ataque
+
+    /**
+     * @param fireRate taxa de disparo da arma (quanto maior mais rápida é a arma)
+     * @param damage dano infligido por cada projétil
+     * @param projectileFactory fábrica a partir da qual os projéteis serão gerados
+     */
     public AutomaticWeapon(int fireRate, int damage, ProjectileFactory projectileFactory) {
         super(fireRate, damage);
         this.projectileFactory = projectileFactory;
