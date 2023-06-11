@@ -36,8 +36,7 @@ Depois, exeute o jogo:
 java Game
 ```
 
-> certifique-se ter ter em sua máquina uma versão igual ou superior ao java 17.
-{: .prompt-warning }
+> certifique-se de ter em sua máquina uma versão igual ou superior ao java 17.
 
 
 # Relatório entrega 2
