@@ -10,7 +10,7 @@ public class Layer {
     private final BufferedImage[][] tileMap;
 
     /**
-     * Layer que forma uma mapa
+     * Layer que forma um mapa
      * @param data Array com números dos sprites em suas posições
      * @param width Comprimento, em quantidade de tiles, da layer
      * @param height Largura, em quantidade de tiles, da layer

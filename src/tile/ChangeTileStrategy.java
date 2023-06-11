@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public abstract class ChangeTileStrategy {
 
     /**
-     * Quarda as regiões em que deve haver uma mudança de mapa
-     * A regiões são guardadas em vetores no formato {minX, maxX, minY, maxY}
+     * Guarda as regiões em que deve haver uma mudança de mapa
+     * As regiões são guardadas em vetores no formato {minX, maxX, minY, maxY}
      * nos quais min e max indicam, respectivamente, as coordenadas mínimas e máximas de X e Y.
      */
     ArrayList<int[]> regions;
