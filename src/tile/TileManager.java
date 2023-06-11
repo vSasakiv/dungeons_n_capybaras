@@ -2,12 +2,12 @@ package tile;
 
 import java.awt.*;
 import game_entity.GameEntity;
+import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import gameloop.Constants;
 
@@ -16,8 +16,8 @@ import gameloop.Constants;
  * Classe que decide qual mapa seguir, carrega as imagens dos tiles e os desenha na janela do jogo 
  */
 public class TileManager {
-    public ChangeTileStrategy changeStrategy;
-    ArrayList<Layer> layers = new ArrayList<>();
+    public ChangeTileStrategy changeStrategy; // Estratégia para mudanças de mapa
+    ArrayList<Layer> layers = new ArrayList<>(); // Conjunto de camadas (layers) que formam o mapa
     int WorldRolls;// Número de linhas no mundo
     int WorldColumns; //Número de colunas no mundo
     GameEntity player;
@@ -29,12 +29,12 @@ public class TileManager {
      */
     public TileManager (String path, GameEntity player, ChangeTileStrategy strategy) {
         addTileMap(path);
-        setLayerCollision("Collision");
         this.player = player;
         this.changeStrategy = strategy;
     }
 
     /** Este método é responsável por implementar a lógica para a renderização dos tiles
+     * Implementa também a lógica da câmera do jogo (centrada no player)
      * @param g2d Ferramenta que desenha as imagens na tela
      */
     public void draw (Graphics2D g2d) {
@@ -50,10 +50,10 @@ public class TileManager {
                     worldX - Constants.TILE_SIZE < this.player.getWorldPosX() + (float) Constants.WIDTH /2 &&
                     worldY + Constants.TILE_SIZE > this.player.getWorldPosY() - (float) Constants.HEIGHT /2 &&
                     worldY - Constants.TILE_SIZE < this.player.getWorldPosY() + (float) Constants.HEIGHT /2) {
-                    for (Layer layer : layers) {
-                        if (layer.getTileMap()[worldRow][worldColumn] != null && !Objects.equals(layer.getName(), "Collision"))
+                    for (int i = 0; i < layers.size() - 1; i++) {
+                        if (layers.get(i).getTileMap()[worldRow][worldColumn] != null)
                             g2d.drawImage(
-                                    layer.getTileMap()[worldRow][worldColumn].getImage(),
+                                    layers.get(i).getTileMap()[worldRow][worldColumn],
                                     screenX, screenY,
                                     Constants.TILE_SIZE,
                                     Constants.TILE_SIZE,
@@ -81,8 +81,8 @@ public class TileManager {
         Element element;
 
         try {
-            MapDocument map = new MapDocument(path);
-            list = map.getListByTag("tileset");
+            Document map = MapDocument.loadDocument(path);
+            list = MapDocument.getListByTag(map,"tileset");
             for (int temp = 0; temp < list.getLength(); temp++) {
                 node = list.item(temp);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -99,7 +99,7 @@ public class TileManager {
                     );
                 }
             }
-            list = map.getListByTag("layer");
+            list = MapDocument.getListByTag(map,"layer");
             for (int i = 0; i < list.getLength(); i++) {
                 node = list.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -113,9 +113,8 @@ public class TileManager {
                             data.get(i),
                             width,
                             height,
-                            tilesetDocuments.get(i).getFirstGrid(),
-                            sprites.get(i),
-                            element.getAttribute("name"))
+                            tilesetDocuments.get(i).getFirstgid(),
+                            sprites.get(i))
                     );
                 }
             }
@@ -126,14 +125,9 @@ public class TileManager {
         }
     }
 
-    public void setLayerCollision (String layerName) {
-        for (Layer layer: layers) {
-            if (Objects.equals(layer.getName(), layerName)) {
-                layer.setCollision(true);
-            }
-        }
-    }
-
+    /**
+     * @return Layer que tem tiles sólidos (deve possuir colisão)
+     */
     public Layer getCollisionLayer () {
         return this.layers.get(this.layers.size() - 1);
     }

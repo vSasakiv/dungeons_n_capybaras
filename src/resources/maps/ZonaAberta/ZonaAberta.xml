@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="4">
- <tileset firstgid="1" source="src/resources/maps/mapaTeste/TilesetFloor.xml"/>
- <tileset firstgid="573" source="src/resources/maps/mapaTeste/TilesetWater.xml"/>
- <tileset firstgid="1049" source="src/resources/maps/mapaTeste/TilesetNature.xml"/>
- <tileset firstgid="1385" source="src/resources/maps/mapaTeste/collision.xml"/>
+ <tileset firstgid="1" source="src/resources/maps/ZonaAberta/TilesetFloor.xml"/>
+ <tileset firstgid="573" source="src/resources/maps/ZonaAberta/TilesetWater.xml"/>
+ <tileset firstgid="1049" source="src/resources/maps/ZonaAberta/TilesetNature.xml"/>
+ <tileset firstgid="1385" source="src/resources/maps/ZonaAberta/collision.xml"/>
  <layer id="1" name="TilesetFloor" width="50" height="50" locked="1">
   <data encoding="csv">
 178,178,178,178,178,178,182,201,266,269,269,269,266,269,266,266,269,269,269,269,269,246,246,246,265,269,268,268,268,265,265,265,265,265,265,266,266,266,267,265,266,267,265,265,265,265,265,265,265,265,

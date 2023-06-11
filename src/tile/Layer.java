@@ -6,35 +6,46 @@ import gameloop.Constants;
 import java.awt.image.BufferedImage;
 
 public class Layer {
-    private Tile[][] tileMap;
-    private boolean collision;
-    private String name;
+    //Matriz com as imagens carregadas de uma layer que forma um mapa
+    private final BufferedImage[][] tileMap;
 
-    public Layer(String[] data, int width, int height, int fistGrid, Sprite sprite, String name) {
+    /**
+     * Layer que forma uma mapa
+     * @param data Array com números dos sprites em suas posições
+     * @param width Comprimento, em quantidade de tiles, da layer
+     * @param height Largura, em quantidade de tiles, da layer
+     * @param fistGrid Número de identificação, no "data", do primeiro sprite
+     * @param sprite Spritesheet contendo imagens de todos os tiles
+     */
+    public Layer(String[] data, int width, int height, int fistGrid, Sprite sprite) {
         this.tileMap = loadLayer(data, width, height, fistGrid, sprite);
-        this.collision = false;
-        this.name = name;
     }
 
-    private Tile[][] loadLayer (String[] data, int width, int height, int fistGrid, Sprite sprite) {
-        Tile[][] layer = new Tile[height][width];
+    /**
+     * Método responsável por carregar a matriz de imagens
+     * @param data Array com números dos sprites em suas posições
+     * @param width Comprimento, em quantidade de tiles, da layer
+     * @param height Largura, em quantidade de tiles, da layer
+     * @param fistGrid Número de identificação, no "data", do primeiro sprite
+     * @param sprite Spritesheet contendo imagens de todos os tiles
+     * @return Matriz de imagens da layer
+     */
+    private BufferedImage[][] loadLayer (String[] data, int width, int height, int fistGrid, Sprite sprite) {
+        BufferedImage[][] layer = new BufferedImage[height][width];
         BufferedImage[] tiles = loadTiles(sprite);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (Integer.parseInt(data[i * width + j]) != 0)
-                    layer[i][j] = new Tile(tiles[Integer.parseInt(data[i * width + j]) - fistGrid]);
+                    layer[i][j] = tiles[Integer.parseInt(data[i * width + j]) - fistGrid]; //Tile(tiles[Integer.parseInt(data[i * width + j]) - fistGrid]);
             }
         }
         return layer;
     }
 
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
-
-
     /**
-     * Carrega vetor de tiles para dado spritesheet
+     * Carrega um vetor com todos os sprites de um Spritesheet
+     * @param sprite Spritesheet
+     * @return vetor com cada sprite
      */
     private BufferedImage[] loadTiles (Sprite sprite) {
         int height = sprite.getSpriteHeight();
@@ -50,7 +61,11 @@ public class Layer {
         return tiles;
     }
 
-    public void collisiondetector (GameEntity entity) {
+    /**
+     * Para os tiles em volta da entidade, verifica se há colisão
+     * @param entity Entidade
+     */
+    public void collisionDetector(GameEntity entity) {
         int tileX = (int) (entity.getWorldPosX() / Constants.TILE_SIZE);
         int tileY = (int) (entity.getWorldPosY() / Constants.TILE_SIZE);
         for (int j = tileX - 1; j <= tileX + 1; j++){
@@ -60,9 +75,16 @@ public class Layer {
         }
     }
 
+    /**
+     * Aplica lógica de colisão para corrigir a posição da entidade caso ela colida com um tile sólido
+     * @param tileX Posição X do tile
+     * @param tileY Posição Y do tile
+     * @param entity Entidade
+     */
     private void checkCollision (int tileX, int tileY, GameEntity entity) {
         int difX = (int) Math.abs(tileY * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosX());
         int difY = (int) Math.abs(tileX * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosY());
+
         if (tileMap[tileX][tileY] != null) {
             if (difX <= Constants.TILE_SIZE &&  difY <= Constants.TILE_SIZE) {
                 if (difX < difY) {
@@ -82,12 +104,7 @@ public class Layer {
         }
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public Tile[][] getTileMap() {
+    public BufferedImage[][] getTileMap() {
         return tileMap;
     }
 

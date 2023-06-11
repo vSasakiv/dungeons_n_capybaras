@@ -33,7 +33,7 @@ public class MapState implements State{
     public void tick() {
         mapPlayer.tick(keyHandler);
         Layer layer = maps.get(mapNum).getCollisionLayer();
-        layer.collisiondetector(mapPlayer);
+        layer.collisionDetector(mapPlayer);
         mapNum = this.maps.get(mapNum).changeStrategy.changeMap(mapPlayer, mapNum);
         this.mapPlayer.setVelocity(currentState.estadoAtual);
     }
