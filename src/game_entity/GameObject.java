@@ -1,4 +1,4 @@
-package game_entity;
+package src.game_entity;
 
 /**
  * Classes utilizada para representar todos os objetos do jogo, possuindo apenas
@@ -14,7 +14,7 @@ public class GameObject {
      */
     public GameObject(float worldPosX, float worldPosY){
         position = new Vector(worldPosX, worldPosY);
-        screenPosition = new Vector (worldPosX ,worldPosY);
+        screenPosition = new Vector(worldPosX ,worldPosY);
     }
 
     /**

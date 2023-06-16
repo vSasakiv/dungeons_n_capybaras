@@ -1,10 +1,10 @@
-package game_entity;
+package src.game_entity;
 
 /**
  * Classes que representa todas as entidades do jogo, isto é, todos os objetos com
  * um comportamento especial com o Player ou se movimentam.
  */
-public abstract class GameEntity extends GameObject{
+public abstract class GameEntity extends GameObject {
     protected int velocity;
     private int SpriteSizeX;
     private int SpriteSizeY;

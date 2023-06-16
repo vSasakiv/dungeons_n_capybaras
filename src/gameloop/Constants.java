@@ -1,6 +1,6 @@
-package gameloop;
+package src.gameloop;
 
-import game_entity.Vector;
+import src.game_entity.Vector;
 
 /**
  * Classe que contém constantes utilizadas por todo o projeto

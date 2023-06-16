@@ -1,4 +1,4 @@
-package game_entity;
+package src.game_entity;
 
 /**
  * Classe contador utilizada para realizar medições de tempo, como

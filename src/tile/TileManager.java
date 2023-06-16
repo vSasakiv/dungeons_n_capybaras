@@ -1,7 +1,7 @@
-package tile;
+package src.tile;
 
 import java.awt.*;
-import game_entity.GameEntity;
+import src.game_entity.GameEntity;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 
-import gameloop.Constants;
+import src.gameloop.Constants;
 
 
 /**

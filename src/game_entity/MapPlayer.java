@@ -1,14 +1,14 @@
-package game_entity;
+package src.game_entity;
 
-import gameloop.Constants;
-import gameloop.KeyHandler;
-import tile.AnimationSprite;
+import src.gameloop.Constants;
+import src.gameloop.KeyHandler;
+import src.tile.AnimationSprite;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MapPlayer extends GameEntity{
+public class MapPlayer extends GameEntity {
     //Posições fixas do player: centrado na tela
     public final int SCREEN_X = Constants.WIDTH / 2;
     public final int SCREEN_Y = Constants.HEIGHT / 2;
@@ -50,6 +50,7 @@ public class MapPlayer extends GameEntity{
 
     /**
      * Atualiza a direção do movimento do player, com base no input do teclado
+     *
      * @param keyHandler Inputs do teclado
      * @return um vetor correspondente à nova direção
      */
@@ -183,30 +184,33 @@ public class MapPlayer extends GameEntity{
         downRight = new ArrayList<>();
         standBack = new ArrayList<>();
         standFront =  new ArrayList<>();
+        /*String CurrentDirectoryPath = System.getProperty("user.dir");
+        File CurrentDirectory = new File(CurrentDirectoryPath);
+        String AbsolutePath = CurrentDirectory.getAbsolutePath();
+        AbsolutePath = AbsolutePath + "/src/resources/player/Character_Up.png";*/
+        this.up.add(new AnimationSprite("/src/resources/player/Character_Up.png", width, height, 0, 0, 4));
+        this.up.add(new AnimationSprite("/src/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
 
-        this.up.add(new AnimationSprite("/resources/player/Character_Up.png", width, height, 0, 0, 4));
-        this.up.add(new AnimationSprite("/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
+        this.upLeft.add(new AnimationSprite("/src/resources/player/Character_UpLeft.png", width, height, 0, 0, 4));
+        this.upLeft.add(new AnimationSprite("/src/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
 
-        this.upLeft.add(new AnimationSprite("/resources/player/Character_UpLeft.png", width, height, 0, 0, 4));
-        this.upLeft.add(new AnimationSprite("/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
+        this.upRight.add(new AnimationSprite("/src/resources/player/Character_UpRight.png", width, height, 0, 0, 4));
+        this.upRight.add(new AnimationSprite("/src/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
 
-        this.upRight.add(new AnimationSprite("/resources/player/Character_UpRight.png", width, height, 0, 0, 4));
-        this.upRight.add(new AnimationSprite("/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
+        this.down.add(new AnimationSprite("/src/resources/player/Character_Down.png", width, height, 0, 0, 4));
+        this.down.add(new AnimationSprite("/src/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
 
-        this.down.add(new AnimationSprite("/resources/player/Character_Down.png", width, height, 0, 0, 4));
-        this.down.add(new AnimationSprite("/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
+        this.downLeft.add(new AnimationSprite("/src/resources/player/Character_DownLeft.png", width, height, 0, 0, 4));
+        this.downLeft.add(new AnimationSprite("/src/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
 
-        this.downLeft.add(new AnimationSprite("/resources/player/Character_DownLeft.png", width, height, 0, 0, 4));
-        this.downLeft.add(new AnimationSprite("/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
+        this.downRight.add(new AnimationSprite("/src/resources/player/Character_DownRight.png", width, height, 0, 0, 4));
+        this.downRight.add(new AnimationSprite("/src/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
 
-        this.downRight.add(new AnimationSprite("/resources/player/Character_DownRight.png", width, height, 0, 0, 4));
-        this.downRight.add(new AnimationSprite("/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
+        this.right.add(new AnimationSprite("/src/resources/player/Character_Right.png", width, height, 0, 0, 4));
+        this.right.add(new AnimationSprite("/src/resources/player/ninjaRight.png", width/2, height/2, 0, 0, 4));
 
-        this.right.add(new AnimationSprite("/resources/player/Character_Right.png", width, height, 0, 0, 4));
-        this.right.add(new AnimationSprite("/resources/player/ninjaRight.png", width/2, height/2, 0, 0, 4));
-
-        this.left.add(new AnimationSprite("/resources/player/Character_Left.png", width, height, 0, 0, 4));
-        this.left.add(new AnimationSprite("/resources/player/ninjaLeft.png", width/2, height/2, 0, 0, 4));
+        this.left.add(new AnimationSprite("/src/resources/player/Character_Left.png", width, height, 0, 0, 4));
+        this.left.add(new AnimationSprite("/src/resources/player/ninjaLeft.png", width/2, height/2, 0, 0, 4));
 
         standBack.add(up.get(0).getSpriteArray()[0]);
         standBack.add(up.get(1).getSpriteArray()[0]);

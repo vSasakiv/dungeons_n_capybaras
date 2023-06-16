@@ -1,9 +1,9 @@
-package game_entity.weapons;
+package src.game_entity.weapons;
 
-import game_entity.GameEntity;
-import game_entity.Vector;
-import game_entity.weapons.projectiles.Projectile;
-import game_entity.weapons.projectiles.ProjectileFactory;
+import src.game_entity.GameEntity;
+import src.game_entity.Vector;
+import src.game_entity.weapons.projectiles.Projectile;
+import src.game_entity.weapons.projectiles.ProjectileFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -99,7 +99,7 @@ public class MultiShotWeapon extends Weapon{
      */
     private void getImage () {
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Bow.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/src/resources/weapons/bow/Bow.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

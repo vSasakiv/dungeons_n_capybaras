@@ -1,4 +1,4 @@
-package game_entity;
+package src.game_entity;
 
 public enum MapPlayerStateEnum {
     DEFAULT(3), NINJA(7);

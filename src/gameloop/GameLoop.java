@@ -1,6 +1,6 @@
-package gameloop;
+package src.gameloop;
 
-import gameloop.game_states.GameState;
+import src.gameloop.game_states.GameState;
 
 public class GameLoop implements Runnable {
 

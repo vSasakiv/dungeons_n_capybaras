@@ -1,6 +1,6 @@
-package game_entity.weapons.projectiles;
+package src.game_entity.weapons.projectiles;
 
-import game_entity.Vector;
+import src.game_entity.Vector;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class ClusterBulletFactory implements ProjectileFactory{
      */
     private void getImage () {
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Arrow.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/src/resources/weapons/bow/Arrow.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,10 +1,10 @@
-package game_entity.weapons.projectiles;
+package src.game_entity.weapons.projectiles;
 
-import game_entity.GameEntity;
-import game_entity.GameObject;
-import game_entity.Hitbox;
-import game_entity.Vector;
-import gameloop.Constants;
+import src.game_entity.GameEntity;
+import src.game_entity.GameObject;
+import src.game_entity.Hitbox;
+import src.game_entity.Vector;
+import src.gameloop.Constants;
 
 import java.awt.*;
 

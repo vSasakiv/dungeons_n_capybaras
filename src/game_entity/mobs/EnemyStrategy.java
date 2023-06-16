@@ -1,6 +1,6 @@
-package game_entity.mobs;
+package src.game_entity.mobs;
 
-import game_entity.Vector;
+import src.game_entity.Vector;
 
 /**
  * Interface que contém todos os métodos necessários para termos uma

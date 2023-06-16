@@ -1,7 +1,7 @@
-package game_entity.mobs;
+package src.game_entity.mobs;
 
-import game_entity.*;
-import game_entity.weapons.AttackResults;
+import src.game_entity.*;
+import src.game_entity.weapons.AttackResults;
 
 import java.util.ArrayList;
 

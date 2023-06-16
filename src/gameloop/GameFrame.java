@@ -1,7 +1,7 @@
-package gameloop;
+package src.gameloop;
 
-import gameloop.game_states.GameState;
-import gameloop.game_states.State;
+import src.gameloop.game_states.GameState;
+import src.gameloop.game_states.State;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;

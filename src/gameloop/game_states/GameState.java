@@ -1,8 +1,8 @@
-package gameloop.game_states;
+package src.gameloop.game_states;
 
-import gameloop.Constants;
-import gameloop.KeyHandler;
-import gameloop.MouseHandler;
+import src.gameloop.Constants;
+import src.gameloop.KeyHandler;
+import src.gameloop.MouseHandler;
 import java.awt.event.KeyListener;
 
 /**

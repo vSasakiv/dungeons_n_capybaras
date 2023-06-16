@@ -1,4 +1,4 @@
-package game_entity.mobs;
+package src.game_entity.mobs;
 
 /**
  * Enum para representar os estados de um inimigo

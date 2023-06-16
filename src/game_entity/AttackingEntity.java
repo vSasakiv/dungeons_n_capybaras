@@ -1,15 +1,15 @@
-package game_entity;
+package src.game_entity;
 
-import game_entity.weapons.MeleeWeaponAttack;
-import game_entity.weapons.projectiles.Projectile;
-import game_entity.weapons.Weapon;
+import src.game_entity.weapons.MeleeWeaponAttack;
+import src.game_entity.weapons.projectiles.Projectile;
+import src.game_entity.weapons.Weapon;
 
 import java.util.ArrayList;
 
 /**
  * Classe para representar uma entidade que realiza ataques, i.e. mobs e o player
  */
-public class AttackingEntity extends GameEntity{
+public class AttackingEntity extends GameEntity {
 
     private Weapon weapon; // Arma utilizada pela entidade
     private Attributes attributes; // Atributos da entidade
@@ -49,7 +49,7 @@ public class AttackingEntity extends GameEntity{
 
         // devemos apagar todos os ataques que já foram feitos
         this.meleeAttacks.removeIf(MeleeWeaponAttack::isFinished);
-    };
+    }
 
     /**
      * @return ArrayList com todos os projéteis gerados por esta entidade

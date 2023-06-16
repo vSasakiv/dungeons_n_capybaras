@@ -1,6 +1,6 @@
-package game_entity;
+package src.game_entity;
 
-import gameloop.Constants;
+import src.gameloop.Constants;
 
 import java.awt.*;
 
@@ -142,8 +142,8 @@ public class Hitbox {
         g2d.drawRect(
                 (int) (screenX),
                 (int) (screenY),
-                (int) Constants.TILE_SIZE,
-                (int) Constants.TILE_SIZE
+                Constants.TILE_SIZE,
+                Constants.TILE_SIZE
         );
     }
 

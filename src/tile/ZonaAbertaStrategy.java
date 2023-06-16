@@ -1,7 +1,7 @@
-package tile;
+package src.tile;
 
-import game_entity.GameEntity;
-import gameloop.Constants;
+import src.game_entity.GameEntity;
+import src.gameloop.Constants;
 
 import java.util.ArrayList;
 

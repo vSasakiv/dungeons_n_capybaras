@@ -1,5 +1,5 @@
-package game_entity.weapons;
-import game_entity.weapons.projectiles.Projectile;
+package src.game_entity.weapons;
+import src.game_entity.weapons.projectiles.Projectile;
 
 import java.util.ArrayList;
 

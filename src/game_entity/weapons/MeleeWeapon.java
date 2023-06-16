@@ -1,9 +1,9 @@
-package game_entity.weapons;
+package src.game_entity.weapons;
 
-import game_entity.Counter;
-import game_entity.GameEntity;
-import game_entity.Hitbox;
-import game_entity.Vector;
+import src.game_entity.Counter;
+import src.game_entity.GameEntity;
+import src.game_entity.Hitbox;
+import src.game_entity.Vector;
 import java.awt.*;
 import java.util.ArrayList;
 

@@ -1,8 +1,6 @@
-package game_entity.weapons;
+package src.game_entity.weapons;
 
-import game_entity.Counter;
-import game_entity.GameEntity;
-import game_entity.Vector;
+import src.game_entity.*;
 import java.awt.*;
 
 /**

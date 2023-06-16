@@ -1,11 +1,11 @@
-package gameloop.game_states;
+package src.gameloop.game_states;
 
-import game_entity.MapPlayer;
-import game_entity.MapPlayerStateEnum;
-import game_entity.Vector;
-import gameloop.Constants;
-import gameloop.KeyHandler;
-import tile.*;
+import src.game_entity.MapPlayer;
+import src.game_entity.MapPlayerStateEnum;
+import src.game_entity.Vector;
+import src.gameloop.Constants;
+import src.gameloop.KeyHandler;
+import src.tile.*;
 
 import java.awt.*;
 import java.util.ArrayList;

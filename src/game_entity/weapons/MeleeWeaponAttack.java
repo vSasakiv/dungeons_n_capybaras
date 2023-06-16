@@ -1,8 +1,8 @@
-package game_entity.weapons;
+package src.game_entity.weapons;
 
-import game_entity.Counter;
-import game_entity.Hitbox;
-import game_entity.Vector;
+import src.game_entity.Counter;
+import src.game_entity.Hitbox;
+import src.game_entity.Vector;
 
 /**
  * Classe para representar um ataque corpo a corpo

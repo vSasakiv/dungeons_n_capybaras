@@ -1,6 +1,6 @@
-package game_entity.weapons.projectiles;
+package src.game_entity.weapons.projectiles;
 
-import game_entity.Vector;
+import src.game_entity.Vector;
 
 /**
  * Interface para implementação de uma fábrica de projéteis

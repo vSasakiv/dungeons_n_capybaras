@@ -1,8 +1,8 @@
-package tile;
+package src.tile;
 
-import game_entity.GameEntity;
-import game_entity.Vector;
-import gameloop.Constants;
+import src.game_entity.GameEntity;
+import src.game_entity.Vector;
+import src.gameloop.Constants;
 import java.awt.image.BufferedImage;
 
 public class Layer {

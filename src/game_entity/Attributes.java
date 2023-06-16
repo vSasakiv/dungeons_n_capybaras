@@ -1,4 +1,4 @@
-package game_entity;
+package src.game_entity;
 
 import java.awt.*;
 

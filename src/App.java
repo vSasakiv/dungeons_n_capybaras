@@ -1,13 +1,12 @@
 package src;
 
-import gameloop.Constants;
-import gameloop.GameFrame;
-import gameloop.GameLoop;
-
+import src.gameloop.Constants;
+import src.gameloop.GameFrame;
+import src.gameloop.GameLoop;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 
-class App {
+public class App {
 
   public static void runGame () {
     EventQueue.invokeLater(() -> {

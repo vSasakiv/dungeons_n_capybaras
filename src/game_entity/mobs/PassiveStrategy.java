@@ -1,7 +1,7 @@
-package game_entity.mobs;
+package src.game_entity.mobs;
 
-import game_entity.Counter;
-import game_entity.Vector;
+import src.game_entity.Counter;
+import src.game_entity.Vector;
 
 /**
  * Classe que representa uma estratégia de inimigo passiva, isto é, de um inimigo que tenta

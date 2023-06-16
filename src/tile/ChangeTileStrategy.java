@@ -1,8 +1,8 @@
-package tile;
+package src.tile;
 
 
-import game_entity.GameEntity;
-import game_entity.Vector;
+import src.game_entity.GameEntity;
+import src.game_entity.Vector;
 import java.util.ArrayList;
 
 public abstract class ChangeTileStrategy {

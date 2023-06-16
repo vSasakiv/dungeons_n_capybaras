@@ -1,7 +1,7 @@
-package game_entity.weapons.projectiles;
+package src.game_entity.weapons.projectiles;
 
-import game_entity.GameEntity;
-import game_entity.Vector;
+import src.game_entity.GameEntity;
+import src.game_entity.Vector;
 
 import java.awt.*;
 import java.util.ArrayList;

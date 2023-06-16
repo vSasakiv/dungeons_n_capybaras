@@ -1,4 +1,4 @@
-package gameloop.game_states;
+package src.gameloop.game_states;
 
 import java.awt.*;
 

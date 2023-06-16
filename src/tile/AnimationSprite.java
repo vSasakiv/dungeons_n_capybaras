@@ -1,8 +1,8 @@
-package tile;
+package src.tile;
 
 import java.awt.image.BufferedImage;
 
-public class AnimationSprite extends Sprite{
+public class AnimationSprite extends Sprite {
     //Array com as imagens da animação
     BufferedImage[] spriteArray;
 
