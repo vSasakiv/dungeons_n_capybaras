@@ -1,3 +1,5 @@
+package src;
+
 import gameloop.Constants;
 import gameloop.GameFrame;
 import gameloop.GameLoop;
