@@ -16,14 +16,14 @@ public class TileDungeonManager implements TileManager {
     public TileDungeonManager (ArrayList<int[][]> dungeonNumbers, String type, GameEntity player, ChangeTileStrategy changeStrategy) {
         LayerInfo info = LayerInfoProvider.getLayerInfo(type);
         assert info != null;
-        int WorldRolls = dungeonNumbers.get(0).length;
+        int WorldRows = dungeonNumbers.get(0).length;
         int WorldColumns = dungeonNumbers.get(0)[0].length;
-        layers = loadLayers(dungeonNumbers, info, WorldRolls, WorldColumns);
-        drawMethod = new DrawTileManager(layers, WorldRolls, WorldColumns, player);
+        layers = loadLayers(dungeonNumbers, info, WorldRows, WorldColumns);
+        drawMethod = new DrawTileManager(layers, WorldRows, WorldColumns, player);
         this.changeStrategy = changeStrategy;
     }
 
-    private ArrayList<Layer> loadLayers (ArrayList<int[][]> dungeonNumbers,  LayerInfo info, int rolls, int columns) {
+    private ArrayList<Layer> loadLayers (ArrayList<int[][]> dungeonNumbers,  LayerInfo info, int rows, int columns) {
         ArrayList<Sprite> sprites = new ArrayList<>();
         ArrayList<Layer> layers = new ArrayList<>();
         for (int i = 0; i < info.imagePath.length; i++) {
@@ -35,8 +35,8 @@ public class TileDungeonManager implements TileManager {
             );
             layers.add(new Layer(
                     dungeonNumbers.get(i),
+                    rows,
                     columns,
-                    rolls,
                     info.fistGid[i],
                     sprites.get(i))
             );
