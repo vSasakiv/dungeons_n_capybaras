@@ -19,7 +19,7 @@ import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
-import tile.TileManager;
+import tile.MapTileManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  */
 public class  DungeonState implements State{
     public final DungeonPlayer dungeonPlayer;
-    public final TileManager tileManager;
+    public final MapTileManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
@@ -58,7 +58,7 @@ public class  DungeonState implements State{
 
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
-        tileManager = new TileManager("/src/resources/maps/ZonaAberta/ZonaAberta.xml", dungeonPlayer, new ZonaAbertaStrategy());
+        tileManager = new MapTileManager("/src/resources/maps/ZonaAberta/ZonaAberta.xml", dungeonPlayer, new ZonaAbertaStrategy());
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));

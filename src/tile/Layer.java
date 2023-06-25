@@ -20,6 +20,9 @@ public class Layer {
     public Layer(String[] data, int width, int height, int fistGrid, Sprite sprite) {
         this.tileMap = loadLayer(data, width, height, fistGrid, sprite);
     }
+    public Layer(int[][] data, int width, int height, int fistGid, Sprite sprite) {
+        this.tileMap = loadLayer(data, width, height, fistGid, sprite);
+    }
 
     /**
      * Método responsável por carregar a matriz de imagens
@@ -36,7 +39,19 @@ public class Layer {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (Integer.parseInt(data[i * width + j]) != 0)
-                    layer[i][j] = tiles[Integer.parseInt(data[i * width + j]) - fistGrid]; //Tile(tiles[Integer.parseInt(data[i * width + j]) - fistGrid]);
+                    layer[i][j] = tiles[Integer.parseInt(data[i * width + j]) - fistGrid];
+            }
+        }
+        return layer;
+    }
+
+    private BufferedImage[][] loadLayer (int[][] data, int width, int height, int fistGrid, Sprite sprite) {
+        BufferedImage[][] layer = new BufferedImage[height][width];
+        BufferedImage[] tiles = loadTiles(sprite);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (data[i][j] != 0)
+                    layer[i][j] = tiles[data[i][j] - fistGrid];
             }
         }
         return layer;
@@ -52,6 +67,7 @@ public class Layer {
         int width = sprite.getSpriteWidth();
 
         BufferedImage[] tiles = new BufferedImage[height * width];
+
         //O tile número "x" estará na posição x do vetor
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
