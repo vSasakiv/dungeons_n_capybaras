@@ -2,21 +2,22 @@ package gameloop;
 
 import game_entity.GameEntity;
 import game_entity.static_entities.CollidableObject;
+import tile.MapTileManager;
 import tile.TileManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Map {
-    TileManager tilemap;
+    MapTileManager tilemap;
     ArrayList<CollidableObject> objects;
 
-    public Map(TileManager tilemap, ArrayList<CollidableObject> objects) {
+    public Map(MapTileManager tilemap, ArrayList<CollidableObject> objects) {
         this.tilemap = tilemap;
         this.objects = objects;
     }
 
-    public TileManager getTilemap() {
+    public MapTileManager getTilemap() {
         return tilemap;
     }
 

@@ -26,7 +26,7 @@ public class MapState implements State{
     public MapState(KeyHandler keyHandler) {
         maps = new ArrayList<>();
         this.mapPlayer = new MapPlayer(200, 200, 3);
-        TileManager estacionamentoMap = new TileManager(
+        MapTileManager estacionamentoMap = new MapTileManager(
                 "/src/resources/maps/estacionamento/estacionamento.xml",
                 mapPlayer,
                 new EstacionamentoStrategy());
@@ -35,7 +35,7 @@ public class MapState implements State{
         estacionamentoObjects.add(randomDoor);
         maps.add(new Map(estacionamentoMap, estacionamentoObjects));
 
-        TileManager bienioSupMap = new TileManager(
+        MapTileManager bienioSupMap = new MapTileManager(
                 "/src/resources/maps/BienioSup/BienioSup.xml",
                 mapPlayer,
                 new BienioSupStrategy());
