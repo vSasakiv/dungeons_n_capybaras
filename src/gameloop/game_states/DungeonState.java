@@ -1,5 +1,6 @@
 package gameloop.game_states;
 
+import dungeon_gen.DungeonGenerator;
 import game_entity.Attributes;
 import game_entity.Hitbox;
 import game_entity.DungeonPlayer;
@@ -17,9 +18,11 @@ import game_entity.weapons.projectiles.ProjectileFactory;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
+import tile.BienioSupStrategy;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
 import tile.MapTileManager;
+import tile.dungeon.TileDungeonManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,10 +32,11 @@ import java.util.ArrayList;
  */
 public class  DungeonState implements State{
     public final DungeonPlayer dungeonPlayer;
-    public final MapTileManager tileManager;
+    public final TileDungeonManager tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
+    private final DungeonGenerator dungeonGenerator;
 
     private int mapNum;
 
@@ -58,7 +62,13 @@ public class  DungeonState implements State{
 
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
-        tileManager = new MapTileManager("/src/resources/maps/ZonaAberta/ZonaAberta.xml", dungeonPlayer, new ZonaAbertaStrategy());
+        dungeonGenerator = new DungeonGenerator();
+        ArrayList<int[][]> dungeon = dungeonGenerator.generate("bienio", 105);
+        tileManager = new TileDungeonManager(
+                dungeon,
+                "bienio",
+                this.dungeonPlayer,
+                new BienioSupStrategy());
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));

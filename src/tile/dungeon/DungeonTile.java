@@ -14,7 +14,6 @@ public class DungeonTile {
     private void getInfo (String path) {
         MapTileManager tile = new MapTileManager(path);
         mapTileNumbers = tile.getMapTileNumbers();
-
     }
 
     public ArrayList<int[][]> getMapTileNumbers() {

@@ -1,7 +1,11 @@
 package tile.dungeon;
 
+import java.util.ArrayList;
+
 public interface DungeonAbstractFactory{
-    DungeonTile createRoom();
+    ArrayList<DungeonTile> createRoom();
     DungeonTile createHorizontalCorridor();
     DungeonTile createVerticalCorridor();
+
+    int maxLayers();
 }

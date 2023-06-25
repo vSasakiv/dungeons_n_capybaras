@@ -13,6 +13,4 @@ public final class BienioLayers extends LayerInfo {
         TileWidth = 16;
         TileHeight = 16;
     }
-
-
 }

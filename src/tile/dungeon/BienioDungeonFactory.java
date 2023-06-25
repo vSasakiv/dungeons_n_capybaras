@@ -1,9 +1,13 @@
 package tile.dungeon;
 
+import java.util.ArrayList;
+
 public class BienioDungeonFactory implements DungeonAbstractFactory {
     @Override
-    public DungeonTile createRoom() {
-        return new DungeonTile("/src/resources/dungeons/bienio/BienioRoom_1.xml");
+    public ArrayList<DungeonTile> createRoom() {
+        ArrayList<DungeonTile> rooms = new ArrayList<>();
+        rooms.add(new DungeonTile("/src/resources/dungeons/bienio/BienioRoom_1.xml"));
+        return rooms;
     }
 
     @Override
@@ -16,4 +20,8 @@ public class BienioDungeonFactory implements DungeonAbstractFactory {
         return new DungeonTile("/src/resources/dungeons/bienio/BienioCorredorVertical_2.xml");
     }
 
+    @Override
+    public int maxLayers() {
+        return 7;
+    }
 }
