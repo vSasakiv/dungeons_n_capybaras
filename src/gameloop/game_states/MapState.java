@@ -3,8 +3,11 @@ package gameloop.game_states;
 import game_entity.MapPlayer;
 import game_entity.MapPlayerStateEnum;
 import game_entity.Vector;
+import game_entity.static_entities.CollidableObject;
+import game_entity.static_entities.Door;
 import gameloop.Constants;
 import gameloop.KeyHandler;
+import gameloop.Map;
 import tile.*;
 
 import java.awt.*;
@@ -15,16 +18,32 @@ import java.util.ArrayList;
  */
 public class MapState implements State{
     private final MapPlayer mapPlayer;
-    public ArrayList<TileManager> maps;
+    public ArrayList<Map> maps;
     private final KeyHandler keyHandler;
     private int mapNum = 0;
-    private MapPlayerStateEnum currentState;
+    private final MapPlayerStateEnum currentState;
 
     public MapState(KeyHandler keyHandler) {
         maps = new ArrayList<>();
         this.mapPlayer = new MapPlayer(200, 200, 3);
-        maps.add(new TileManager("/src/resources/maps/estacionamento/estacionamento.xml", mapPlayer, new EstacionamentoStrategy()));
-        maps.add(new TileManager("/src/resources/maps/BienioSup/BienioSup.xml", mapPlayer, new BienioSupStrategy()));
+        TileManager estacionamentoMap = new TileManager(
+                "/src/resources/maps/estacionamento/estacionamento.xml",
+                mapPlayer,
+                new EstacionamentoStrategy());
+        ArrayList<CollidableObject> estacionamentoObjects = new ArrayList<>();
+        CollidableObject randomDoor = new Door(275, 566, 50 ,50);
+        estacionamentoObjects.add(randomDoor);
+        maps.add(new Map(estacionamentoMap, estacionamentoObjects));
+
+        TileManager bienioSupMap = new TileManager(
+                "/src/resources/maps/BienioSup/BienioSup.xml",
+                mapPlayer,
+                new BienioSupStrategy());
+        ArrayList<CollidableObject> bienioSupObjects = new ArrayList<>();
+        CollidableObject randomDoor2 = new Door(1361, 1243, 50 ,50);
+
+        bienioSupObjects.add(randomDoor2);
+        maps.add(new Map(bienioSupMap, bienioSupObjects));
         this.currentState = MapPlayerStateEnum.DEFAULT;
         this.keyHandler = keyHandler;
     }
@@ -32,9 +51,9 @@ public class MapState implements State{
     @Override
     public void tick() {
         mapPlayer.tick(keyHandler);
-        Layer layer = maps.get(mapNum).getCollisionLayer();
+        Layer layer = maps.get(mapNum).getTilemap().getCollisionLayer();
         layer.collisionDetector(mapPlayer);
-        mapNum = this.maps.get(mapNum).changeStrategy.changeMap(mapPlayer, mapNum);
+        mapNum = this.maps.get(mapNum).getTilemap().changeStrategy.changeMap(mapPlayer, mapNum);
         this.mapPlayer.setVelocity(currentState.estadoAtual);
     }
 
@@ -46,7 +65,7 @@ public class MapState implements State{
             // exemplo
             g2d.setColor(Color.BLACK);
 
-            this.maps.get(mapNum).draw(g2d);
+            this.maps.get(mapNum).draw(g2d, this.mapPlayer);
             this.mapPlayer.draw(g2d);
             g2d.setColor(Color.red);
             this.mapPlayer.getHitbox().draw(g2d, this.mapPlayer);
