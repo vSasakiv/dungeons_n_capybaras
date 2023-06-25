@@ -2,7 +2,9 @@ package game_entity;
 
 import gameloop.Constants;
 import gameloop.KeyHandler;
-import tile.AnimationSprite;
+import gameloop.render.Draw;
+import gameloop.render.DrawMapPlayer;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -15,14 +17,14 @@ public class MapPlayer extends GameEntity{
 
     private MapPlayerStateEnum currentState;
     //Sprites
-    private ArrayList<BufferedImage> standFront, standBack;
     private String spriteDirection; // Indicã a orientação do sprite
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
     private int spriteNumber = 0; // Indica qual sprite está sendo renderizado, no caso de um array
-    private ArrayList<AnimationSprite> up, upLeft, upRight, down, downLeft, downRight, right, left;
     private final Hitbox hitbox;
     public int playerSelected = 0;
+    protected ArrayList<PlayerSprite> playerSprites;
 
+    Draw drawMethod;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
@@ -39,6 +41,13 @@ public class MapPlayer extends GameEntity{
         this.currentState = MapPlayerStateEnum.DEFAULT;
         this.hitbox = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.loadSprites();
+        drawMethod = new DrawMapPlayer(this);
+    }
+
+    protected void loadSprites() {
+        playerSprites = new ArrayList<>();
+        playerSprites.add(PlayerSpriteFactory.create("default"));
+        playerSprites.add(PlayerSpriteFactory.create("ninja"));
     }
 
     public void tick(KeyHandler keyHandler) {
@@ -87,40 +96,7 @@ public class MapPlayer extends GameEntity{
      * @param g2d ferramenta para renderização
      */
     public void draw(Graphics2D g2d) {
-
-        BufferedImage playerImage = null;
-        switch (spriteDirection) {
-            case "STAND_FRONT" -> playerImage = standFront.get(playerSelected);
-            case "STAND_BACK" -> playerImage = standBack.get(playerSelected);
-            case "UP" -> playerImage = up.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "UP_LEFT" -> playerImage = upLeft.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "UP_RIGHT" -> playerImage = upRight.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "DOWN" -> playerImage = down.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "DOWN_LEFT" -> playerImage = downLeft.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "DOWN_RIGHT" -> playerImage = downRight.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "RIGHT" -> playerImage = right.get(playerSelected).getSpriteArray()[spriteNumber];
-            case "LEFT" -> playerImage = left.get(playerSelected).getSpriteArray()[spriteNumber];
-        }
-        //Desenha o player
-        if (playerSelected == 0) {
-            g2d.drawImage(
-                    playerImage,
-                    (int)this.getScreenX(),
-                    (int)this.getScreenY(),
-                    this.getSpriteSizeX(),
-                    this.getSpriteSizeY(),
-                    null
-            );
-        } else {
-            g2d.drawImage(
-                    playerImage,
-                    (int) this.getScreenX()+ Constants.TILE_SIZE/2,
-                    (int) this.getScreenY()+ Constants.TILE_SIZE/2,
-                    this.getSpriteSizeX()/2,
-                    this.getSpriteSizeY()/2,
-                    null
-            );
-        }
+        drawMethod.draw(g2d);
     }
 
     /**
@@ -170,50 +146,6 @@ public class MapPlayer extends GameEntity{
         }
     }
 
-    private void loadSprites () {
-        int width = 32;
-        int height = 32;
-        up = new ArrayList<>();
-        upLeft = new ArrayList<>();
-        upRight = new ArrayList<>();
-        right = new ArrayList<>();
-        left = new ArrayList<>();
-        down = new ArrayList<>();
-        downLeft = new ArrayList<>();
-        downRight = new ArrayList<>();
-        standBack = new ArrayList<>();
-        standFront =  new ArrayList<>();
-
-        this.up.add(new AnimationSprite("/resources/player/Character_Up.png", width, height, 0, 0, 4));
-        this.up.add(new AnimationSprite("/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
-
-        this.upLeft.add(new AnimationSprite("/resources/player/Character_UpLeft.png", width, height, 0, 0, 4));
-        this.upLeft.add(new AnimationSprite("/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
-
-        this.upRight.add(new AnimationSprite("/resources/player/Character_UpRight.png", width, height, 0, 0, 4));
-        this.upRight.add(new AnimationSprite("/resources/player/ninjaUp.png", width/2, height/2, 0, 0, 4));
-
-        this.down.add(new AnimationSprite("/resources/player/Character_Down.png", width, height, 0, 0, 4));
-        this.down.add(new AnimationSprite("/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
-
-        this.downLeft.add(new AnimationSprite("/resources/player/Character_DownLeft.png", width, height, 0, 0, 4));
-        this.downLeft.add(new AnimationSprite("/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
-
-        this.downRight.add(new AnimationSprite("/resources/player/Character_DownRight.png", width, height, 0, 0, 4));
-        this.downRight.add(new AnimationSprite("/resources/player/ninjaDown.png", width/2, height/2, 0, 0, 4));
-
-        this.right.add(new AnimationSprite("/resources/player/Character_Right.png", width, height, 0, 0, 4));
-        this.right.add(new AnimationSprite("/resources/player/ninjaRight.png", width/2, height/2, 0, 0, 4));
-
-        this.left.add(new AnimationSprite("/resources/player/Character_Left.png", width, height, 0, 0, 4));
-        this.left.add(new AnimationSprite("/resources/player/ninjaLeft.png", width/2, height/2, 0, 0, 4));
-
-        standBack.add(up.get(0).getSpriteArray()[0]);
-        standBack.add(up.get(1).getSpriteArray()[0]);
-        standFront.add(down.get(0).getSpriteArray()[0]);
-        standFront.add(down.get(1).getSpriteArray()[0]);
-    }
-
     private void updateState(KeyHandler keyHandler){
         if (keyHandler.isKeyN()) {
             keyHandler.setKeyN(false);
@@ -231,10 +163,31 @@ public class MapPlayer extends GameEntity{
         this.velocity = this.currentState.estadoAtual;
     }
 
+    public BufferedImage getPlayerImage(PlayerSprite playerSelected) {
+        BufferedImage playerImage = null;
+        switch (spriteDirection) {
+            case "STAND_FRONT" -> playerImage = playerSelected.standFront;
+            case "STAND_BACK" -> playerImage = playerSelected.standBack;
+            case "UP" -> playerImage = playerSelected.up.getSpriteArray()[spriteNumber];
+            case "UP_LEFT" -> playerImage = playerSelected.upLeft.getSpriteArray()[spriteNumber];
+            case "UP_RIGHT" -> playerImage = playerSelected.upRight.getSpriteArray()[spriteNumber];
+            case "DOWN" -> playerImage = playerSelected.down.getSpriteArray()[spriteNumber];
+            case "DOWN_LEFT" -> playerImage = playerSelected.downLeft.getSpriteArray()[spriteNumber];
+            case "DOWN_RIGHT" -> playerImage = playerSelected.downRight.getSpriteArray()[spriteNumber];
+            case "RIGHT" -> playerImage = playerSelected.right.getSpriteArray()[spriteNumber];
+            case "LEFT" -> playerImage = playerSelected.left.getSpriteArray()[spriteNumber];
+        }
+        return playerImage;
+    }
+
     /**
      * @return hitbox do player
      */
     public Hitbox getHitbox() {
         return hitbox;
+    }
+
+    public ArrayList<PlayerSprite> getPlayerSprites() {
+        return playerSprites;
     }
 }

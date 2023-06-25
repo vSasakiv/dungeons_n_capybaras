@@ -8,6 +8,8 @@ import game_entity.weapons.AttackResults;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
+import gameloop.render.Draw;
+import gameloop.render.DrawDungeonPlayer;
 import tile.AnimationSprite;
 
 public class DungeonPlayer extends AttackingEntity{
@@ -24,6 +26,7 @@ public class DungeonPlayer extends AttackingEntity{
 
     private final Counter invincibilityCounter;
     private final Hitbox hitbox;
+    Draw drawMethod;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
@@ -41,6 +44,7 @@ public class DungeonPlayer extends AttackingEntity{
         this.invincibilityCounter = new Counter(30, 1);
         this.setAttributes(new Attributes(10, 10, 200));
         this.loadSprites();
+        drawMethod = new DrawDungeonPlayer(this);
     }
 
     public void tick(KeyHandler keyHandler, MouseHandler mouseHandler) {
@@ -123,6 +127,13 @@ public class DungeonPlayer extends AttackingEntity{
      * @param g2d ferramenta para renderização
      */
     public void draw(Graphics2D g2d) {
+        //Desenha o player
+        drawMethod.draw(g2d);
+        //Desenha a armar do player
+        this.getWeapon().draw(g2d, this);
+    }
+
+    public BufferedImage getPlayerImage () {
         BufferedImage playerImage = null;
         switch (spriteDirection) {
             case "STAND_FRONT" -> playerImage = standFront;
@@ -136,17 +147,7 @@ public class DungeonPlayer extends AttackingEntity{
             case "RIGHT" -> playerImage = right.getSpriteArray()[spriteNumber];
             case "LEFT" -> playerImage = left.getSpriteArray()[spriteNumber];
         }
-        //Desenha o player
-        g2d.drawImage(
-                playerImage,
-                (int)this.getScreenX(),
-                (int)this.getScreenY(),
-                this.getSpriteSizeX(),
-                this.getSpriteSizeY(),
-                null
-        );
-        //Desenha a armar do player
-        this.getWeapon().draw(g2d, this);
+        return playerImage;
     }
 
     /**
