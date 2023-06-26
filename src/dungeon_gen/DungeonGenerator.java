@@ -69,7 +69,7 @@ public class DungeonGenerator {
         ArrayList<int[][]> horizontalRightEntrance = dungeonFactory.createHorizontalRightEntrance().getMapTileNumbers();
         ArrayList<int[][]> verticalUpEntrance = dungeonFactory.createVerticalUpEntrance().getMapTileNumbers();
         ArrayList<int[][]> horizontalLeftEntrance = dungeonFactory.createHorizontalLeftEntrance().getMapTileNumbers();
-        ArrayList<int[][]> verticalDownEntrance = dungeonFactory.createVerticalUpEntrance().getMapTileNumbers();
+        ArrayList<int[][]> verticalDownEntrance = dungeonFactory.createVerticalDownEntrance().getMapTileNumbers();
 
         if (centerX == 0 || centerX == 1)
             addRoom(verticalDownEntrance, center[centerX] + 1 + room.get(0).length / 2, center[centerY]);
