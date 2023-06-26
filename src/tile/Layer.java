@@ -100,7 +100,7 @@ public class Layer {
     private void checkCollision (int tileX, int tileY, GameEntity entity) {
         int difX = (int) Math.abs(tileY * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosX());
         int difY = (int) Math.abs(tileX * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosY());
-
+        System.out.println("TileX: " + tileX + "TileY: " + tileY);
         if (tileMap[tileX][tileY] != null) {
             if (difX <= Constants.TILE_SIZE &&  difY <= Constants.TILE_SIZE) {
                 if (difX < difY) {

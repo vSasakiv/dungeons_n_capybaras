@@ -37,8 +37,10 @@ public class DungeonGenerator {
 
         this.generateCorridor(dungeonFactory, center);
         this.addRoom(rooms.get(0).getMapTileNumbers(), center[0], center[0]); // initial room
+        addEntrance(dungeonFactory, rooms.get(0).getMapTileNumbers(), center, 0, 0);
         this.addRoom(rooms.get(0).getMapTileNumbers(), center[2], center[2]); // boss room
-        genRooms(rooms, center);
+        addEntrance(dungeonFactory, rooms.get(0).getMapTileNumbers(), center, 2, 2);
+        genRooms(dungeonFactory, rooms, center);
 
         return this.dungeon;
     }
@@ -63,17 +65,33 @@ public class DungeonGenerator {
         for (int i = 0; i < room.size(); i++)
             DungeonGenerator.putMatrix(this.dungeon.get(i), room.get(i), x, y);
     }
+    private void addEntrance(DungeonAbstractFactory dungeonFactory, ArrayList<int[][]> room, int[] center, int centerX, int centerY){
+        ArrayList<int[][]> horizontalRightEntrance = dungeonFactory.createHorizontalRightEntrance().getMapTileNumbers();
+        ArrayList<int[][]> verticalUpEntrance = dungeonFactory.createVerticalUpEntrance().getMapTileNumbers();
+        ArrayList<int[][]> horizontalLeftEntrance = dungeonFactory.createHorizontalLeftEntrance().getMapTileNumbers();
+        ArrayList<int[][]> verticalDownEntrance = dungeonFactory.createVerticalUpEntrance().getMapTileNumbers();
 
-    private void genRooms(ArrayList<DungeonTile> rooms, int[] center){
+        if (centerX == 0 || centerX == 1)
+            addRoom(verticalDownEntrance, center[centerX] + 1 + room.get(0).length / 2, center[centerY]);
+        if (centerY == 0 || centerY == 1)
+            addRoom(horizontalRightEntrance, center[centerX], center[centerY] + 1 + room.get(0).length / 2);
+        if (centerX == 2 || centerX == 1)
+            addRoom(verticalUpEntrance, center[centerX] - room.get(0).length / 2, center[centerY]);
+        if (centerY == 2 || centerY == 1)
+            addRoom(horizontalLeftEntrance, center[centerX] , center[centerY]  - 1 - room.get(0).length / 2);
+    }
+
+    private void genRooms(DungeonAbstractFactory dungeonFactory, ArrayList<DungeonTile> rooms, int[] center){
         int[][] placed = new int[3][3];
         placed[0][0] = 1;
         placed[2][2] = 1;
-        for (int i = 0; i < 6;) {
+        for (int i = 0; i < 7;) {
             int x = rand.nextInt(3);
             int y = rand.nextInt(3);
             if (placed[x][y] == 0) {
                 ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size())).getMapTileNumbers();
                 this.addRoom(room, center[x], center[y]);
+                this.addEntrance(dungeonFactory, room, center, x, y);
                 placed[x][y] = 1;
                 i++;
             }

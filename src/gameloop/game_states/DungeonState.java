@@ -18,10 +18,8 @@ import game_entity.weapons.projectiles.ProjectileFactory;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
-import tile.BienioSupStrategy;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
-import tile.MapTileManager;
 import tile.dungeon.TileDungeonManager;
 
 import java.awt.*;
@@ -42,7 +40,7 @@ public class  DungeonState implements State{
 
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        dungeonPlayer = new DungeonPlayer(150, 150, 4);
+        dungeonPlayer = new DungeonPlayer(150, 150, 20);
 
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
         Attributes enemyAttributes = new Attributes(5, 0, 0);
@@ -68,7 +66,7 @@ public class  DungeonState implements State{
                 dungeon,
                 "bienio",
                 this.dungeonPlayer,
-                new BienioSupStrategy());
+                new ZonaAbertaStrategy());
         enemies = new ArrayList<>();
         enemies.add(enemyTemplate.clone(200, 200));
         enemies.add(enemyTemplate.clone(500, 500));
@@ -78,10 +76,10 @@ public class  DungeonState implements State{
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
         Layer layer = tileManager.getCollisionLayer();
-        layer.collisionDetector(dungeonPlayer);
+        // layer.collisionDetector(dungeonPlayer);
 
         for (Enemy e: enemies) {
-            layer.collisionDetector(e);
+            //layer.collisionDetector(e);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);

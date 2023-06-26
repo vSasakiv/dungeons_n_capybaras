@@ -56,6 +56,7 @@ public class DungeonPlayer extends AttackingEntity{
         this.updateAttack(mouseHandler);
         this.updateWeapon(mouseHandler);
         this.hitbox.setPosition(this.position);
+
     }
 
     /**

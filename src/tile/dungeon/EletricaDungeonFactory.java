@@ -21,6 +21,26 @@ public class EletricaDungeonFactory implements DungeonAbstractFactory{
     }
 
     @Override
+    public DungeonTile createVerticalUpEntrance() {
+        return new DungeonTile("caminho/para/arquivo/mapa.xml");
+    }
+
+    @Override
+    public DungeonTile createHorizontalRightEntrance() {
+        return new DungeonTile("caminho/para/arquivo/mapa.xml");
+    }
+
+    @Override
+    public DungeonTile createHorizontalLeftEntrance() {
+        return new DungeonTile("caminho/para/arquivo/mapa.xml");
+    }
+
+    @Override
+    public DungeonTile createVerticalDownEntrance() {
+        return new DungeonTile("caminho/para/arquivo/mapa.xml");
+    }
+
+    @Override
     public int maxLayers() {
         return 7;
     }
