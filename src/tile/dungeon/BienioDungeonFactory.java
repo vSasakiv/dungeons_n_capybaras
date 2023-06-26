@@ -24,7 +24,6 @@ public class BienioDungeonFactory implements DungeonAbstractFactory {
     public DungeonTile createVerticalUpEntrance() {
         return new DungeonTile("/src/resources/dungeons/bienio/BienioVerticalCorridorUpEntrance.xml");
     }
-
     @Override
     public DungeonTile createHorizontalRightEntrance() {
         return new DungeonTile("/src/resources/dungeons/bienio/BienioHorizontalCorridorRightEntrance.xml");

@@ -74,11 +74,11 @@ public class DungeonGenerator {
         if (centerX == 0 || centerX == 1)
             addRoom(verticalDownEntrance, center[centerX] + 1 + room.get(0).length / 2, center[centerY]);
         if (centerY == 0 || centerY == 1)
-            addRoom(horizontalRightEntrance, center[centerX], center[centerY] + 1 + room.get(0).length / 2);
+            addRoom(horizontalRightEntrance, center[centerX], center[centerY] + 1 + room.get(0)[0].length / 2);
         if (centerX == 2 || centerX == 1)
             addRoom(verticalUpEntrance, center[centerX] - room.get(0).length / 2, center[centerY]);
         if (centerY == 2 || centerY == 1)
-            addRoom(horizontalLeftEntrance, center[centerX] , center[centerY]  - 1 - room.get(0).length / 2);
+            addRoom(horizontalLeftEntrance, center[centerX] , center[centerY]  - 1 - room.get(0)[0].length / 2);
     }
 
     private void genRooms(DungeonAbstractFactory dungeonFactory, ArrayList<DungeonTile> rooms, int[] center){
