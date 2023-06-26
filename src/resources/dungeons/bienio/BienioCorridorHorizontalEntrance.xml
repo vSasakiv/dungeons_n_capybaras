@@ -7,24 +7,24 @@
  <tileset firstgid="1816" source="src/resources/dungeons/bienio/collision.xml"/>
  <layer id="1" name="Room_Builder_free_16x16" width="1" height="7" locked="1">
   <data encoding="csv">
-291,
-308,
 217,
 217,
 217,
 217,
-291
+217,
+217,
+217
 </data>
  </layer>
  <layer id="2" name="Room_Builder_free_16x16_2" width="1" height="7" locked="1">
   <data encoding="csv">
+46,
+8,
 0,
 0,
 0,
 0,
-0,
-0,
-0
+46
 </data>
  </layer>
  <layer id="3" name="Interiors_free_16x16" width="1" height="7" locked="1">
