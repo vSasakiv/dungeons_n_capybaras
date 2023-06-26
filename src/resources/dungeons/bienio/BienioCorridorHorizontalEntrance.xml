@@ -16,15 +16,15 @@
 217
 </data>
  </layer>
- <layer id="2" name="Room_Builder_free_16x16_2" width="1" height="7" locked="1">
+ <layer id="2" name="Room_Builder_free_16x16_2" width="1" height="7">
   <data encoding="csv">
-46,
-8,
+63,
 0,
 0,
 0,
 0,
-46
+0,
+29
 </data>
  </layer>
  <layer id="3" name="Interiors_free_16x16" width="1" height="7" locked="1">
@@ -49,7 +49,7 @@
 0
 </data>
  </layer>
- <layer id="5" name="Collision" width="1" height="7" opacity="0.35">
+ <layer id="5" name="Collision" width="1" height="7" locked="1" opacity="0.35">
   <data encoding="csv">
 1816,
 1816,
