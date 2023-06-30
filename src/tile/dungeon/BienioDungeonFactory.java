@@ -7,6 +7,9 @@ public class BienioDungeonFactory implements DungeonAbstractFactory {
     public ArrayList<DungeonTile> createRoom() {
         ArrayList<DungeonTile> rooms = new ArrayList<>();
         rooms.add(new DungeonTile("/src/resources/dungeons/bienio/BienioRoom_1.xml"));
+        rooms.add(new DungeonTile("/src/resources/dungeons/bienio/BienioRoom_2.xml"));
+        rooms.add(new DungeonTile("/src/resources/dungeons/bienio/BienioRoom_3.xml"));
+        rooms.add(new DungeonTile("/src/resources/dungeons/bienio/BienioBossRoom.xml"));
         return rooms;
     }
 

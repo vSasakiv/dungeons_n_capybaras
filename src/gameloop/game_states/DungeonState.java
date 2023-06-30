@@ -61,14 +61,14 @@ public class  DungeonState implements State{
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
         dungeonGenerator = new DungeonGenerator();
-        ArrayList<int[][]> dungeon = dungeonGenerator.generate("bienio", 105);
+        ArrayList<int[][]> dungeon = dungeonGenerator.generate("eletrica", 255);
         tileManager = new TileDungeonManager(
                 dungeon,
-                "bienio",
+                "eletrica",
                 this.dungeonPlayer,
                 new ZonaAbertaStrategy());
         enemies = new ArrayList<>();
-        enemies.add(enemyTemplate.clone(200, 200));
+        enemies.add(enemyTemplate.clone(400, 400));
         enemies.add(enemyTemplate.clone(500, 500));
     }
     @Override
@@ -79,7 +79,7 @@ public class  DungeonState implements State{
         // layer.collisionDetector(dungeonPlayer);
 
         for (Enemy e: enemies) {
-            //layer.collisionDetector(e);
+            // layer.collisionDetector(e);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);
