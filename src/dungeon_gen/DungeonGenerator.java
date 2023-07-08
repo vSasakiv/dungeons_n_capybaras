@@ -38,8 +38,8 @@ public class DungeonGenerator {
         this.generateCorridor(dungeonFactory, center);
         this.addRoom(rooms.get(0).getMapTileNumbers(), center[0], center[0]); // initial room
         addEntrance(dungeonFactory, rooms.get(0).getMapTileNumbers(), center, 0, 0);
-        this.addRoom(rooms.get(0).getMapTileNumbers(), center[2], center[2]); // boss room
-        addEntrance(dungeonFactory, rooms.get(0).getMapTileNumbers(), center, 2, 2);
+        this.addRoom(rooms.get(rooms.size() - 1).getMapTileNumbers(), center[2], center[2]); // boss room
+        addEntrance(dungeonFactory, rooms.get(rooms.size() - 1).getMapTileNumbers(), center, 2, 2);
         genRooms(dungeonFactory, rooms, center);
 
         return this.dungeon;
@@ -89,7 +89,7 @@ public class DungeonGenerator {
             int x = rand.nextInt(3);
             int y = rand.nextInt(3);
             if (placed[x][y] == 0) {
-                ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size())).getMapTileNumbers();
+                ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size() - 1)).getMapTileNumbers();
                 this.addRoom(room, center[x], center[y]);
                 this.addEntrance(dungeonFactory, room, center, x, y);
                 placed[x][y] = 1;
