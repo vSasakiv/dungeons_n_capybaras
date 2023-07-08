@@ -155,7 +155,7 @@ public class  DungeonState implements State{
         return attacks;
     }
 
-    public int getMapNum() {
+    public int nextState() {
         return mapNum;
     }
     public void setMapNum(int mapNum) {
