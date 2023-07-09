@@ -35,7 +35,7 @@ public class  DungeonState implements State{
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
     private final DungeonGenerator dungeonGenerator;
-
+    private String currentDialogue;
     private int mapNum;
 
 
@@ -61,10 +61,10 @@ public class  DungeonState implements State{
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
         dungeonGenerator = new DungeonGenerator();
-        ArrayList<int[][]> dungeon = dungeonGenerator.generate("eletrica", 255);
+        ArrayList<int[][]> dungeon = dungeonGenerator.generate("bienio", 255);
         tileManager = new TileDungeonManager(
                 dungeon,
-                "eletrica",
+                "bienio",
                 this.dungeonPlayer,
                 new ZonaAbertaStrategy());
         enemies = new ArrayList<>();
@@ -165,4 +165,16 @@ public class  DungeonState implements State{
     public void setDefaultPosition(int x, int y) {
         this.dungeonPlayer.setPosition(new Vector(x, y));
     }
+
+    @Override
+    public void setCurrentDialogue(String text) {
+        this.currentDialogue = text;
+    }
+
+    @Override
+    public String getCurrentDialogue() {
+        return this.currentDialogue;
+    }
+
+
 }

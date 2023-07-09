@@ -45,6 +45,7 @@ public class GameState {
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
                 } else if (stateList[0].nextState() == -2) {
                     this.currentState = StateEnum.dialogueState;
+                    stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
                     stateList[0].setMapNum(0);
                 }
             }

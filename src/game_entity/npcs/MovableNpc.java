@@ -12,4 +12,6 @@ public interface MovableNpc {
     void setStrategy(NpcStrategy strategy);
 
     boolean isColliding(Hitbox hitbox);
+
+    String[] getDialogues();
 }

@@ -1,5 +1,6 @@
 package game_entity;
 
+import game_entity.entity_sprites.PlayerSprite;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.render.Draw;
@@ -55,7 +56,7 @@ public class MapPlayer extends GameEntity{
         this.setDirection(this.updateDirection(keyHandler));
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.hitbox.setPosition(this.position);
-        System.out.println("pos x: " + this.position.x + "pos y: " + this.position.y);
+        //System.out.println("pos x: " + this.position.x + "pos y: " + this.position.y);
     }
 
     /**

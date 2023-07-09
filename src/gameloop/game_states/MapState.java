@@ -4,7 +4,7 @@ import game_entity.GameEntity;
 import game_entity.MapPlayer;
 import game_entity.MapPlayerStateEnum;
 import game_entity.Vector;
-import game_entity.npcs.ConvictusNpc;
+import game_entity.npcs.OldManNpc;
 import game_entity.npcs.MovableNpc;
 import game_entity.npcs.PatrolStrategy;
 import game_entity.static_entities.CollidableObject;
@@ -27,6 +27,7 @@ public class MapState implements State{
     private int mapNum = 0;
     private int nextState = 0;
     private final MapPlayerStateEnum currentState;
+    private String currentDialogue;
 
     public MapState(KeyHandler keyHandler) {
         maps = new ArrayList<>();
@@ -37,7 +38,7 @@ public class MapState implements State{
                 new EstacionamentoStrategy());
 
         CollidableObject randomDoor = new Door(275, 566, 50 ,50);
-        MovableNpc convictus1 = new ConvictusNpc(300, 600, 3);
+        MovableNpc convictus1 = new OldManNpc(300, 600, 2);
         convictus1.setStrategy(new PatrolStrategy((GameEntity) convictus1, new Vector(300, 900)));
 
         Map estacionamento = new Map(estacionamentoMap);
@@ -72,6 +73,7 @@ public class MapState implements State{
             for (MovableNpc npc: maps.get(mapNum).getNpcs()){
                 if (npc.isColliding(this.mapPlayer.getHitbox())){
                     nextState = -2;
+                    this.currentDialogue = npc.getDialogues()[0];
                 }
             }
             this.keyHandler.setKeyEnter(false);
@@ -106,4 +108,12 @@ public class MapState implements State{
         this.mapPlayer.setPosition(new Vector(x, y));
     }
 
+    @Override
+    public void setCurrentDialogue(String text) {
+        this.currentDialogue = text;
+    }
+
+    public String getCurrentDialogue() {
+        return currentDialogue;
+    }
 }

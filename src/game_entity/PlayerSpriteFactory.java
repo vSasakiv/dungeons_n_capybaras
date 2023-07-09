@@ -1,5 +1,9 @@
 package game_entity;
 
+import game_entity.entity_sprites.PlayerDefaultSprite;
+import game_entity.entity_sprites.PlayerNinjaSprite;
+import game_entity.entity_sprites.PlayerSprite;
+
 import java.util.Objects;
 
 public class PlayerSpriteFactory{

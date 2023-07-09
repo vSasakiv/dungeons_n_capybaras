@@ -1,4 +1,4 @@
-package game_entity;
+package game_entity.entity_sprites;
 
 import tile.AnimationSprite;
 

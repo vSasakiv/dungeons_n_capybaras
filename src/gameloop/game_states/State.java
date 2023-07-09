@@ -11,4 +11,6 @@ public interface State {
     int nextState();
     void setMapNum(int mapNum);
     void setDefaultPosition(int x, int y);
+    void setCurrentDialogue (String text);
+    String getCurrentDialogue ();
 }
