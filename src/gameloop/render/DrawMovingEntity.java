@@ -4,27 +4,29 @@ import game_entity.GameEntity;
 import game_entity.entity_sprites.MovingEntitySprites;
 import game_entity.Vector;
 import gameloop.Constants;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DrawMovingEntity implements Draw {
-
-    private String spriteDirection;
-    GameEntity entity;
+    protected String spriteDirection;
+    private final GameEntity entity;
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
-    private int spriteNumber = 0;
-    MovingEntitySprites entitySprite;
+    protected int spriteNumber = 0;
+    protected final ArrayList<MovingEntitySprites> entitySprites;
+    protected Vector direction;
+    protected int spritesSelect;
 
-    public DrawMovingEntity(GameEntity entity, MovingEntitySprites movingEntitySprites) {
+    public DrawMovingEntity(GameEntity entity,  ArrayList<MovingEntitySprites> movingEntitySprites) {
         this.entity = entity;
-        this.entitySprite = movingEntitySprites;
+        spritesSelect = 0;
+        this.entitySprites = movingEntitySprites;
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        BufferedImage playerImage = getPlayerImage(entitySprite);
+        BufferedImage playerImage = getEntityImage();
         //Desenha o player
         g2d.drawImage(
                 playerImage,
@@ -36,9 +38,11 @@ public class DrawMovingEntity implements Draw {
         );
     }
 
+    /**
+     * Atualiza a direção do sprite, com base na movimentação do player
+     * @param direction Direção do movimento do player
+     */
     public void spriteUpdate(Vector direction) {
-        spriteCounterUpdate();
-        //Mudança de sprite pelo teclado
         if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
             this.spriteDirection = "UP";
         } else if (Vector.vectorEquals(direction, Constants.DIRECTION_LEFT)) {
@@ -55,20 +59,23 @@ public class DrawMovingEntity implements Draw {
         }
     }
 
-    public BufferedImage getPlayerImage(MovingEntitySprites entitySelected) {
+    protected BufferedImage getEntityImage() {
         BufferedImage playerImage = null;
         switch (spriteDirection) {
-            case "STAND_FRONT" -> playerImage = entitySelected.standFront;
-            case "STAND_BACK" -> playerImage = entitySelected.standBack;
-            case "UP" -> playerImage = entitySelected.up.getSpriteArray()[spriteNumber];
-            case "DOWN" -> playerImage = entitySelected.down.getSpriteArray()[spriteNumber];
-            case "RIGHT" -> playerImage = entitySelected.right.getSpriteArray()[spriteNumber];
-            case "LEFT" -> playerImage = entitySelected.left.getSpriteArray()[spriteNumber];
+            case "STAND_FRONT" -> playerImage = entitySprites.get(spritesSelect).standFront;
+            case "STAND_BACK" -> playerImage = entitySprites.get(spritesSelect).standBack;
+            case "UP" -> playerImage = entitySprites.get(spritesSelect).up.getSpriteArray()[spriteNumber];
+            case "DOWN" -> playerImage = entitySprites.get(spritesSelect).down.getSpriteArray()[spriteNumber];
+            case "RIGHT" -> playerImage = entitySprites.get(spritesSelect).right.getSpriteArray()[spriteNumber];
+            case "LEFT" -> playerImage = entitySprites.get(spritesSelect).left.getSpriteArray()[spriteNumber];
         }
         return playerImage;
     }
 
-    private void spriteCounterUpdate() {
+    /**
+     * Alterna os sprites, para fins de animação
+     */
+    public void spriteCounterUpdate() {
         /*
          * Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,
          * alternando entre 0 e 1 (indica dois sprites diferentes)
@@ -80,4 +87,7 @@ public class DrawMovingEntity implements Draw {
         }
     }
 
+    public void setSpritesSelect(int spritesSelect) {
+        this.spritesSelect = spritesSelect;
+    }
 }

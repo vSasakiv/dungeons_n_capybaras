@@ -3,11 +3,14 @@ package game_entity.npcs;
 import game_entity.GameEntity;
 import game_entity.Hitbox;
 import game_entity.Vector;
+import game_entity.entity_sprites.MovingEntitySprites;
 import game_entity.entity_sprites.NpcOldManSprite;
 import gameloop.Constants;
 import gameloop.render.DrawMovingEntity;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 public class OldManNpc extends GameEntity implements MovableNpc{
 
     private final Hitbox hitbox;
@@ -19,7 +22,9 @@ public class OldManNpc extends GameEntity implements MovableNpc{
         super(worldPosX, worldPosY, velocity);
         this.strategy = new PatrolStrategy(this, new Vector(0, 0));
         this.hitbox = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE, this.position);
-        this.drawMethod = new DrawMovingEntity(this, new NpcOldManSprite());
+        ArrayList<MovingEntitySprites> sprites = new ArrayList<>();
+        sprites.add(new NpcOldManSprite());
+        this.drawMethod = new DrawMovingEntity(this, sprites);
         this.setSpriteSizeX(Constants.TILE_SIZE);
         this.setSpriteSizeY(Constants.TILE_SIZE);
 
@@ -32,6 +37,7 @@ public class OldManNpc extends GameEntity implements MovableNpc{
         this.hitbox.setPosition(this.position);
         this.setDialogues();
         this.drawMethod.spriteUpdate(this.getDirection());
+        this.drawMethod.spriteCounterUpdate();
         this.setScreenX(this.getWorldPosX() - playerPos.x + (float) Constants.WIDTH /2 - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(this.getWorldPosY() - playerPos.y + (float) Constants.HEIGHT /2 - (float) this.getSpriteSizeX() / 2);
     }

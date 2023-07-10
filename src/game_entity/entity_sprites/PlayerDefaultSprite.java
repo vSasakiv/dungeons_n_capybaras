@@ -2,7 +2,7 @@ package game_entity.entity_sprites;
 
 import tile.AnimationSprite;
 
-public class PlayerDefaultSprite extends PlayerSprite{
+public class PlayerDefaultSprite extends MovingEntitySprites{
     @Override
     void loadSprites() {
         int width = 32;
