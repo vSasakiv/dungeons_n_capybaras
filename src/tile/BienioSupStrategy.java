@@ -27,7 +27,7 @@ public class BienioSupStrategy extends ChangeTileStrategy{
         int index = changePosition(player.getPosition());
         switch (index) {
             case 0 -> {
-                player.setPosition(new Vector(Constants.TILE_SIZE * 6, Constants.TILE_SIZE * 47));
+                player.setPosition(new Vector(Constants.TILE_SIZE * 13, Constants.TILE_SIZE * 47));
                 return 0;
             }
             case 1 -> {

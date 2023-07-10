@@ -10,10 +10,10 @@ import gameloop.render.DrawMovingEntity;
 import java.awt.*;
 public class OldManNpc extends GameEntity implements MovableNpc{
 
-    private Hitbox hitbox;
+    private final Hitbox hitbox;
     private NpcStrategy strategy;
-    private DrawMovingEntity drawMethod;
-    private String dialogues[] = new String[3];
+    private final DrawMovingEntity drawMethod;
+    private final String[] dialogues = new String[3];
 
     public OldManNpc(float worldPosX, float worldPosY, int velocity) {
         super(worldPosX, worldPosY, velocity);
@@ -52,7 +52,7 @@ public class OldManNpc extends GameEntity implements MovableNpc{
     }
 
     private void setDialogues () {
-        this.dialogues[0] = "Alguma estranha está acontecendo, o Biênio foi invadido!\nEu não sou pago o suficiente para isso... \nVocê parece forte, poderia resolver isso? Preciso aplicar um \ntestinho mais tarde...";
+        this.dialogues[0] = "Alguma coisa estranha está acontecendo, o Biênio foi invadido!\nEu não sou pago o suficiente para isso... \nVocê parece forte, poderia resolver isso? Preciso aplicar um \ntestinho mais tarde...";
         this.dialogues[1] = "Obrigado por resolver o problema do Biênio! \nUma pena que aquele lugar agora está uma bagunça...";
         this.dialogues[2] = "Parece que fecharam a sub de cálculo haha,\nos alunos estão enlouquecendo.";
     }

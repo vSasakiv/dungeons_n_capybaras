@@ -34,13 +34,12 @@ public class  DungeonState implements State{
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
-    private final DungeonGenerator dungeonGenerator;
     private String currentDialogue;
     private int mapNum;
 
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        dungeonPlayer = new DungeonPlayer(150, 150, 20);
+        dungeonPlayer = new DungeonPlayer(600, 600, 7);
         tileManager = new ArrayList<>();
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
         Attributes enemyAttributes = new Attributes(5, 0, 0);
@@ -60,7 +59,7 @@ public class  DungeonState implements State{
 
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
-        dungeonGenerator = new DungeonGenerator();
+        DungeonGenerator dungeonGenerator = new DungeonGenerator();
 
         ArrayList<int[][]> dungeon = dungeonGenerator.generate("bienio", 255);
         tileManager.add(new TileDungeonManager(
@@ -86,8 +85,8 @@ public class  DungeonState implements State{
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        Layer layer = tileManager.get(mapNum).getCollisionLayer();
-        layer.collisionDetector(dungeonPlayer);
+        //Layer layer = tileManager.get(mapNum).getCollisionLayer();
+        //layer.collisionDetector(dungeonPlayer);
 
         for (Enemy e: enemies) {
             //layer.collisionDetector(e);
