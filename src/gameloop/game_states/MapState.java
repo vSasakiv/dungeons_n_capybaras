@@ -83,7 +83,7 @@ public class MapState implements State{
 
     @Override
     public void draw(Graphics2D g2d) {
-        if (this.mapNum != -1) {
+        if (this.mapNum >= 0) {
             g2d.setColor(Color.WHITE);
             g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
             // exemplo

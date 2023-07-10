@@ -42,11 +42,18 @@ public class GameState {
                 if (stateList[0].nextState() == -1) {
                     this.currentState = StateEnum.dungeonState;
                     stateList[0].setMapNum(0);
+                    stateList[1].setMapNum(0);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
                 } else if (stateList[0].nextState() == -2) {
                     this.currentState = StateEnum.dialogueState;
                     stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
                     stateList[0].setMapNum(0);
+                } else if (stateList[0].nextState() == -3) {
+                    this.currentState = StateEnum.dungeonState;
+                    stateList[0].setMapNum(0);
+                    stateList[1].setMapNum(1);
+                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
+
                 }
             }
             case dungeonState -> {

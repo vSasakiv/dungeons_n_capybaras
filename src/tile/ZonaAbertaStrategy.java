@@ -24,12 +24,10 @@ public class ZonaAbertaStrategy extends ChangeTileStrategy{
      */
     public int changeMap (GameEntity player, int mapNum) {
         int index = changePosition(player.getPosition());
+        System.out.println(index);
         switch (index) {
             case 0 -> {
                 return -1;
-            }
-            case -1 -> {
-                return 0;
             }
         }
         return mapNum;
