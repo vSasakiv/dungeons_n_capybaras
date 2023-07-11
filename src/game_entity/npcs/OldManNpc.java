@@ -13,11 +13,20 @@ import java.util.ArrayList;
 
 public class OldManNpc extends GameEntity implements MovableNpc{
 
+    // Hitbox do npc
     private final Hitbox hitbox;
+    // Estratégia de movimentação do npc
     private NpcStrategy strategy;
+    // Método para desenhar npc na tela
     private final DrawMovingEntity drawMethod;
+    // Diálogos do npc
     private final String[] dialogues = new String[3];
 
+    /**
+     * @param worldPosX posição x no mundo do npc
+     * @param worldPosY posição y no mundo do npc
+     * @param velocity velocidade do npc
+     */
     public OldManNpc(float worldPosX, float worldPosY, int velocity) {
         super(worldPosX, worldPosY, velocity);
         this.strategy = new PatrolStrategy(this, new Vector(0, 0));
@@ -30,6 +39,9 @@ public class OldManNpc extends GameEntity implements MovableNpc{
 
     }
 
+    /**
+     * @param playerPos vetor posição do player
+     */
     @Override
     public void tick(Vector playerPos) {
         this.setDirection(this.strategy.direction(this, playerPos));
@@ -42,15 +54,26 @@ public class OldManNpc extends GameEntity implements MovableNpc{
         this.setScreenY(this.getWorldPosY() - playerPos.y + (float) Constants.HEIGHT /2 - (float) this.getSpriteSizeX() / 2);
     }
 
+    /**
+     * @param strategy modifica a strategy do npc
+     */
     public void setStrategy(NpcStrategy strategy) {
         this.strategy = strategy;
     }
 
+    /**
+     * @param hitbox Hitbox de outra entidade
+     * @return true caso esteja colidindo
+     */
     @Override
     public boolean isColliding(Hitbox hitbox) {
         return (hitbox.isHitting(this.hitbox));
     }
 
+    /**
+     * @param g2d    Graphics2D java
+     * @param player Entidade na qual será desenhado relativo a
+     */
     @Override
     public void draw(Graphics2D g2d, GameEntity player) {
         drawMethod.draw(g2d);
@@ -63,6 +86,9 @@ public class OldManNpc extends GameEntity implements MovableNpc{
         this.dialogues[2] = "Parece que fecharam a sub de cálculo haha,\nos alunos estão enlouquecendo.";
     }
 
+    /**
+     * @return Array de String contendo diálogo
+     */
     public String[] getDialogues() {
         return dialogues;
     }
