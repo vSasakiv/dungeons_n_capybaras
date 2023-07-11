@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="15" height="7" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="1">
+ <tileset firstgid="1" source="src/resources/dungeons/eletrica/Room_Builder_free_16x16_2.xml"/>
+ <tileset firstgid="1" source="src/resources/dungeons/eletrica/Room_Builder_free_16x16_2.xml"/>
+ <tileset firstgid="392" source="src/resources/dungeons/eletrica/Interiors_free_16x16.xml"/>
+ <tileset firstgid="392" source="src/resources/dungeons/eletrica/Interiors_free_16x16.xml"/>
+ <tileset firstgid="1816" source="src/resources/dungeons/eletrica/atlas_16x.xml"/>
+ <tileset firstgid="1816" source="src/resources/dungeons/eletrica/atlas_16x.xml"/>
+ <tileset firstgid="2584" source="src/resources/dungeons/eletrica/collision.xml"/>
+ <layer id="1" name="Room_Builder_free_16x16" width="15" height="7">
+  <data encoding="csv">
+91,91,91,91,91,91,91,91,91,91,91,91,91,91,91,
+104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,
+204,219,220,204,221,220,220,202,221,202,202,220,204,202,202,
+219,202,220,204,221,202,220,221,220,202,202,220,221,219,204,
+202,202,219,221,204,219,219,220,219,202,204,204,219,221,219,
+204,202,220,220,221,221,204,203,204,220,219,221,202,203,202,
+104,104,104,104,104,104,104,104,104,104,104,104,104,104,104
+</data>
+ </layer>
+ <layer id="2" name="Room_Builder_free_16x16_2" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Interiors_free_16x16" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Interiors_free_16x16_2" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="atlas_16x" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="atlas_16x_2" width="15" height="7" locked="1">
+  <data encoding="csv">
+2538,2538,2538,2538,2538,2538,2538,2538,2538,2538,2538,2538,2538,2538,2538,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2346,2346,2346,2346,2346,2346,2346,2346,2346,2346,2346,2346,2346,2346,2346,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="Collision" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

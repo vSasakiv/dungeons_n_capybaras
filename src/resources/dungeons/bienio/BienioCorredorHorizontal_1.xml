@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="15" height="7" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="src/resources/dungeons/bienio/Room_Builder_free_16x16_2.xml"/>
+ <tileset firstgid="1" source="src/resources/dungeons/bienio/Room_Builder_free_16x16_2.xml"/>
+ <tileset firstgid="392" source="src/resources/dungeons/bienio/Interiors_free_16x16.xml"/>
+ <tileset firstgid="392" source="src/resources/dungeons/bienio/Interiors_free_16x16.xml"/>
+ <tileset firstgid="1816" source="src/resources/dungeons/bienio/collision.xml"/>
+ <layer id="1" name="Room_Builder_free_16x16" width="15" height="7">
+  <data encoding="csv">
+291,291,291,291,291,291,291,291,291,291,291,291,291,291,291,
+308,308,308,308,308,308,308,308,308,308,308,308,308,308,308,
+199,217,217,201,217,199,201,199,201,218,216,199,200,217,216,
+218,200,201,201,216,201,199,200,199,201,218,218,217,200,216,
+200,200,201,218,199,201,216,199,216,199,218,199,201,201,201,
+199,199,216,200,218,200,200,201,200,200,199,217,218,201,218,
+315,315,315,315,315,315,315,315,315,315,315,315,315,315,315
+</data>
+ </layer>
+ <layer id="2" name="Room_Builder_free_16x16_2" width="15" height="7">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+64,64,64,64,64,64,64,64,64,64,64,64,64,64,64
+</data>
+ </layer>
+ <layer id="3" name="Interiors_free_16x16" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Interiors_free_16x16_2" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Collision" width="15" height="7" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

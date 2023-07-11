@@ -1,5 +1,6 @@
 package gameloop.game_states;
 
+import dungeon_gen.DungeonGenerator;
 import game_entity.Attributes;
 import game_entity.Hitbox;
 import game_entity.DungeonPlayer;
@@ -19,7 +20,7 @@ import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
-import tile.TileManager;
+import tile.dungeon.TileDungeonManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,17 +30,17 @@ import java.util.ArrayList;
  */
 public class  DungeonState implements State{
     public final DungeonPlayer dungeonPlayer;
-    public final TileManager tileManager;
+    public final ArrayList<TileDungeonManager> tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private final ArrayList<Enemy> enemies;
-
+    private String currentDialogue;
     private int mapNum;
 
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        dungeonPlayer = new DungeonPlayer(150, 150, 4);
-
+        dungeonPlayer = new DungeonPlayer(600, 600, 7);
+        tileManager = new ArrayList<>();
         Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
         Attributes enemyAttributes = new Attributes(5, 0, 0);
         EnemyStrategy enemyStrategy = new PassiveStrategy(500, 200, 150, 30, 60);
@@ -58,20 +59,37 @@ public class  DungeonState implements State{
 
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
-        tileManager = new TileManager("/src/resources/maps/ZonaAberta/ZonaAberta.xml", dungeonPlayer, new ZonaAbertaStrategy());
+        DungeonGenerator dungeonGenerator = new DungeonGenerator();
+
+        ArrayList<int[][]> dungeon = dungeonGenerator.generate("bienio", 255);
+        tileManager.add(new TileDungeonManager(
+                dungeon,
+                "bienio",
+                this.dungeonPlayer,
+                new ZonaAbertaStrategy())
+        );
+
+        ArrayList<int[][]> dungeon2 = dungeonGenerator.generate("eletrica", 255);
+        tileManager.add(new TileDungeonManager(
+                dungeon2,
+                "eletrica",
+                this.dungeonPlayer,
+                new ZonaAbertaStrategy())
+        );
+
         enemies = new ArrayList<>();
-        enemies.add(enemyTemplate.clone(200, 200));
-        enemies.add(enemyTemplate.clone(500, 500));
+        //enemies.add(enemyTemplate.clone(400, 400));
+        //enemies.add(enemyTemplate.clone(500, 500));
     }
     @Override
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        Layer layer = tileManager.getCollisionLayer();
-        layer.collisionDetector(dungeonPlayer);
+        //Layer layer = tileManager.get(mapNum).getCollisionLayer();
+        //layer.collisionDetector(dungeonPlayer);
 
         for (Enemy e: enemies) {
-            layer.collisionDetector(e);
+            //layer.collisionDetector(e);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);
@@ -94,8 +112,7 @@ public class  DungeonState implements State{
                 }
         }
         enemies.removeIf(Enemy::isDead);
-
-        mapNum = this.tileManager.changeStrategy.changeMap(dungeonPlayer, mapNum);
+        mapNum = this.tileManager.get(mapNum).changeStrategy.changeMap(dungeonPlayer, mapNum);
     }
 
     @Override
@@ -105,7 +122,8 @@ public class  DungeonState implements State{
         // exemplo
         g2d.setColor(Color.BLACK);
 
-        this.tileManager.draw(g2d);
+        if (mapNum >= 0)
+            this.tileManager.get(mapNum).draw(g2d);
         //gameState.tm.render(g2d);
 
         for (Projectile p : this.getProjectiles()){
@@ -147,7 +165,7 @@ public class  DungeonState implements State{
         return attacks;
     }
 
-    public int getMapNum() {
+    public int nextState() {
         return mapNum;
     }
     public void setMapNum(int mapNum) {
@@ -157,4 +175,15 @@ public class  DungeonState implements State{
     public void setDefaultPosition(int x, int y) {
         this.dungeonPlayer.setPosition(new Vector(x, y));
     }
+
+    @Override
+    public void setCurrentDialogue(String text) {
+        this.currentDialogue = text;
+    }
+
+    @Override
+    public String getCurrentDialogue() {
+        return this.currentDialogue;
+    }
+
 }
