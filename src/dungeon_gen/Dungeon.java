@@ -5,7 +5,7 @@ import game_entity.mobs.EnemyTemplates;
 import java.util.ArrayList;
 
 public class Dungeon {
-    private MonsterRoom[] combatRooms = new MonsterRoom[7];
+    private final MonsterRoom[] combatRooms = new MonsterRoom[7];
     private ArrayList<int[][]> dungeonTiles;
     private final DungeonGenerator generator = new DungeonGenerator();
 

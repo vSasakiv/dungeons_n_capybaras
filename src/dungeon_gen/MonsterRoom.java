@@ -22,9 +22,7 @@ public class MonsterRoom extends DungeonRoom {
 
     private void generateEnemies(int minEnemies, int maxEnemies, int enemyWaves, ArrayList<Enemy> enemyTemplates){
         int numEnemies;
-        int maxY = this.getMaxY();
         int minY = this.getMinY();
-        int maxX = this.getMaxX();
         int minX = this.getMinX();
         for (int i = 0; i < enemyWaves; i++){
             numEnemies = random.nextInt(minEnemies, maxEnemies+1);

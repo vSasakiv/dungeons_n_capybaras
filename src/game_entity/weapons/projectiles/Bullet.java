@@ -2,7 +2,6 @@ package game_entity.weapons.projectiles;
 
 import game_entity.GameEntity;
 import game_entity.Vector;
-import gameloop.Constants;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
