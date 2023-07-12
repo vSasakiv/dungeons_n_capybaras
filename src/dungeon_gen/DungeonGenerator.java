@@ -12,6 +12,7 @@ public class DungeonGenerator {
     // Gerador aleatório para geração única
     Random rand = new Random();
 
+    DungeonRoom[] combatRooms = new DungeonRoom[7];
     public DungeonGenerator(){}
 
     /**
@@ -122,12 +123,19 @@ public class DungeonGenerator {
             // caso a sala não tenha sido colocada, colocamos uma nova sala
             if (placed[x][y] == 0) {
                 ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size() - 1)).getMapTileNumbers();
+                int [][] validTileMatrix = new int[room.get(0).length][room.get(0)[0].length];
+                DungeonGenerator.putMatrix(validTileMatrix, room.get(0), validTileMatrix.length/2, validTileMatrix[0].length/2);
                 this.addRoom(room, center[x], center[y]);
                 this.addEntrance(dungeonFactory, room, center, x, y);
+                this.combatRooms[i] = new DungeonRoom(center[x], center[y], room.get(0).length, room.get(0)[0].length, validTileMatrix);
                 placed[x][y] = 1;
                 i++;
             }
         }
+    }
+
+    public DungeonRoom[] getCombatRooms() {
+        return combatRooms;
     }
 
     /**
