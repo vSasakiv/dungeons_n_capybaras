@@ -93,6 +93,12 @@ public class Vector {
         return (a.x == b.x && a.y == b.y);
     }
 
+    public static boolean vectorEqualsTolerance(Vector a, Vector b, float tolerance) {
+        boolean xEquals = a.x <= (b.x + tolerance) && a.x >= (b.x - tolerance);
+        boolean yEquals = a.y <= (b.y + tolerance) && a.y >= (b.y - tolerance);
+        return xEquals && yEquals;
+    }
+
     public static Vector randomUnitVector() {
         Vector v = new Vector((float) (Math.random() * 2.0 - 1.0), (float)(Math.random() * 2.0 - 1.0));
         return Vector.unitVector(v);

@@ -22,9 +22,10 @@ public class GameState {
         this.keyHandler = new KeyHandler();
         this.mouseHandler = new MouseHandler();
         this.currentState = StateEnum.mapState;
-        this.stateList = new State[2];
+        this.stateList = new State[3];
         this.stateList[0] = new MapState(keyHandler);
         this.stateList[1] = new DungeonState(keyHandler, mouseHandler);
+        this.stateList[2] = new DialogueState(keyHandler);
     }
 
     /**
@@ -33,23 +34,38 @@ public class GameState {
     public void tick() {
         updateState();
         this.stateList[currentState.estadoAtual].tick();
-
     }
 
     private void updateState() {
         switch (currentState) {
             case mapState -> {
-                if (stateList[0].getMapNum() == -1) {
+                if (stateList[0].nextState() == -1) {
                     this.currentState = StateEnum.dungeonState;
                     stateList[0].setMapNum(0);
+                    stateList[1].setMapNum(0);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
+                } else if (stateList[0].nextState() == -2) {
+                    this.currentState = StateEnum.dialogueState;
+                    stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
+                    stateList[0].setMapNum(0);
+                } else if (stateList[0].nextState() == -3) {
+                    this.currentState = StateEnum.dungeonState;
+                    stateList[0].setMapNum(0);
+                    stateList[1].setMapNum(1);
+                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
+
                 }
             }
             case dungeonState -> {
-                if (stateList[1].getMapNum() == -1) {
+                if (stateList[1].nextState() == -1) {
                     this.currentState = StateEnum.mapState;
                     stateList[1].setMapNum(0);
                     stateList[currentState.estadoAtual].setDefaultPosition(42 * Constants.TILE_SIZE, 2 * Constants.TILE_SIZE);
+                }
+            }
+            case dialogueState -> {
+                if (stateList[2].nextState() != 2){
+                    this.currentState = StateEnum.mapState;
                 }
             }
         }

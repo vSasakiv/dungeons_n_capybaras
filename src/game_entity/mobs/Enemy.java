@@ -68,7 +68,6 @@ public class Enemy extends AttackingEntity {
      */
     private void updateShoot(Vector playerPos) {
         AttackResults results;
-        System.out.println(this.getWeapon().canShoot());
         if (this.estrategia.shouldShoot() && this.getWeapon().canShoot()){
             Vector direction = Vector.unitVector(
                     new Vector(
