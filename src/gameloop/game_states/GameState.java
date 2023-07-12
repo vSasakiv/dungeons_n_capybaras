@@ -41,6 +41,8 @@ public class GameState {
             case mapState -> {
                 if (stateList[0].nextState() == -1) {
                     this.currentState = StateEnum.dungeonState;
+                    DungeonState state = (DungeonState) stateList[1];
+                    state.generateDungeon("bienio", 255);
                     stateList[0].setMapNum(0);
                     stateList[1].setMapNum(0);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
@@ -50,6 +52,8 @@ public class GameState {
                     stateList[0].setMapNum(0);
                 } else if (stateList[0].nextState() == -3) {
                     this.currentState = StateEnum.dungeonState;
+                    DungeonState state = (DungeonState) stateList[1];
+                    state.generateDungeon("eletrica", 255);
                     stateList[0].setMapNum(0);
                     stateList[1].setMapNum(1);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);

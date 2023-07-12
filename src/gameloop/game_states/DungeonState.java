@@ -1,14 +1,11 @@
 package gameloop.game_states;
 
-import dungeon_gen.DungeonGenerator;
-import game_entity.Attributes;
+import dungeon_gen.Dungeon;
+import dungeon_gen.MonsterRoom;
 import game_entity.Hitbox;
 import game_entity.DungeonPlayer;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
-import game_entity.mobs.EnemyStrategy;
-import game_entity.mobs.PassiveStrategy;
-import game_entity.weapons.AutomaticWeapon;
 import game_entity.weapons.MeleeWeaponAttack;
 import game_entity.weapons.MultiShotWeapon;
 import game_entity.weapons.projectiles.BulletFactory;
@@ -30,22 +27,16 @@ import java.util.ArrayList;
  */
 public class  DungeonState implements State{
     public final DungeonPlayer dungeonPlayer;
-    public final ArrayList<TileDungeonManager> tileManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
-    private final ArrayList<Enemy> enemies;
     private String currentDialogue;
     private int mapNum;
-
+    private final Dungeon dungeon = new Dungeon();
+    private TileDungeonManager tileManager;
+    private final ArrayList<Enemy> enemies = new ArrayList<>();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
         dungeonPlayer = new DungeonPlayer(600, 600, 7);
-        tileManager = new ArrayList<>();
-        Hitbox enemyHitbox = new Hitbox(50, 50, new Vector(200, 200));
-        Attributes enemyAttributes = new Attributes(5, 0, 0);
-        EnemyStrategy enemyStrategy = new PassiveStrategy(500, 200, 150, 30, 60);
-        Enemy enemyTemplate = new Enemy(200, 200, 4, enemyStrategy);
-
 
         ProjectileFactory subSubFactory = new BulletFactory(4, 6);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory );
@@ -53,43 +44,40 @@ public class  DungeonState implements State{
         //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
         dungeonPlayer.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
 
-        enemyTemplate.setWeapon(new AutomaticWeapon(5, 4, subSubFactory));
-        enemyTemplate.setHitbox(enemyHitbox);
-        enemyTemplate.setAttributes(enemyAttributes);
-
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
-        DungeonGenerator dungeonGenerator = new DungeonGenerator();
+    }
 
-        ArrayList<int[][]> dungeon = dungeonGenerator.generate("bienio", 255);
-        tileManager.add(new TileDungeonManager(
-                dungeon,
-                "bienio",
-                this.dungeonPlayer,
-                new ZonaAbertaStrategy())
+    public void generateDungeon(String tipo, int size){
+        this.dungeon.geraDungeon(tipo, size, 4, 2, 10);
+        this.tileManager = new TileDungeonManager(
+                this.dungeon.getDungeonTiles(),
+                tipo,
+                dungeonPlayer,
+                new ZonaAbertaStrategy()
         );
 
-        ArrayList<int[][]> dungeon2 = dungeonGenerator.generate("eletrica", 255);
-        tileManager.add(new TileDungeonManager(
-                dungeon2,
-                "eletrica",
-                this.dungeonPlayer,
-                new ZonaAbertaStrategy())
-        );
-
-        enemies = new ArrayList<>();
-        //enemies.add(enemyTemplate.clone(400, 400));
-        //enemies.add(enemyTemplate.clone(500, 500));
     }
     @Override
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        //Layer layer = tileManager.get(mapNum).getCollisionLayer();
-        //layer.collisionDetector(dungeonPlayer);
+        enemies.clear();
+        for (MonsterRoom monsterRoom: this.dungeon.getCombatRooms()){
+            monsterRoom.startWaves(dungeonPlayer);
+            if (monsterRoom.hasWaves()){
+                monsterRoom.nextWave();
+                this.enemies.addAll(monsterRoom.getCurrentWave());
+                System.out.println(this.enemies);
+            }
+            monsterRoom.killEnemies();
+        }
+
+        Layer layer = tileManager.getCollisionLayer();
+        layer.collisionDetector(dungeonPlayer);
 
         for (Enemy e: enemies) {
-            //layer.collisionDetector(e);
+            layer.collisionDetector(e);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);
@@ -111,8 +99,7 @@ public class  DungeonState implements State{
                     p.setCollided(true);
                 }
         }
-        enemies.removeIf(Enemy::isDead);
-        mapNum = this.tileManager.get(mapNum).changeStrategy.changeMap(dungeonPlayer, mapNum);
+        mapNum = this.tileManager.changeStrategy.changeMap(dungeonPlayer, mapNum);
     }
 
     @Override
@@ -123,7 +110,7 @@ public class  DungeonState implements State{
         g2d.setColor(Color.BLACK);
 
         if (mapNum >= 0)
-            this.tileManager.get(mapNum).draw(g2d);
+            this.tileManager.draw(g2d);
         //gameState.tm.render(g2d);
 
         for (Projectile p : this.getProjectiles()){
