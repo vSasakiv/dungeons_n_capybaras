@@ -4,6 +4,7 @@
 - Henrique Eduardo dos Santos de Souza @henrique_eduardo_souza
 - Vinicius Batista da Silva @viniciusbsilva
 - Vitor Sasaki Venzel @vSasakiv
+- Fabiano Mankishi Shimura @fabiano.shimura
 
 **Dependências**:
 - Java SDK openjdk 11.0.18
