@@ -24,7 +24,8 @@ public class Dungeon {
                    minEnemies,
                    maxEnemies,
                    EnemyTemplates.getEnemyTemplates(),
-                   rooms[i].getValidTileMatrix());
+                   rooms[i].getValidTileMatrix(),
+                   rooms[i].getDoors());
        }
     }
 

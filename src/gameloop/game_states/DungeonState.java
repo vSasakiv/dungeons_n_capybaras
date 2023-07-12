@@ -6,6 +6,7 @@ import game_entity.Hitbox;
 import game_entity.DungeonPlayer;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
+import game_entity.static_entities.CollidableObject;
 import game_entity.weapons.MeleeWeaponAttack;
 import game_entity.weapons.MultiShotWeapon;
 import game_entity.weapons.projectiles.BulletFactory;
@@ -34,6 +35,8 @@ public class  DungeonState implements State{
     private final Dungeon dungeon = new Dungeon();
     private TileDungeonManager tileManager;
     private final ArrayList<Enemy> enemies = new ArrayList<>();
+
+    private final ArrayList<CollidableObject> collidableObjects = new ArrayList<>();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
         dungeonPlayer = new DungeonPlayer(600, 600, 7);
@@ -68,13 +71,18 @@ public class  DungeonState implements State{
             if (monsterRoom.hasWaves()){
                 monsterRoom.nextWave();
                 this.enemies.addAll(monsterRoom.getCurrentWave());
-                System.out.println(this.enemies);
             }
             monsterRoom.killEnemies();
+            this.collidableObjects.addAll(monsterRoom.getActiveDoors());
+            System.out.println(this.collidableObjects);
         }
 
         Layer layer = tileManager.getCollisionLayer();
         layer.collisionDetector(dungeonPlayer);
+
+        for (CollidableObject collidable: this.collidableObjects){
+            collidable.checkCollision(dungeonPlayer, dungeonPlayer.getHitbox());
+        }
 
         for (Enemy e: enemies) {
             layer.collisionDetector(e);
@@ -99,6 +107,7 @@ public class  DungeonState implements State{
                     p.setCollided(true);
                 }
         }
+        collidableObjects.clear();
         mapNum = this.tileManager.changeStrategy.changeMap(dungeonPlayer, mapNum);
     }
 
@@ -112,6 +121,10 @@ public class  DungeonState implements State{
         if (mapNum >= 0)
             this.tileManager.draw(g2d);
         //gameState.tm.render(g2d);
+
+        for (MonsterRoom room: this.dungeon.getCombatRooms()){
+            room.drawDoors(g2d, this.dungeonPlayer);
+        }
 
         for (Projectile p : this.getProjectiles()){
             p.draw(g2d, this.dungeonPlayer);
