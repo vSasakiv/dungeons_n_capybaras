@@ -45,11 +45,7 @@ public class Bullet extends Projectile{
      */
     @Override
     public boolean shouldDelete() {
-        return  this.getWorldPosX() < 0 ||
-                this.getWorldPosX() > Constants.WORLD_WIDTH ||
-                this.getWorldPosY() < 0 ||
-                this.getWorldPosY() > Constants.WORLD_HEIGHT ||
-                this.collided;
+        return this.collided;
     }
 
     /**
