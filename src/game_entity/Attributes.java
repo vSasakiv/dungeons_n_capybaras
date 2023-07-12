@@ -44,7 +44,7 @@ public class Attributes {
      * @param damage quantidade de dano que a entidade recebeu
      */
     public void takeDamage(int damage){
-        if (this.currentArmor == 0)
+        if (this.currentArmor <= 0)
             this.currentHealth -= damage;
         else this.currentArmor -= damage;
     }
