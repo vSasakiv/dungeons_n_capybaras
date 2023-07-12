@@ -12,12 +12,11 @@ import game_entity.*;
 
 public class HitboxTest {
 
-    private Vector position = new Vector(200, 300);
-    private Hitbox hitbox = new Hitbox(0, 0, position);
-
     @Test
     @DisplayName("Testa se existe a posição")
     void positionNotNullTest() {
+
+        Vector position = new Vector(200, 300);
 
         assertNotNull(position, "Position is not null");
     }
@@ -26,6 +25,8 @@ public class HitboxTest {
     @DisplayName("Testa se existe a posição e o hitbox")
     void hitboxNotNullTest() {
 
+        Vector position = new Vector(200, 300);
+        Hitbox hitbox = new Hitbox(0, 0, position);
         assertNotNull(hitbox, "Hitbox is not null");
     }
 
@@ -33,31 +34,18 @@ public class HitboxTest {
     @DisplayName("Testa se acertou")
     void isHittingTest() {
 
-        assertNotNull(hitbox);
+        Vector position = new Vector(200, 300);
+        Hitbox hitbox = new Hitbox(10, 10, position);
+        assertTrue(hitbox.isHitting(hitbox), "Acertou");
     }
 
     @Test
     @DisplayName("Testa se não acertou")
     void isNotHittingTest() {
 
-        Boolean teste = false;
-
-        assertFalse(teste, "Não acertou");
-
-        assertTrue(hitbox.isHitting(hitbox), "Não acertou");
-
-    }
-
-    public static void main(String[] args) {
-
-        Vector position = new Vector(200, 300);
-
-        Hitbox hitbox = new Hitbox(10, 20, position);
-
-        System.out.println(hitbox.getWidth());
-        System.out.println(hitbox.getHeight());
-        System.out.println(hitbox.getPosition());
-
+        Vector position = new Vector(-1000, -1000);
+        Hitbox hitbox = new Hitbox(-10, -10, position);
+        assertFalse(hitbox.isHitting(hitbox), "Não acertou");
     }
 
 }

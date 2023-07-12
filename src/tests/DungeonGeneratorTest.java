@@ -9,25 +9,30 @@ import dungeon_gen.DungeonGenerator;
 
 public class DungeonGeneratorTest {
 
-    private final static DungeonGenerator dungeonGenerator = new DungeonGenerator();
-    // ArrayList<int[][]> dungeon = dungeonGenerator.generate("teste", 1);
-
     @Test
     @DisplayName("Testa Generate Dungeon")
-    void generateNotNullTest() {
+    void generateTest() {
 
+        DungeonGenerator dungeonGenerator = new DungeonGenerator();
+        // ArrayList<int[][]> dungeon = dungeonGenerator.generate("eletrica", 255);
         assertNotNull(dungeonGenerator);
     }
 
-    // @Test
-    // @DisplayName("Testa Generate Eletrica")
-    // void generateEletricaTest() {
+    @Test
+    @DisplayName("Testa Generate Dungeon")
+    void generateEletricaTest() {
 
-    // ArrayList<int[][]> dungeon = dungeonGenerator.generate("eletrica", 255);
-    // assertNotNull(dungeonGenerator);
-    // }
+        DungeonGenerator dungeonGenerator = new DungeonGenerator();
+        // ArrayList<int[][]> dungeon = dungeonGenerator.generate("eletrica", 255);
+        assertNotNull(dungeonGenerator);
+    }
 
     public static void main(String[] args) {
+
+        DungeonGenerator dungeonGenerator = new DungeonGenerator();
+        ArrayList<int[][]> dungeon = dungeonGenerator.generate("eletrica", 255);
+        System.out.println(dungeon);
+        System.out.println("teste");
 
     }
 
