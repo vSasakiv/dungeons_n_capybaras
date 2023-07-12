@@ -2,8 +2,10 @@ package dungeon_gen;
 
 import game_entity.GameEntity;
 import game_entity.mobs.Enemy;
+import game_entity.static_entities.Door;
 import gameloop.Constants;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,8 +16,8 @@ public class MonsterRoom extends DungeonRoom {
     private boolean hasWaves = true;
     private boolean startWaves = false;
     private final ArrayList<ArrayList<Enemy>> enemyWaves;
-    public MonsterRoom(int x, int y, int width, int height, int enemyWaves, int minEnemies, int maxEnemies, ArrayList<Enemy> enemyTemplates, int[][] validTileMatrix) {
-        super(x, y, width, height, validTileMatrix);
+    public MonsterRoom(int x, int y, int width, int height, int enemyWaves, int minEnemies, int maxEnemies, ArrayList<Enemy> enemyTemplates, int[][] validTileMatrix, ArrayList<Door> doors) {
+        super(x, y, width, height, validTileMatrix, doors);
         this.enemyWaves = new ArrayList<>();
         generateEnemies(minEnemies, maxEnemies, enemyWaves, enemyTemplates);
     }
@@ -71,5 +73,18 @@ public class MonsterRoom extends DungeonRoom {
     public void killEnemies(){
         if (this.hasWaves)
             this.enemyWaves.get(this.currentWave).removeIf(Enemy::isDead);
+    }
+
+    public void drawDoors(Graphics2D g2d, GameEntity player){
+        for (Door door : this.getDoors()){
+            door.draw(g2d, player);
+        }
+    }
+
+    public ArrayList<Door> getActiveDoors(){
+        if (this.hasWaves && this.startWaves){
+            return this.getDoors();
+        }
+        return new ArrayList<>();
     }
 }
