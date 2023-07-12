@@ -61,7 +61,7 @@ public class PassiveStrategy implements EnemyStrategy{
                 playerPos.x - pos.x,
                 playerPos.y - pos.y);
         // verificamos a distância entre o player e o inimigo e mudamos seu state baseado nela
-        checkPlayer((int) distanceVector.module());
+        this.checkPlayer((int) distanceVector.module());
         // dependendo do state atual, ou o inimigo está em patrulha, ou está ativo
         switch (this.state){
             case PATROL -> patrol();

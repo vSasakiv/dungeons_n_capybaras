@@ -2,6 +2,7 @@ package game_entity.mobs;
 
 import game_entity.*;
 import game_entity.weapons.AttackResults;
+import game_entity.weapons.Weapon;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,13 @@ public class Enemy extends AttackingEntity {
      * @param velocity  velocidade
      * @param estrategia estrategia de combate do inimigo
      */
-    public Enemy(float worldPosX, float worldPosY, int velocity, EnemyStrategy estrategia) {
+    public Enemy(float worldPosX, float worldPosY, int velocity, EnemyStrategy estrategia, Weapon weapon, Hitbox hitbox, Attributes atributos) {
         super(worldPosX, worldPosY, velocity);
         this.estrategia = estrategia;
         this.invincibilityCounter = new Counter(30, 1);
+        this.setWeapon(weapon);
+        this.setHitbox(hitbox);
+        this.setAttributes(atributos);
     }
 
     /**
@@ -31,7 +35,7 @@ public class Enemy extends AttackingEntity {
      * @return um clone de um inimigo modelo nas posições worldPosX e worldPosY
      */
     public Enemy clone(float worldPosX, float worldPosY){
-        Enemy clone = new Enemy(worldPosX, worldPosY, this.velocity, this.estrategia.clone());
+        Enemy clone = new Enemy(worldPosX, worldPosY, this.velocity, this.estrategia.clone(), this.getWeapon().clone(), new Hitbox(this.hitbox), new Attributes(this.getAttributes()));
         clone.setWeapon(this.getWeapon().clone());
         clone.hitbox = new Hitbox(this.hitbox);
         clone.setAttributes(new Attributes(this.getAttributes()));
