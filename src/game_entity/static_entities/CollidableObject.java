@@ -1,8 +1,6 @@
 package game_entity.static_entities;
 
-import game_entity.GameEntity;
-import game_entity.GameObject;
-import game_entity.Hitbox;
+import game_entity.*;
 
 import java.awt.*;
 
@@ -32,6 +30,36 @@ public abstract class CollidableObject extends GameObject {
     public CollidableObject(float worldPosX, float worldPosY, int width, int height){
         super(worldPosX, worldPosY);
         this.hitbox = new Hitbox(width, height, this.position);
+    }
+
+    public void checkCollision(AttackingEntity entity, Hitbox hitbox){
+        if (this.hitbox.isHitting(hitbox)){
+            this.handleCollision(entity, hitbox);
+        }
+    }
+
+    private void handleCollision(AttackingEntity entity, Hitbox hitbox){
+        Vector previousPosition = Vector.add(
+                hitbox.getPosition(),
+                Vector.scalarMultiply(entity.getDirection(), -1 * entity.getVelocity()));
+        Vector previousPositionX = Vector.add(
+                previousPosition,
+                new Vector(entity.getDirection().x * entity.getVelocity(), 0));
+        Vector previousPositionY = Vector.add(
+               previousPosition,
+               new Vector(0, entity.getDirection().y * entity.getVelocity()));
+        Hitbox previousX = new Hitbox(hitbox.getWidth(), hitbox.getHeight(), previousPositionX);
+        Hitbox previousY = new Hitbox(hitbox.getWidth(), hitbox.getHeight(), previousPositionY);
+        if (this.hitbox.isHitting(previousX)){
+            entity.setPosition(Vector.add(
+                    entity.getPosition(),
+                    Vector.scalarMultiply(new Vector(entity.getDirection().x, 0),-1 * entity.getVelocity())));
+        }
+        if (this.hitbox.isHitting(previousY)){
+            entity.setPosition(Vector.add(
+                    entity.getPosition(),
+                    Vector.scalarMultiply(new Vector(0, entity.getDirection().y),-1 * entity.getVelocity())));
+        }
     }
 
     /**
