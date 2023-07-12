@@ -58,7 +58,7 @@ public class Hitbox {
      * @return obtém maior coordenada y da caixa
      */
     public float maxY() {
-        return this.width / 2 + this.position.y;
+        return this.height/ 2 + this.position.y;
     }
 
     /**
