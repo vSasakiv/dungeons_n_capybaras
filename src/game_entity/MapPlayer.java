@@ -32,7 +32,7 @@ public class MapPlayer extends GameEntity{
         this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
         this.currentState = MapPlayerStateEnum.DEFAULT;
-        this.hitbox = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE, new Vector(this.getWorldPosX(), this.getWorldPosY()));
+        this.hitbox = new Hitbox((float) Constants.TILE_SIZE * 2 / 3, (float) Constants.TILE_SIZE * 2 / 3, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.loadSprites();
         drawMethod = new DrawPlayer(this, playerSprites);
     }

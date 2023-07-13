@@ -43,6 +43,9 @@ public class DrawTileManager implements Draw{
                                     null
                             );
                     }
+                    if (layers.get(layers.size() - 1).getTileMap()[worldRow][worldColumn] != null) {
+                        layers.get(layers.size() - 1).getCollisionLayer()[worldRow][worldColumn].draw(g2d, player);
+                    }
 
                 }
             }

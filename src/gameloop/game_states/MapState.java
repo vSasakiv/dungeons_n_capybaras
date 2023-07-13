@@ -64,8 +64,10 @@ public class MapState implements State{
     @Override
     public void tick() {
         mapPlayer.tick(keyHandler);
+
         Layer layer = maps.get(mapNum).getTilemap().getCollisionLayer();
-        layer.collisionDetector(mapPlayer);
+        layer.collisionDetector(mapPlayer, mapPlayer.getHitbox());
+
         maps.get(mapNum).tick(mapPlayer.getPosition());
         mapNum = this.maps.get(mapNum).getTilemap().changeStrategy.changeMap(mapPlayer, mapNum);
         nextState = mapNum;

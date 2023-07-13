@@ -45,7 +45,7 @@ public class GameState {
                     state.generateDungeon("bienio", 255);
                     stateList[0].setMapNum(0);
                     stateList[1].setMapNum(0);
-                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
+                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 43, Constants.TILE_SIZE * 41);
                 } else if (stateList[0].nextState() == -2) {
                     this.currentState = StateEnum.dialogueState;
                     stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
@@ -56,7 +56,7 @@ public class GameState {
                     state.generateDungeon("eletrica", 255);
                     stateList[0].setMapNum(0);
                     stateList[1].setMapNum(1);
-                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 23, Constants.TILE_SIZE * 47);
+                    stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 42, Constants.TILE_SIZE * 42);
 
                 }
             }

@@ -74,18 +74,18 @@ public class  DungeonState implements State{
             }
             monsterRoom.killEnemies();
             this.collidableObjects.addAll(monsterRoom.getActiveDoors());
-            System.out.println(this.collidableObjects);
+            //System.out.println(this.collidableObjects);
         }
 
         Layer layer = tileManager.getCollisionLayer();
-        layer.collisionDetector(dungeonPlayer);
+        layer.collisionDetector(dungeonPlayer, dungeonPlayer.getHitbox());
 
         for (CollidableObject collidable: this.collidableObjects){
             collidable.checkCollision(dungeonPlayer, dungeonPlayer.getHitbox());
         }
 
         for (Enemy e: enemies) {
-            layer.collisionDetector(e);
+            //layer.collisionDetector(e, );
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);

@@ -33,6 +33,7 @@ public class MapTileManager implements TileManager{
         addTileMap(path);
         this.changeStrategy = strategy;
         drawMethod = new DrawTileManager(layers, WorldRolls, WorldColumns, player);
+        this.layers.get(this.layers.size() - 1).setCollision(true);
     }
 
     public MapTileManager(String path) {
@@ -54,7 +55,6 @@ public class MapTileManager implements TileManager{
     public void addTileMap (String path) {
         ArrayList<Sprite> sprites = new ArrayList<>();
         mapTileNumbers = new ArrayList<>();
-        String name;
         int height = 0;
         int width = 0;
         ArrayList<String[]> data = new ArrayList<>();
@@ -70,7 +70,7 @@ public class MapTileManager implements TileManager{
                 node = list.item(temp);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     element = (Element) node;
-                    System.out.println("atributos: " + element.getAttribute("firstgid") + ", " + element.getAttribute("source"));
+                    //System.out.println("atributos: " + element.getAttribute("firstgid") + ", " + element.getAttribute("source"));
                     tilesetDocuments.add(new TilesetDocument(
                             "/" + element.getAttribute("source"),
                             Integer.parseInt(element.getAttribute("firstgid")))
@@ -87,7 +87,6 @@ public class MapTileManager implements TileManager{
                 node = list.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     element = (Element) node;
-                    name =  element.getAttribute("name");
                     if (i == 0) {
                         width = Integer.parseInt(element.getAttribute("width"));
                         height = Integer.parseInt(element.getAttribute("height"));
@@ -101,7 +100,7 @@ public class MapTileManager implements TileManager{
                             sprites.get(i))
 
                     );
-                    mapTileNumbers.add(getLayerMatrix(data.get(i), width, height, tilesetDocuments.get(i).getFirstgid()));
+                    mapTileNumbers.add(getLayerMatrix(data.get(i), width, height));
                 }
             }
             this.WorldColumns = width;
@@ -118,7 +117,7 @@ public class MapTileManager implements TileManager{
         return this.layers.get(this.layers.size() - 1);
     }
 
-    private int[][] getLayerMatrix (String[] data, int width, int height, int firstGid) {
+    private int[][] getLayerMatrix (String[] data, int width, int height) {
         int[][] matrix = new int[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {

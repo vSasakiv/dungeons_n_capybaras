@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public abstract class CollidableObject extends GameObject {
     // Hitbox de um objeto colidível
-    Hitbox hitbox;
+    public Hitbox hitbox;
 
     /**
      * @param worldPosX posição x do objeto
@@ -32,13 +32,13 @@ public abstract class CollidableObject extends GameObject {
         this.hitbox = new Hitbox(width, height, this.position);
     }
 
-    public void checkCollision(AttackingEntity entity, Hitbox hitbox){
+    public void checkCollision(GameEntity entity, Hitbox hitbox){
         if (this.hitbox.isHitting(hitbox)){
             this.handleCollision(entity, hitbox);
         }
     }
 
-    private void handleCollision(AttackingEntity entity, Hitbox hitbox){
+    private void handleCollision(GameEntity entity, Hitbox hitbox){
         Vector previousPosition = Vector.add(
                 hitbox.getPosition(),
                 Vector.scalarMultiply(entity.getDirection(), -1 * entity.getVelocity()));
