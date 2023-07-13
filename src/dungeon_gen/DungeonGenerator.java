@@ -58,8 +58,8 @@ public class DungeonGenerator {
         for (int k = 0; k < horCorridor.size(); k++)
             for (int i = 0; i < 3; i++)
                 for (int j = center[0]; j < center[2]; j+= 15){
-                    putMatrix(this.dungeon.get(k), horCorridor.get(k), center[i], j);
-                    putMatrix(this.dungeon.get(k), verCorridor.get(k), j, center[i]);
+                    putMatrix(this.dungeon.get(k), verCorridor.get(k), center[i], j);
+                    putMatrix(this.dungeon.get(k), horCorridor.get(k), j, center[i]);
                 }
     }
 
@@ -103,29 +103,29 @@ public class DungeonGenerator {
         int entranceX, entranceY;
         // dependendo da posição da sala, colocamos ou não a entrada
         if (centerX == 0 || centerX == 1) {
-            entranceX = center[centerX] + 1 + room.get(0).length / 2;
+            entranceX = center[centerX] + 1 + room.get(0)[0].length / 2;
             entranceY = center[centerY];
-            addRoom(verticalDownEntrance, entranceX, entranceY);
+            addRoom(horizontalRightEntrance, entranceX, entranceY);
             doors.add(new Door(
-                    entranceX * Constants.TILE_SIZE,
+                    entranceX * Constants.TILE_SIZE + Constants.TILE_SIZE,
                     entranceY * Constants.TILE_SIZE + Constants.TILE_SIZE/2.0f,
                      Constants.TILE_SIZE,
                      7 * Constants.TILE_SIZE));
         }
         if (centerY == 0 || centerY == 1) {
             entranceX = center[centerX];
-            entranceY = center[centerY] + 1 + room.get(0)[0].length / 2;
-            addRoom(horizontalRightEntrance, entranceX, entranceY);
+            entranceY = center[centerY] + 1 + room.get(0).length / 2;
+            addRoom(verticalDownEntrance, entranceX, entranceY);
             doors.add(new Door(
                     entranceX * Constants.TILE_SIZE + Constants.TILE_SIZE/2.0f,
-                    entranceY * Constants.TILE_SIZE,
+                    entranceY * Constants.TILE_SIZE + Constants.TILE_SIZE,
                     7 * Constants.TILE_SIZE,
                     Constants.TILE_SIZE));
         }
         if (centerX == 2 || centerX == 1) {
-            entranceX = center[centerX] - room.get(0).length / 2;
+            entranceX = center[centerX] - 1 - room.get(0)[0].length / 2;
             entranceY = center[centerY];
-            addRoom(verticalUpEntrance, entranceX, entranceY);
+            addRoom(horizontalLeftEntrance, entranceX, entranceY);
             doors.add(new Door(
                     entranceX * Constants.TILE_SIZE - Constants.TILE_SIZE       ,
                     entranceY * Constants.TILE_SIZE + Constants.TILE_SIZE/2.0f,
@@ -134,11 +134,11 @@ public class DungeonGenerator {
         }
         if (centerY == 2 || centerY == 1) {
             entranceX = center[centerX];
-            entranceY = center[centerY] - 1 - room.get(0)[0].length / 2;
-            addRoom(horizontalLeftEntrance, entranceX, entranceY);
+            entranceY = center[centerY] - room.get(0).length / 2;
+            addRoom(verticalUpEntrance, entranceX, entranceY);
             doors.add(new Door(
                     entranceX * Constants.TILE_SIZE + Constants.TILE_SIZE/2.0f,
-                    entranceY * Constants.TILE_SIZE,
+                    entranceY * Constants.TILE_SIZE - Constants.TILE_SIZE,
                     7 * Constants.TILE_SIZE,
                     Constants.TILE_SIZE));
         }
@@ -162,10 +162,10 @@ public class DungeonGenerator {
             if (placed[x][y] == 0) {
                 ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size() - 1)).getMapTileNumbers();
                 int [][] validTileMatrix = new int[room.get(0).length][room.get(0)[0].length];
-                DungeonGenerator.putMatrix(validTileMatrix, room.get(0), validTileMatrix.length/2, validTileMatrix[0].length/2);
+                DungeonGenerator.putMatrix(validTileMatrix, room.get(0), validTileMatrix[0].length/2, validTileMatrix.length/2);
                 this.addRoom(room, center[x], center[y]);
                 ArrayList<Door> doors = this.addEntrance(dungeonFactory, room, center, x, y);
-                this.combatRooms[i] = new DungeonRoom(center[x], center[y], room.get(0).length, room.get(0)[0].length, validTileMatrix, doors);
+                this.combatRooms[i] = new DungeonRoom(center[x], center[y], room.get(0)[0].length, room.get(0).length, validTileMatrix, doors);
                 placed[x][y] = 1;
                 i++;
             }
@@ -183,8 +183,8 @@ public class DungeonGenerator {
      * @param y posição na qual a matriz inserida será colocada na fonte
      */
     private static void putMatrix(int[][] sourceMatrix, int[][] insertMatrix, int x, int y){
-        for (int i = 0, i2 = x - insertMatrix.length/2; i < insertMatrix.length; i++, i2++)
-            for (int j = 0, j2 = y - insertMatrix[0].length/2; j < insertMatrix[0].length; j++, j2++)
-                sourceMatrix[i2][j2] = insertMatrix[i][j];
+        for (int i = 0, i2 = x - insertMatrix[0].length/2; i < insertMatrix[0].length; i++, i2++)
+            for (int j = 0, j2 = y - insertMatrix.length/2; j < insertMatrix.length; j++, j2++)
+                sourceMatrix[j2][i2] = insertMatrix[j][i];
     }
 }
