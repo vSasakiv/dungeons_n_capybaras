@@ -1,15 +1,20 @@
 package game_entity.mobs;
 
 import game_entity.*;
+import game_entity.entity_sprites.*;
+import game_entity.entity_sprites.mobs.LarvaSprite;
 import game_entity.weapons.AttackResults;
 import game_entity.weapons.Weapon;
+import gameloop.Constants;
+import gameloop.render.DrawMovingEntity;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends AttackingEntity {
     protected Counter invincibilityCounter; // Contador de frames de invincibility
     public Hitbox hitbox; // Hitbox do inimigo
-
+    private DrawMovingEntity drawMethod;
     private EnemyStrategy estrategia; // Estratégia que o inimigo segue
 
     /**
@@ -27,6 +32,11 @@ public class Enemy extends AttackingEntity {
         this.setWeapon(weapon);
         this.setHitbox(hitbox);
         this.setAttributes(atributos);
+        ArrayList<MovingEntitySprites> sprites = new ArrayList<>();
+        sprites.add(new LarvaSprite());
+        this.drawMethod = new DrawMovingEntity(this, sprites);
+        this.setSpriteSizeX(Constants.TILE_SIZE);
+        this.setSpriteSizeY(Constants.TILE_SIZE);
     }
 
     /**
@@ -48,12 +58,20 @@ public class Enemy extends AttackingEntity {
      */
     public void tick(Vector playerPos){
         this.invincibilityCounter.tick();
-        Vector direction = estrategia.newDirection(this.position, playerPos);
-        this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
+        this.setDirection(estrategia.newDirection(this.position, playerPos));
+        this.position = Vector.add(this.position, Vector.scalarMultiply(getDirection(), this.velocity));
         this.getWeapon().tick();
         this.updateShoot(playerPos);
-        this.tickAttacks(direction);
+        this.tickAttacks(getDirection());
+        this.drawMethod.spriteUpdate(DirectionUpdater.updateDirection(getDirection()));
+        this.drawMethod.spriteCounterUpdate();
+        this.setScreenX(this.getWorldPosX() - playerPos.x + (float) Constants.WIDTH /2 - (float) this.getSpriteSizeX() / 2);
+        this.setScreenY(this.getWorldPosY() - playerPos.y + (float) Constants.HEIGHT /2 - (float) this.getSpriteSizeX() / 2);
         this.hitbox.setPosition(this.position);
+    }
+
+    public void draw(Graphics2D g2d) {
+        drawMethod.draw(g2d);
     }
 
     /**

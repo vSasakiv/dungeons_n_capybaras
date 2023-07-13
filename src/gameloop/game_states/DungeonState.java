@@ -85,7 +85,7 @@ public class  DungeonState implements State{
         }
 
         for (Enemy e: enemies) {
-            //layer.collisionDetector(e, );
+            layer.collisionDetector(e, e.hitbox);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);
@@ -133,11 +133,9 @@ public class  DungeonState implements State{
 
         this.dungeonPlayer.draw(g2d);
         g2d.setColor(Color.red);
+
         for (Enemy e: this.enemies) {
-            g2d.fillOval(
-                    (int) (e.getWorldPosX() - this.dungeonPlayer.getWorldPosX() + Constants.WIDTH / 2.0 - 5),
-                    (int) (e.getWorldPosY() - this.dungeonPlayer.getWorldPosY() + Constants.HEIGHT / 2.0 - 5),
-                    10, 10);
+            e.draw(g2d);
             e.hitbox.draw(g2d, this.dungeonPlayer);
         }
         for (Hitbox h: this.getWeaponHitbox())
