@@ -1,6 +1,8 @@
 package dungeon_gen;
 
 import game_entity.GameEntity;
+import game_entity.Hitbox;
+import game_entity.Vector;
 import game_entity.mobs.Enemy;
 import game_entity.static_entities.Door;
 import gameloop.Constants;
@@ -31,9 +33,9 @@ public class MonsterRoom extends DungeonRoom {
             this.enemyWaves.add(new ArrayList<>());
             for (int j = 0; j < numEnemies;){
                 int randomEnemyIndex = random.nextInt(0, enemyTemplates.size());
-                int randomEnemyPosX = random.nextInt(0, this.getValidTileMatrix().length);
-                int randomEnemyPosY = random.nextInt(0, this.getValidTileMatrix()[0].length);
-                if (this.getValidTileMatrix()[randomEnemyPosX][randomEnemyPosY] != 0){
+                int randomEnemyPosX = random.nextInt(0, this.getValidTileMatrix()[0].length);
+                int randomEnemyPosY = random.nextInt(0, this.getValidTileMatrix().length);
+                if (this.getValidTileMatrix()[randomEnemyPosY][randomEnemyPosX] != 0){
                     randomEnemyPosX = randomEnemyPosX * Constants.TILE_SIZE + minX;
                     randomEnemyPosY = randomEnemyPosY * Constants.TILE_SIZE + minY;
                     this.enemyWaves.get(i).add(enemyTemplates.get(randomEnemyIndex).clone(randomEnemyPosX, randomEnemyPosY));
@@ -78,6 +80,21 @@ public class MonsterRoom extends DungeonRoom {
     public void drawDoors(Graphics2D g2d, GameEntity player){
         for (Door door : this.getDoors()){
             door.draw(g2d, player);
+        }
+    }
+
+    public void drawSpawnable(Graphics2D g2d, GameEntity player){
+        for (int i = 0; i < this.getValidTileMatrix()[0].length; i++) {
+            for (int j = 0; j < this.getValidTileMatrix().length; j++) {
+                if (this.getValidTileMatrix()[j][i] != 0) {
+                    Hitbox temp = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE,
+                            new Vector(
+                                    (this.getX() + i - (float) this.getValidTileMatrix()[0].length / 2) * Constants.TILE_SIZE + (float) Constants.TILE_SIZE / 2,
+                                    (this.getY() + j - (float) this.getValidTileMatrix().length / 2) * Constants.TILE_SIZE + (float) Constants.TILE_SIZE / 2
+                            ));
+                    temp.draw(g2d, player);
+                }
+            }
         }
     }
 

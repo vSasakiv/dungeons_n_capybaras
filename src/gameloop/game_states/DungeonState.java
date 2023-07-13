@@ -39,7 +39,7 @@ public class  DungeonState implements State{
     private final ArrayList<CollidableObject> collidableObjects = new ArrayList<>();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        dungeonPlayer = new DungeonPlayer(600, 600, 7);
+        dungeonPlayer = new DungeonPlayer(600, 600, 30);
 
         ProjectileFactory subSubFactory = new BulletFactory(4, 6);
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory );
@@ -124,6 +124,7 @@ public class  DungeonState implements State{
 
         for (MonsterRoom room: this.dungeon.getCombatRooms()){
             room.drawDoors(g2d, this.dungeonPlayer);
+            room.drawSpawnable(g2d, this.dungeonPlayer);
         }
 
         for (Projectile p : this.getProjectiles()){

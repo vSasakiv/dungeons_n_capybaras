@@ -161,8 +161,7 @@ public class DungeonGenerator {
             // caso a sala não tenha sido colocada, colocamos uma nova sala
             if (placed[x][y] == 0) {
                 ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size() - 1)).getMapTileNumbers();
-                int [][] validTileMatrix = new int[room.get(0).length][room.get(0)[0].length];
-                DungeonGenerator.putMatrix(validTileMatrix, room.get(0), validTileMatrix[0].length/2, validTileMatrix.length/2);
+                int [][] validTileMatrix = DungeonGenerator.validSpawnMatrix(room.get(0), room.get(room.size()-1));
                 this.addRoom(room, center[x], center[y]);
                 ArrayList<Door> doors = this.addEntrance(dungeonFactory, room, center, x, y);
                 this.combatRooms[i] = new DungeonRoom(center[x], center[y], room.get(0)[0].length, room.get(0).length, validTileMatrix, doors);
@@ -186,5 +185,39 @@ public class DungeonGenerator {
         for (int i = 0, i2 = x - insertMatrix[0].length/2; i < insertMatrix[0].length; i++, i2++)
             for (int j = 0, j2 = y - insertMatrix.length/2; j < insertMatrix.length; j++, j2++)
                 sourceMatrix[j2][i2] = insertMatrix[j][i];
+    }
+
+    private static int[][] validSpawnMatrix(int[][] matrixRoom, int[][] matrixCollisions){
+        int [][] matrixValida = new int[matrixRoom.length][matrixRoom[0].length];
+        int [][] matrixCollisionExtended = DungeonGenerator.extendCollisionMatrix(matrixCollisions);
+        for (int i = 0; i < matrixRoom.length; i++){
+            for (int j = 0; j < matrixRoom[0].length; j++){
+                if (matrixRoom[i][j] != 0 && matrixCollisionExtended[i][j] == 0){
+                    matrixValida[i][j] = 1;
+                }
+            }
+        }
+        return matrixValida;
+    }
+
+    private static int[][] extendCollisionMatrix(int[][] matrixCollisions) {
+        int[][] matrixSurrounded = new int[matrixCollisions.length][matrixCollisions[0].length];
+        int[][] direcoes = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        int cx, cy;
+        for (int i = 0; i < matrixCollisions.length; i++) {
+            for (int j = 0; j < matrixCollisions[0].length; j++) {
+                if (matrixCollisions[i][j] != 0) {
+                    matrixSurrounded[i][j] = 1;
+                    for (int[] direcao : direcoes) {
+                        cx = i + direcao[0];
+                        cy = j + direcao[1];
+                        if (cx >= 0 && cx < matrixCollisions.length && cy >= 0 && cy < matrixCollisions[0].length) {
+                            matrixSurrounded[cx][cy] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        return matrixSurrounded;
     }
 }
