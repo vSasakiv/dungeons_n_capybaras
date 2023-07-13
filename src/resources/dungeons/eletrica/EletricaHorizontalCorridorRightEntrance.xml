@@ -75,13 +75,13 @@
  </layer>
  <layer id="7" name="Collision" width="3" height="7" locked="1">
   <data encoding="csv">
+   2584,2584,2584,
 0,0,0,
 0,0,0,
 0,0,0,
 0,0,0,
-0,0,0,
-0,0,0,
-0,0,0
+   2584,2584,2584,
+   2584,0,0
 </data>
  </layer>
 </map>
