@@ -15,5 +15,6 @@ public class Door extends CollidableObject {
     @Override
     public void draw(Graphics2D g2d, GameEntity player){
         this.hitbox.draw(g2d, player);
+
     }
 }

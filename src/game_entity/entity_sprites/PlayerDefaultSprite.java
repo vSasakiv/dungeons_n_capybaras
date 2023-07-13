@@ -4,7 +4,7 @@ import tile.AnimationSprite;
 
 public class PlayerDefaultSprite extends MovingEntitySprites{
     @Override
-    void loadSprites() {
+    protected void loadSprites() {
         int width = 32;
         int height = 32;
         this.up = new AnimationSprite("/resources/player/Character_Up.png", width, height, 0, 0, 4);
@@ -16,6 +16,6 @@ public class PlayerDefaultSprite extends MovingEntitySprites{
         this.right = new AnimationSprite("/resources/player/Character_Right.png", width, height, 0, 0, 4);
         this.left = new AnimationSprite("/resources/player/Character_Left.png", width, height, 0, 0, 4);
         standBack = up.getSpriteArray()[0];
-        standFront = down.getSpriteArray()[0];
+        standFront = new AnimationSprite("/resources/player/Character_Down.png", width, height, 0, 0, 4);
     }
 }

@@ -62,7 +62,7 @@ public class DrawMovingEntity implements Draw {
     protected BufferedImage getEntityImage() {
         BufferedImage playerImage = null;
         switch (spriteDirection) {
-            case "STAND_FRONT" -> playerImage = entitySprites.get(spritesSelect).standFront;
+            case "STAND_FRONT" -> playerImage = entitySprites.get(spritesSelect).standFront.getSpriteArray()[spriteNumber];
             case "STAND_BACK" -> playerImage = entitySprites.get(spritesSelect).standBack;
             case "UP" -> playerImage = entitySprites.get(spritesSelect).up.getSpriteArray()[spriteNumber];
             case "DOWN" -> playerImage = entitySprites.get(spritesSelect).down.getSpriteArray()[spriteNumber];
