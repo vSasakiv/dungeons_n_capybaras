@@ -8,7 +8,7 @@ import java.awt.*;
 public class Attributes {
     private int currentHealth;
     private int currentArmor;
-    private final int currentMana;
+    private int currentMana;
     private final int maxHealth;
     private final int maxArmor;
     private final int maxMana;
@@ -47,6 +47,12 @@ public class Attributes {
         if (this.currentArmor <= 0)
             this.currentHealth -= damage;
         else this.currentArmor -= damage;
+    }
+
+    public void restore(){
+        this.currentArmor = this.maxArmor;
+        this.currentHealth = this.maxHealth;
+        this.currentMana = this.maxMana;
     }
 
     public boolean isDead(){

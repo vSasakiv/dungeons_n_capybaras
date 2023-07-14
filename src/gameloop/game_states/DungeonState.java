@@ -59,6 +59,8 @@ public class  DungeonState implements State{
                 dungeonPlayer,
                 new ZonaAbertaStrategy()
         );
+        this.dungeonPlayer.getAttributes().restore();
+        this.dungeonPlayer.setPosition(new Vector(600, 600));
 
     }
 
@@ -125,6 +127,9 @@ public class  DungeonState implements State{
     @Override
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
+        if (dungeonPlayer.getAttributes().isDead()){
+            this.setMapNum(-1);
+        }
         enemies.clear();
 
         this.updateRooms();
