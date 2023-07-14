@@ -83,7 +83,7 @@ public class ClusterBullet extends Projectile{
      */
     @Override
     public boolean shouldDelete() {
-        return counter > timeUntilExplode;
+        return counter > timeUntilExplode || this.collided;
     }
 
     /**
