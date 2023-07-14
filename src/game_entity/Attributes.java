@@ -11,6 +11,7 @@ public class Attributes {
     private int currentMana;
     private int maxHealth;
     private int maxArmor;
+    private final int maxMana;
 
     private int incremented = 0;
 
