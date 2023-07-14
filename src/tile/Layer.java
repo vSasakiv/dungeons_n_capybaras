@@ -4,6 +4,7 @@ import game_entity.GameEntity;
 import game_entity.Hitbox;
 import game_entity.Vector;
 import game_entity.static_entities.CollidableTile;
+import game_entity.weapons.projectiles.Projectile;
 import gameloop.Constants;
 import java.awt.image.BufferedImage;
 
@@ -103,7 +104,20 @@ public class Layer {
             }
             entity.setPosition(new Vector(newPosX, newPosY));
         }
+    }
 
+    public void collisionDetectorProjectile(Projectile projectile){
+        if (collision) {
+            int tileX = (int) (projectile.getWorldPosX() / Constants.TILE_SIZE);
+            int tileY = (int) (projectile.getWorldPosY() / Constants.TILE_SIZE);
+            for (int j = tileX - 1; j <= tileX + 1; j++) {
+                for (int i = tileY - 1; i <= tileY + 1; i++) {
+                    if (this.collisionLayer[i][j] != null && projectile.getHitbox().isHitting(this.collisionLayer[i][j].hitbox)) {
+                        projectile.setCollided(true);
+                    }
+                }
+            }
+        }
     }
 
     private void changeCollisionLayer () {
