@@ -40,6 +40,8 @@ public class DungeonGenerator {
         addEntrance(dungeonFactory, rooms.get(0).getMapTileNumbers(), center, 0, 0);
         this.addRoom(rooms.get(rooms.size() - 1).getMapTileNumbers(), center[2], center[2]); // boss room
         addEntrance(dungeonFactory, rooms.get(rooms.size() - 1).getMapTileNumbers(), center, 2, 2);
+        rooms.remove(0);
+        rooms.remove(rooms.size() - 1);
         // geramos as salas intermediárias
         genRooms(dungeonFactory, rooms, center);
 
@@ -160,7 +162,7 @@ public class DungeonGenerator {
             int y = rand.nextInt(3);
             // caso a sala não tenha sido colocada, colocamos uma nova sala
             if (placed[x][y] == 0) {
-                ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size() - 1)).getMapTileNumbers();
+                ArrayList<int[][]> room = rooms.get(rand.nextInt(rooms.size())).getMapTileNumbers();
                 int [][] validTileMatrix = DungeonGenerator.validSpawnMatrix(room.get(0), room.get(room.size()-1));
                 this.addRoom(room, center[x], center[y]);
                 ArrayList<Door> doors = this.addEntrance(dungeonFactory, room, center, x, y);
