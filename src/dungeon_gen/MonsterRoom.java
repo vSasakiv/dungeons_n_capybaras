@@ -98,6 +98,10 @@ public class MonsterRoom extends DungeonRoom {
         }
     }
 
+    public ArrayList<ArrayList<Enemy>> getEnemyWaves() {
+        return enemyWaves;
+    }
+
     public ArrayList<Door> getActiveDoors(){
         if (this.hasWaves && this.startWaves){
             return this.getDoors();

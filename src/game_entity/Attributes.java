@@ -9,9 +9,10 @@ public class Attributes {
     private int currentHealth;
     private int currentArmor;
     private int currentMana;
-    private final int maxHealth;
-    private final int maxArmor;
-    private final int maxMana;
+    private int maxHealth;
+    private int maxArmor;
+
+    private int incremented = 0;
 
     /**
      * @param health pontos de vida da entidade
@@ -38,6 +39,7 @@ public class Attributes {
         this.currentArmor = attributes.currentArmor;
         this.maxMana = attributes.maxMana;
         this.currentMana = attributes.currentMana;
+        this.incremented = attributes.incremented;
     }
 
     /**
@@ -53,6 +55,30 @@ public class Attributes {
         this.currentArmor = this.maxArmor;
         this.currentHealth = this.maxHealth;
         this.currentMana = this.maxMana;
+    }
+
+    public void setIncremented(int increment){
+        this.incremented = increment;
+    }
+
+    public int getIncremented(){
+        return this.incremented;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void setMaxArmor(int maxArmor) {
+        this.maxArmor = maxArmor;
+    }
+
+    public int getMaxArmor() {
+        return maxArmor;
     }
 
     public boolean isDead(){

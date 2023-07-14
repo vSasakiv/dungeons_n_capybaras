@@ -16,6 +16,8 @@ import game_entity.weapons.projectiles.ProjectileFactory;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
+import gameloop.game_states.difficulty.DifficultyState;
+import gameloop.game_states.difficulty.EasyState;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
 import tile.dungeon.TileDungeonManager;
@@ -37,6 +39,8 @@ public class  DungeonState implements State{
     private final ArrayList<Enemy> enemies = new ArrayList<>();
 
     private final ArrayList<CollidableObject> collidableObjects = new ArrayList<>();
+
+    private DifficultyState difficultyState = new EasyState();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
         dungeonPlayer = new DungeonPlayer(600, 600, 30);
@@ -61,6 +65,13 @@ public class  DungeonState implements State{
         );
         this.dungeonPlayer.getAttributes().restore();
         this.dungeonPlayer.setPosition(new Vector(600, 600));
+        for (MonsterRoom monsterRoom: this.dungeon.getCombatRooms()){
+            for (ArrayList<Enemy> enemyList : monsterRoom.getEnemyWaves()){
+                for (Enemy enemy: enemyList){
+                    this.difficultyState.updateAttributes(enemy);
+                }
+            }
+        }
 
     }
 
@@ -206,6 +217,10 @@ public class  DungeonState implements State{
 
     public void setDefaultPosition(int x, int y) {
         this.dungeonPlayer.setPosition(new Vector(x, y));
+    }
+
+    public void setDifficultyState(DifficultyState difficultyState) {
+        this.difficultyState = difficultyState;
     }
 
     @Override
