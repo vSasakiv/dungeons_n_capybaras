@@ -61,11 +61,8 @@ public class  DungeonState implements State{
         );
 
     }
-    @Override
-    public void tick() {
-        dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
 
-        enemies.clear();
+    public void updateRooms(){
         for (MonsterRoom monsterRoom: this.dungeon.getCombatRooms()){
             monsterRoom.startWaves(dungeonPlayer);
             if (monsterRoom.hasWaves()){
@@ -76,14 +73,18 @@ public class  DungeonState implements State{
             this.collidableObjects.addAll(monsterRoom.getActiveDoors());
             //System.out.println(this.collidableObjects);
         }
+    }
 
-        Layer layer = tileManager.getCollisionLayer();
-        layer.collisionDetector(dungeonPlayer, dungeonPlayer.getHitbox());
-
+    private void checkCollidable(){
         for (CollidableObject collidable: this.collidableObjects){
             collidable.checkCollision(dungeonPlayer, dungeonPlayer.getHitbox());
+            for (Enemy e: enemies){
+                collidable.checkCollision(e, e.hitbox);
+            }
         }
+    }
 
+    private void checkEnemies(Layer layer){
         for (Enemy e: enemies) {
             layer.collisionDetector(e, e.hitbox);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
@@ -96,17 +97,44 @@ public class  DungeonState implements State{
                     dungeonPlayer.gotHit(e.getWeapon().getDamage());
                     p.setCollided(true);
                 }
+                for (CollidableObject collidable: this.collidableObjects){
+                    if (p.getHitbox().isHitting(collidable.hitbox)){
+                        p.setCollided(true);
+                    }
+                }
+                layer.collisionDetectorProjectile(p);
             }
             for (MeleeWeaponAttack hitbox: dungeonPlayer.getMeleeAttacks())
                 if (e.hitbox.isHitting(hitbox))
                     e.gotHit(hitbox.getDamage());
 
-            for (Projectile p: dungeonPlayer.getRangedAttacks())
+            for (Projectile p: dungeonPlayer.getRangedAttacks()) {
                 if (p.getHitbox().isHitting(e.hitbox)) {
                     e.gotHit(dungeonPlayer.getWeapon().getDamage());
                     p.setCollided(true);
                 }
+                for (CollidableObject collidable: this.collidableObjects){
+                    if (p.getHitbox().isHitting(collidable.hitbox)){
+                        p.setCollided(true);
+                    }
+                }
+                layer.collisionDetectorProjectile(p);
+            }
         }
+    }
+    @Override
+    public void tick() {
+        dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
+        enemies.clear();
+
+        this.updateRooms();
+
+        Layer layer = tileManager.getCollisionLayer();
+        layer.collisionDetector(dungeonPlayer, dungeonPlayer.getHitbox());
+
+        this.checkCollidable();
+        this.checkEnemies(layer);
+
         collidableObjects.clear();
         mapNum = this.tileManager.changeStrategy.changeMap(dungeonPlayer, mapNum);
     }
