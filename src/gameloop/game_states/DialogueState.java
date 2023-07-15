@@ -73,6 +73,16 @@ public class DialogueState implements State{
     }
 
     @Override
+    public void playMusic(int index) {
+
+    }
+
+    @Override
+    public void stopMusic() {
+
+    }
+
+    @Override
     public int nextState() {
         if (exit){
             return nextState;

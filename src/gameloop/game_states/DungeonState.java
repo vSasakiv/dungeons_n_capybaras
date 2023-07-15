@@ -18,6 +18,8 @@ import gameloop.KeyHandler;
 import gameloop.MouseHandler;
 import gameloop.game_states.difficulty.DifficultyState;
 import gameloop.game_states.difficulty.EasyState;
+import gameloop.sound.DungeonSound;
+import gameloop.sound.GameSound;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
 import tile.dungeon.TileDungeonManager;
@@ -41,6 +43,8 @@ public class  DungeonState implements State{
     private final ArrayList<CollidableObject> collidableObjects = new ArrayList<>();
 
     private DifficultyState difficultyState = new EasyState();
+
+    private final GameSound sound = new DungeonSound();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
         dungeonPlayer = new DungeonPlayer(600, 600, 30);
@@ -139,6 +143,7 @@ public class  DungeonState implements State{
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
         if (dungeonPlayer.getAttributes().isDead()){
+            this.playSound(0);
             this.setMapNum(-1);
         }
         enemies.clear();
@@ -189,6 +194,22 @@ public class  DungeonState implements State{
         this.dungeonPlayer.getAttributes().draw(g2d);
     }
 
+    public void playMusic (int index) {
+        sound.setMusicFile(index);
+        sound.playMusic();
+        sound.loop();
+        sound.setVolume(0.1F, "MUSIC");
+    }
+
+    public void playSound(int index) {
+        sound.setSoundFile(index);
+        sound.setVolume(0.5F, "SOUND");
+        sound.playSound();
+    }
+
+    public void stopMusic () {
+        sound.stop();
+    }
 
     /**
      * obtém os projéteis

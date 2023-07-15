@@ -12,6 +12,8 @@ import game_entity.static_entities.Door;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.Map;
+import gameloop.sound.MapSound;
+import gameloop.sound.GameSound;
 import tile.*;
 
 import java.awt.*;
@@ -28,6 +30,7 @@ public class MapState implements State{
     private int nextState = 0;
     private final MapPlayerStateEnum currentState;
     private String currentDialogue;
+    private final GameSound sound = new MapSound();
 
     public MapState(KeyHandler keyHandler) {
         maps = new ArrayList<>();
@@ -97,6 +100,25 @@ public class MapState implements State{
             this.mapPlayer.getHitbox().draw(g2d, this.mapPlayer);
         }
     }
+
+    public void playMusic (int index) {
+        sound.setMusicFile(index);
+        sound.setVolume(0.01F, "MUSIC");
+        sound.playMusic();
+        sound.loop();
+    }
+
+    public void playSound(int index) {
+        sound.setSoundFile(index);
+        sound.setVolume(0.01F, "SOUND");
+        sound.playSound();
+    }
+
+    public void stopMusic () {
+        sound.stop();
+    }
+
+
 
     public int nextState() {
         return nextState;

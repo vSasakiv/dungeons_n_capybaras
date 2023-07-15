@@ -26,6 +26,7 @@ public class GameState {
         this.stateList[0] = new MapState(keyHandler);
         this.stateList[1] = new DungeonState(keyHandler, mouseHandler);
         this.stateList[2] = new DialogueState(keyHandler);
+        this.stateList[currentState.estadoAtual].playMusic(0);
     }
 
     /**
@@ -34,37 +35,45 @@ public class GameState {
     public void tick() {
         updateState();
         this.stateList[currentState.estadoAtual].tick();
+
     }
 
     private void updateState() {
         switch (currentState) {
             case mapState -> {
                 if (stateList[0].nextState() == -1) {
+                    stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dungeonState;
                     DungeonState state = (DungeonState) stateList[1];
                     state.generateDungeon("bienio", 255);
                     stateList[0].setMapNum(0);
                     stateList[1].setMapNum(0);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 43, Constants.TILE_SIZE * 41);
+                    stateList[currentState.estadoAtual].playMusic(0);
                 } else if (stateList[0].nextState() == -2) {
+                    stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dialogueState;
                     stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
                     stateList[0].setMapNum(0);
+                    stateList[currentState.estadoAtual].playMusic(0);
                 } else if (stateList[0].nextState() == -3) {
+                    stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dungeonState;
                     DungeonState state = (DungeonState) stateList[1];
                     state.generateDungeon("eletrica", 255);
                     stateList[0].setMapNum(0);
                     stateList[1].setMapNum(1);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 42, Constants.TILE_SIZE * 42);
-
+                    stateList[currentState.estadoAtual].playMusic(0);
                 }
             }
             case dungeonState -> {
                 if (stateList[1].nextState() == -1) {
+                    stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.mapState;
                     stateList[1].setMapNum(0);
                     stateList[currentState.estadoAtual].setDefaultPosition(42 * Constants.TILE_SIZE, 2 * Constants.TILE_SIZE);
+                    stateList[currentState.estadoAtual].playMusic(0);
                 }
             }
             case dialogueState -> {
