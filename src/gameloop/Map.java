@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Map {
-    MapTileManager tilemap;
+    private MapTileManager tilemap;
     ArrayList<CollidableObject> objects = new ArrayList<>();
     ArrayList<MovableNpc> npcs = new ArrayList<>();
 

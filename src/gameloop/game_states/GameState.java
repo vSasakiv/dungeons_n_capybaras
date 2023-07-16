@@ -51,11 +51,9 @@ public class GameState {
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 43, Constants.TILE_SIZE * 41);
                     stateList[currentState.estadoAtual].playMusic(0);
                 } else if (stateList[0].nextState() == -2) {
-                    stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dialogueState;
                     stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
                     stateList[0].setMapNum(0);
-                    stateList[currentState.estadoAtual].playMusic(0);
                 } else if (stateList[0].nextState() == -3) {
                     stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dungeonState;

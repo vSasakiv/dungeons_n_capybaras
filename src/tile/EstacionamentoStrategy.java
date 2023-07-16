@@ -31,7 +31,6 @@ public class EstacionamentoStrategy extends ChangeTileStrategy {
                 return 1;
             }
             case 1 -> {
-                player.setPosition(new Vector(Constants.TILE_SIZE * 39, Constants.TILE_SIZE * 3));
                 return -3;
             }
         }

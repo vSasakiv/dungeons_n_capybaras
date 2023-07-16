@@ -14,7 +14,7 @@ public class BienioSupStrategy extends ChangeTileStrategy{
     public BienioSupStrategy () {
         regions = new ArrayList<>();
         regions.add(new int[]{Constants.TILE_SIZE * 33, Constants.TILE_SIZE * 42 , Constants.TILE_SIZE , Constants.TILE_SIZE * 2});
-        regions.add(new int[]{Constants.TILE_SIZE * 12, Constants.TILE_SIZE * 19 , Constants.TILE_SIZE * 48, Constants.TILE_SIZE * 50});
+        regions.add(new int[]{Constants.TILE_SIZE * 10, Constants.TILE_SIZE * 19 , Constants.TILE_SIZE * 49, Constants.TILE_SIZE * 50});
     }
 
     /**
@@ -27,7 +27,7 @@ public class BienioSupStrategy extends ChangeTileStrategy{
         int index = changePosition(player.getPosition());
         switch (index) {
             case 0 -> {
-                player.setPosition(new Vector(Constants.TILE_SIZE * 13, Constants.TILE_SIZE * 47));
+                player.setPosition(new Vector(Constants.TILE_SIZE * 6, Constants.TILE_SIZE * 47));
                 return 0;
             }
             case 1 -> {
