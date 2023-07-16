@@ -22,13 +22,12 @@ public final class EnemyTemplates {
     public static final Enemy ANT = new Enemy(0, 0, 2, AGGRESIVE_BASICO, WEB_WEAPON, HITBOX_NORMAL, ATRIBUTOS_FRACO, "ANT");
     public static final Enemy BRAIN = new Enemy(0, 0, 4, PASSIVE_BASICO, BRAIN_WEAPON, HITBOX_NORMAL, ATRIBUTOS_FRACO, "BRAIN");
     public static final Enemy EYE = new Enemy(0, 0, 5, PASSIVE_BASICO, EYE_WEAPON, HITBOX_GRANDE, ATRIBUTOS_TANQUE, "EYE");
-    public static final Enemy FLAME = new Enemy(0, 0, 3, PASSIVE_BASICO, FLAME_WEAPON, HITBOX_GRANDE, ATRIBUTOS_TANQUE, "FLAME");
+    public static final Enemy FLAME = new Enemy(0, 0, 3, AGGRESIVE_BASICO, FLAME_WEAPON, HITBOX_GRANDE, ATRIBUTOS_TANQUE, "FLAME");
     public static final Enemy FLY = new Enemy(0, 0, 2, AGGRESIVE_BASICO, FLY_WEAPON, HITBOX_NORMAL, ATRIBUTOS_FRACO, "FLY");
     public static final Enemy IMP = new Enemy(0, 0, 3, PASSIVE_BASICO, IMP_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "IMP");
     public static final Enemy LARVA = new Enemy(0, 0, 2, AGGRESIVE_BASICO, EYE_WEAPON, HITBOX_GRANDE, ATRIBUTOS_TANQUE, "LARVA");
     public static final Enemy SLIME = new Enemy(0, 0, 2, AGGRESIVE_BASICO, SLIME_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "SLIME");
     public static final Enemy TWIG = new Enemy(0, 0, 2, PASSIVE_BASICO, TWIG_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "TWIG");
-
 
 
     public static ArrayList<Enemy> getEnemyTemplates(String type){
