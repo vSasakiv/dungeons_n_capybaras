@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Enemy extends AttackingEntity {
     protected Counter invincibilityCounter; // Contador de frames de invincibility
     public Hitbox hitbox; // Hitbox do inimigo
-    private DrawMovingEntity drawMethod;
+    private final DrawMovingEntity drawMethod;
     private EnemyStrategy estrategia; // Estratégia que o inimigo segue
 
     /**
@@ -63,6 +63,7 @@ public class Enemy extends AttackingEntity {
         this.getWeapon().tick();
         this.updateShoot(playerPos);
         this.tickAttacks(getDirection());
+        this.getAttributes().tick();
         this.drawMethod.spriteUpdate(DirectionUpdater.updateDirection(getDirection()));
         this.drawMethod.spriteCounterUpdate();
         this.setScreenX(this.getWorldPosX() - playerPos.x + (float) Constants.WIDTH /2 - (float) this.getSpriteSizeX() / 2);

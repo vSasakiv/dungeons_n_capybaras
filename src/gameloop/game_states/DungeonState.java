@@ -100,6 +100,18 @@ public class  DungeonState implements State{
         }
     }
 
+    private void checkPlayer(Layer layer){
+        layer.collisionDetector(dungeonPlayer, dungeonPlayer.getHitbox());
+        for (Projectile p : dungeonPlayer.getRangedAttacks()) {
+            for (CollidableObject collidable : this.collidableObjects) {
+                if (p.getHitbox().isHitting(collidable.hitbox)) {
+                    p.setCollided(true);
+                }
+            }
+            layer.collisionDetectorProjectile(p);
+        }
+    }
+
     private void checkEnemies(Layer layer){
         for (Enemy e: enemies) {
             layer.collisionDetector(e, e.hitbox);
@@ -129,12 +141,6 @@ public class  DungeonState implements State{
                     e.gotHit(dungeonPlayer.getWeapon().getDamage());
                     p.setCollided(true);
                 }
-                for (CollidableObject collidable: this.collidableObjects){
-                    if (p.getHitbox().isHitting(collidable.hitbox)){
-                        p.setCollided(true);
-                    }
-                }
-                layer.collisionDetectorProjectile(p);
             }
         }
     }
@@ -150,8 +156,8 @@ public class  DungeonState implements State{
         this.updateRooms();
 
         Layer layer = tileManager.getCollisionLayer();
-        layer.collisionDetector(dungeonPlayer, dungeonPlayer.getHitbox());
 
+        this.checkPlayer(layer);
         this.checkCollidable();
         this.checkEnemies(layer);
 

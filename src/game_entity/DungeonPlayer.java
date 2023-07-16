@@ -32,7 +32,7 @@ public class DungeonPlayer extends AttackingEntity{
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
         this.hitbox = new Hitbox(Constants.TILE_SIZE * 2.0F / 3, Constants.TILE_SIZE * 2.0F / 3, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.invincibilityCounter = new Counter(30, 1);
-        this.setAttributes(new Attributes(10, 10, 200));
+        this.setAttributes(new Attributes(10, 10, 200, 5));
         this.loadSprites();
         drawMethod = new DrawPlayer(this, playerSprites);
     }
@@ -42,6 +42,7 @@ public class DungeonPlayer extends AttackingEntity{
         this.invincibilityCounter.tick();
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.getWeapon().tick();
+        this.getAttributes().tick();
         this.tickAttacks(this.getDirection());
         this.updateAttack(mouseHandler);
         this.updateWeapon(mouseHandler);

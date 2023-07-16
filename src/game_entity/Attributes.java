@@ -13,6 +13,8 @@ public class Attributes {
     private int maxArmor;
     private final int maxMana;
 
+    private final Counter regenTimer;
+
     private int incremented = 0;
 
     /**
@@ -20,13 +22,15 @@ public class Attributes {
      * @param armor pontos de armadura da entidade
      * @param mana pontos de mana/energia da entidade
      */
-    public Attributes(int health, int armor, int mana) {
+    public Attributes(int health, int armor, int mana, int regenRate) {
         this.maxHealth = health;
         this.currentHealth = health;
         this.maxArmor = armor;
         this.currentArmor = armor;
         this.maxMana = mana;
         this.currentMana = mana;
+        this.regenTimer = new Counter(1000, regenRate);
+        this.regenTimer.start();
     }
 
     /**
@@ -41,6 +45,13 @@ public class Attributes {
         this.maxMana = attributes.maxMana;
         this.currentMana = attributes.currentMana;
         this.incremented = attributes.incremented;
+        this.regenTimer = new Counter(attributes.regenTimer.getThreshold(), attributes.regenTimer.getIncrement());
+        this.regenTimer.start();
+    }
+
+    public void tick(){
+        this.regenTimer.tick();
+        this.armorRegen();
     }
 
     /**
@@ -50,6 +61,18 @@ public class Attributes {
         if (this.currentArmor <= 0)
             this.currentHealth -= damage;
         else this.currentArmor -= damage;
+        this.regenTimer.resetCounter();
+        this.regenTimer.count();
+        this.regenTimer.start();
+    }
+
+    public void armorRegen(){
+        if (this.regenTimer.isZero()){
+            if (this.currentArmor < this.maxArmor){
+                this.currentArmor += 1;
+                this.regenTimer.start();
+            }
+        }
     }
 
     public void restore(){
