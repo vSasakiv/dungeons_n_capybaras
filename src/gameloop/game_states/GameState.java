@@ -28,7 +28,6 @@ public class GameState {
         this.stateList[2] = new DialogueState(keyHandler);
         this.stateList[currentState.estadoAtual].playMusic(0, 0.1F);
         this.stateList[3] = new MenuState(keyHandler);
-        this.stateList[currentState.estadoAtual].playMusic(0);
     }
 
     /**

@@ -60,8 +60,7 @@ public class MenuState implements State {
     }
 
     @Override
-    public void playMusic(int index) {
-
+    public void playMusic(int index, float volume) {
     }
 
     @Override
