@@ -77,9 +77,12 @@ public class MonsterRoom extends DungeonRoom {
             this.enemyWaves.get(this.currentWave).removeIf(Enemy::isDead);
     }
 
-    public void drawDoors(Graphics2D g2d, GameEntity player){
-        for (Door door : this.getDoors()){
-            door.draw(g2d, player);
+    public void drawDoors(Graphics2D g2d, GameEntity player) {
+
+        if (this.getActiveDoors().size() > 0) {
+            for (Door door : this.getDoors()) {
+                door.draw(g2d, player);
+            }
         }
     }
 
