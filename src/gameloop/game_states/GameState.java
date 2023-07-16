@@ -36,7 +36,6 @@ public class GameState {
     public void tick() {
         updateState();
         this.stateList[currentState.estadoAtual].tick();
-
     }
 
     private void updateState() {
