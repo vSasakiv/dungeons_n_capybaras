@@ -1,5 +1,6 @@
 package gameloop.game_states.difficulty;
 
+import game_entity.DungeonPlayer;
 import game_entity.mobs.Enemy;
 
 /**
@@ -10,4 +11,5 @@ public interface DifficultyState {
      * @param enemy Inimigo do qual devemos atualizar os atributos
      */
     void updateAttributes(Enemy enemy);
+    DungeonPlayer getPlayer();
 }

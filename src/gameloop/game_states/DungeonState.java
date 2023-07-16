@@ -7,12 +7,8 @@ import game_entity.DungeonPlayer;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
 import game_entity.static_entities.CollidableObject;
-import game_entity.weapons.AutomaticWeapon;
 import game_entity.weapons.MeleeWeaponAttack;
-import game_entity.weapons.projectiles.BulletFactory;
-import game_entity.weapons.projectiles.ClusterBulletFactory;
 import game_entity.weapons.projectiles.Projectile;
-import game_entity.weapons.projectiles.ProjectileFactory;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.MouseHandler;
@@ -30,7 +26,7 @@ import java.util.ArrayList;
  * Classe que cuida de toda a lógica do jogo numa dungeon
  */
 public class  DungeonState implements State{
-    public final DungeonPlayer dungeonPlayer; // player da dungeon
+    public DungeonPlayer dungeonPlayer; // player da dungeon
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private String currentDialogue;
@@ -46,14 +42,14 @@ public class  DungeonState implements State{
     private final GameSound sound = new DungeonSound();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        dungeonPlayer = new DungeonPlayer(600, 600, 10);
+       /* dungeonPlayer = new DungeonPlayer(600, 600, 10);
 
         ProjectileFactory subSubFactory = new BulletFactory(4, 6, "ENERGY");
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory, "ENERGY" );
         ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, 6, subFactory, "ENERGY");
         //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
-        dungeonPlayer.setWeapon(new AutomaticWeapon(5, 4, factory, "STAFF"));
-
+        dungeonPlayer.setWeapon(new AutomaticWeapon(5, 4, factory, "STAFF"));*/
+        dungeonPlayer = difficultyState.getPlayer();
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
     }
@@ -285,6 +281,7 @@ public class  DungeonState implements State{
 
     public void setDifficultyState(DifficultyState difficultyState) {
         this.difficultyState = difficultyState;
+        this.dungeonPlayer = difficultyState.getPlayer();
     }
 
     @Override
