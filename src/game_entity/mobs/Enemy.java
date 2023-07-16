@@ -2,7 +2,6 @@ package game_entity.mobs;
 
 import game_entity.*;
 import game_entity.entity_sprites.*;
-import game_entity.entity_sprites.mobs.AntSprite;
 import game_entity.weapons.AttackResults;
 import game_entity.weapons.Weapon;
 import gameloop.Constants;
@@ -16,6 +15,7 @@ public class Enemy extends AttackingEntity {
     public Hitbox hitbox; // Hitbox do inimigo
     private final DrawMovingEntity drawMethod;
     private EnemyStrategy estrategia; // Estratégia que o inimigo segue
+    private String type;
 
     /**
      * Construtor da entidade, numa posição predeterminada
@@ -25,7 +25,7 @@ public class Enemy extends AttackingEntity {
      * @param velocity  velocidade
      * @param estrategia estrategia de combate do inimigo
      */
-    public Enemy(float worldPosX, float worldPosY, int velocity, EnemyStrategy estrategia, Weapon weapon, Hitbox hitbox, Attributes atributos) {
+    public Enemy(float worldPosX, float worldPosY, int velocity, EnemyStrategy estrategia, Weapon weapon, Hitbox hitbox, Attributes atributos, String type) {
         super(worldPosX, worldPosY, velocity);
         this.estrategia = estrategia;
         this.invincibilityCounter = new Counter(30, 1);
@@ -33,7 +33,8 @@ public class Enemy extends AttackingEntity {
         this.setHitbox(hitbox);
         this.setAttributes(atributos);
         ArrayList<MovingEntitySprites> sprites = new ArrayList<>();
-        sprites.add(new AntSprite());
+        sprites.add(MobSpriteProvider.getProjectileSprite(type));
+        this.type = type;
         this.drawMethod = new DrawMovingEntity(this, sprites);
         this.setSpriteSizeX(Constants.TILE_SIZE);
         this.setSpriteSizeY(Constants.TILE_SIZE);
@@ -45,7 +46,7 @@ public class Enemy extends AttackingEntity {
      * @return um clone de um inimigo modelo nas posições worldPosX e worldPosY
      */
     public Enemy clone(float worldPosX, float worldPosY){
-        Enemy clone = new Enemy(worldPosX, worldPosY, this.velocity, this.estrategia.clone(), this.getWeapon().clone(), new Hitbox(this.hitbox), new Attributes(this.getAttributes()));
+        Enemy clone = new Enemy(worldPosX, worldPosY, this.velocity, this.estrategia.clone(), this.getWeapon().clone(), new Hitbox(this.hitbox), new Attributes(this.getAttributes()), this.type);
         clone.setWeapon(this.getWeapon().clone());
         clone.hitbox = new Hitbox(this.hitbox);
         clone.setAttributes(new Attributes(this.getAttributes()));

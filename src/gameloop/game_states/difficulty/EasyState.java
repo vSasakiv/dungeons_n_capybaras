@@ -11,4 +11,5 @@ public class EasyState implements DifficultyState {
         enemy.getAttributes().restore();
         enemy.getAttributes().setIncremented(0);
     }
+
 }

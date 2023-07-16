@@ -11,8 +11,8 @@ public class Dungeon {
 
     public Dungeon() {}
 
-    public void geraDungeon(String tipo, int size, int maxWaves, int minEnemies, int maxEnemies){
-       this.dungeonTiles = generator.generate(tipo, size);
+    public void geraDungeon(String type, int size, int maxWaves, int minEnemies, int maxEnemies){
+       this.dungeonTiles = generator.generate(type, size);
        DungeonRoom[] rooms = generator.getCombatRooms();
        for (int i = 0; i < rooms.length; i++){
            this.combatRooms[i] = new MonsterRoom(
@@ -23,7 +23,7 @@ public class Dungeon {
                    maxWaves,
                    minEnemies,
                    maxEnemies,
-                   EnemyTemplates.getEnemyTemplates(),
+                   EnemyTemplates.getEnemyTemplates(type),
                    rooms[i].getValidTileMatrix(),
                    rooms[i].getDoors());
        }
