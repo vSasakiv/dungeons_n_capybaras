@@ -37,7 +37,6 @@ public class Door extends CollidableObject {
     @Override
     public void draw(Graphics2D g2d, GameEntity player){
         spriteCounterUpdate();
-        this.hitbox.draw(g2d, player);
         //Portas horizontais
         if (this.width >= this.height) {
             for (int i = 1; i < width/Constants.TILE_SIZE - 1; i++) {
