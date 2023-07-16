@@ -6,8 +6,10 @@ public class EletricaDungeonFactory implements DungeonAbstractFactory{
     @Override
     public ArrayList<DungeonTile> createRoom() {
         ArrayList<DungeonTile> rooms = new ArrayList<>();
+        rooms.add(new DungeonTile("/src/resources/dungeons/eletrica/EletricaStart.xml"));
         rooms.add(new DungeonTile("/src/resources/dungeons/eletrica/EletricaRoom_1.xml"));
         rooms.add(new DungeonTile("/src/resources/dungeons/eletrica/EletricaRoom_2.xml"));
+        rooms.add(new DungeonTile("/src/resources/dungeons/eletrica/EletricaBossRoom.xml"));
         return rooms;
     }
 
