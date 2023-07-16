@@ -13,8 +13,10 @@ public class KeyHandler extends KeyAdapter {
     private boolean keyS; // true se tecla S está pressionada
     private boolean keyD; // true se tecla D está pressionada
     private boolean keyN; // true se tecla N está pressionada
-
     private boolean keyEnter;
+    private boolean keyEsc;
+    private boolean keyF;
+    private boolean keyM;
 
     /**
      * Construtor padrão, que inicializa os atributos boolean como falsos
@@ -26,6 +28,9 @@ public class KeyHandler extends KeyAdapter {
         this.keyD = false;
         this.keyN = false;
         this.keyEnter = false;
+        this.keyEsc = false;
+        this.keyF = false;
+        this.keyM = false;
     }
 
     /**
@@ -41,6 +46,9 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_D -> keyD = true;
             case KeyEvent.VK_N -> keyN = true;
             case KeyEvent.VK_ENTER -> keyEnter = true;
+            case KeyEvent.VK_ESCAPE -> keyEsc = true;
+            case KeyEvent.VK_F -> keyF = true;
+            case KeyEvent.VK_M -> keyM = true;
         }
     }
 
@@ -57,6 +65,9 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_D -> keyD = false;
             case KeyEvent.VK_N -> keyN = false;
             case KeyEvent.VK_ENTER -> keyEnter = false;
+            case KeyEvent.VK_ESCAPE -> keyEsc = false;
+            case KeyEvent.VK_F -> keyF = false;
+            case KeyEvent.VK_M -> keyM = false;
         }
     }
 
@@ -104,6 +115,34 @@ public class KeyHandler extends KeyAdapter {
     public boolean isKeyEnter() { return keyEnter; }
 
     public void setKeyEnter(boolean keyEnter) {this.keyEnter = keyEnter; }
+
+    public boolean isKeyEsc() {
+        return keyEsc;
+    }
+
+    public void setKeyEsc(boolean keyEsc) {
+        this.keyEsc = keyEsc;
+    }
+
+    public void setKeyD(boolean keyD) {
+        this.keyD = keyD;
+    }
+
+    public boolean isKeyF() {
+        return keyF;
+    }
+
+    public void setKeyF(boolean keyF) {
+        this.keyF = keyF;
+    }
+
+    public boolean isKeyM() {
+        return keyM;
+    }
+
+    public void setKeyM(boolean keyM) {
+        this.keyM = keyM;
+    }
 
     /**
      * Verifica se alguma tecla está sendo pressionada

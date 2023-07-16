@@ -22,10 +22,11 @@ public class GameState {
         this.keyHandler = new KeyHandler();
         this.mouseHandler = new MouseHandler();
         this.currentState = StateEnum.mapState;
-        this.stateList = new State[3];
+        this.stateList = new State[4];
         this.stateList[0] = new MapState(keyHandler);
         this.stateList[1] = new DungeonState(keyHandler, mouseHandler);
         this.stateList[2] = new DialogueState(keyHandler);
+        this.stateList[3] = new MenuState(keyHandler);
         this.stateList[currentState.estadoAtual].playMusic(0);
     }
 
@@ -53,7 +54,8 @@ public class GameState {
                 } else if (stateList[0].nextState() == -2) {
                     this.currentState = StateEnum.dialogueState;
                     stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
-                    stateList[0].setMapNum(0);
+                    MapState mapState = (MapState) stateList[0];
+                    stateList[0].setMapNum(mapState.getMapNum());
                 } else if (stateList[0].nextState() == -3) {
                     stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dungeonState;
@@ -63,6 +65,10 @@ public class GameState {
                     stateList[1].setMapNum(1);
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 42, Constants.TILE_SIZE * 42);
                     stateList[currentState.estadoAtual].playMusic(0);
+                } else if (stateList[0].nextState() == -4){
+                    this.currentState = StateEnum.menuState;
+                    MapState mapState = (MapState) stateList[0];
+                    stateList[0].setMapNum(mapState.getMapNum());
                 }
             }
             case dungeonState -> {
@@ -77,6 +83,14 @@ public class GameState {
             case dialogueState -> {
                 if (stateList[2].nextState() != 2){
                     this.currentState = StateEnum.mapState;
+                }
+            }
+            case menuState -> {
+                if (stateList[3].nextState() != 3){
+                    this.currentState = StateEnum.mapState;
+                    MenuState menu = (MenuState) stateList[3];
+                    DungeonState dungeon = (DungeonState) stateList[1];
+                    dungeon.setDifficultyState(menu.getDifficulty());
                 }
             }
         }
