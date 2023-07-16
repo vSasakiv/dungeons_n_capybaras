@@ -3,6 +3,7 @@ package game_entity;
 import game_entity.entity_sprites.MovingEntitySprites;
 import gameloop.Constants;
 import gameloop.KeyHandler;
+import gameloop.game_states.PlayerSound;
 import gameloop.render.DrawMovingEntity;
 import gameloop.render.DrawPlayer;
 
@@ -18,6 +19,7 @@ public class MapPlayer extends GameEntity{
     private final Hitbox hitbox;
     protected ArrayList<MovingEntitySprites> playerSprites;
     DrawMovingEntity drawMethod;
+    private PlayerSound playerSound;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
@@ -35,6 +37,7 @@ public class MapPlayer extends GameEntity{
         this.hitbox = new Hitbox((float) Constants.TILE_SIZE * 2 / 3, (float) Constants.TILE_SIZE * 2 / 3, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.loadSprites();
         drawMethod = new DrawPlayer(this, playerSprites);
+        playerSound = new PlayerSound();
     }
 
     protected void loadSprites() {
@@ -48,6 +51,16 @@ public class MapPlayer extends GameEntity{
         this.setDirection(DirectionUpdater.updateDirection(keyHandler, drawMethod));
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.hitbox.setPosition(this.position);
+        System.out.println(drawMethod.getSpriteCounter() * this.velocity);
+        if ((drawMethod.getSpriteCounter() * velocity) % 10  == 0 && getDirection() != Constants.NULL_VECTOR)
+            playSound(0, 0.1F);
+
+    }
+
+    public void playSound (int index, float volume) {
+        playerSound.setSoundFile(index);
+        playerSound.setVolume(volume, "SOUND");
+        playerSound.playSound();
     }
 
 

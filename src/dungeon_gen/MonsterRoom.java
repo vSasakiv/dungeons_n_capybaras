@@ -72,9 +72,12 @@ public class MonsterRoom extends DungeonRoom {
     public boolean hasWaves(){
         return this.hasWaves;
     }
-    public void killEnemies(){
+
+    public boolean killEnemies(){
+        boolean removed = false;
         if (this.hasWaves)
-            this.enemyWaves.get(this.currentWave).removeIf(Enemy::isDead);
+            removed = this.enemyWaves.get(this.currentWave).removeIf(Enemy::isDead);
+        return removed;
     }
 
     public void drawDoors(Graphics2D g2d, GameEntity player) {
@@ -110,5 +113,9 @@ public class MonsterRoom extends DungeonRoom {
             return this.getDoors();
         }
         return new ArrayList<>();
+    }
+
+    public int getCurrentWaveNumber () {
+        return this.currentWave;
     }
 }

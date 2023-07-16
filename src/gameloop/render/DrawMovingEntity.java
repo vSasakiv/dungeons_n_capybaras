@@ -90,4 +90,8 @@ public class DrawMovingEntity implements Draw {
     public void setSpritesSelect(int spritesSelect) {
         this.spritesSelect = spritesSelect;
     }
+
+    public int getSpriteCounter() {
+        return spriteCounter;
+    }
 }

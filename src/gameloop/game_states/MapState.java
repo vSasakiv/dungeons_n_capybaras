@@ -86,25 +86,26 @@ public class MapState implements State{
         maps.get(mapNum).tick(mapPlayer.getPosition());
         nextState = mapNum;
         mapNum = this.maps.get(mapNum).getTilemap().changeStrategy.changeMap(mapPlayer, mapNum);
-
         if (this.keyHandler.isKeyEnter()) {
             if (mapNum < 0)
                 nextState = mapNum;
             else
                 for (MovableNpc npc: maps.get(mapNum).getNpcs()){
                     if (npc.isColliding(this.mapPlayer.getHitbox())){
+                        playSound(0, 0.5F);
                         nextState = -2;
                         this.currentDialogue = npc.getDialogues()[0];
                     }
                 }
             this.keyHandler.setKeyEnter(false);
         } else if (mapNum < 0) {
+            if (!dungeonEntrance)
+                playSound(0, 0.5F);
             mapNum = nextState;
             dungeonEntrance = true;
             currentDialogue = "Você está na entrada de uma dungeon!\nAperte ENTER se quiser entrar.\nCuidado! Uma vez dentro, não há como voltar...";
         } else
             dungeonEntrance = false;
-
 
         this.mapPlayer.setVelocity(currentState.estadoAtual);
     }
@@ -162,16 +163,16 @@ public class MapState implements State{
         }
     }
 
-    public void playMusic (int index) {
+    public void playMusic (int index, float volume) {
         sound.setMusicFile(index);
-        sound.setVolume(0.01F, "MUSIC");
+        sound.setVolume(volume, "MUSIC");
         sound.playMusic();
         sound.loop();
     }
 
-    public void playSound(int index) {
+    public void playSound(int index, float volume) {
         sound.setSoundFile(index);
-        sound.setVolume(0.01F, "SOUND");
+        sound.setVolume(volume, "SOUND");
         sound.playSound();
     }
 

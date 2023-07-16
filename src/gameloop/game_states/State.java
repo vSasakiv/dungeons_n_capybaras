@@ -8,7 +8,7 @@ import java.awt.*;
 public interface State {
     void tick();
     void draw(Graphics2D g2d);
-    void playMusic (int index);
+    void playMusic (int index, float volume);
     void stopMusic();
     int nextState();
     void setMapNum(int mapNum);

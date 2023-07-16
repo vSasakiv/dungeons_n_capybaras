@@ -79,13 +79,19 @@ public class  DungeonState implements State{
     }
 
     public void updateRooms(){
+        boolean enemyKilled;
         for (MonsterRoom monsterRoom: this.dungeon.getCombatRooms()){
             monsterRoom.startWaves(dungeonPlayer);
             if (monsterRoom.hasWaves()){
                 monsterRoom.nextWave();
                 this.enemies.addAll(monsterRoom.getCurrentWave());
             }
-            monsterRoom.killEnemies();
+            enemyKilled = monsterRoom.killEnemies();
+            if (enemyKilled)
+                playSound(1, 0.05F);
+            if (enemyKilled && monsterRoom.getEnemyWaves().get(monsterRoom.getCurrentWaveNumber()).isEmpty())
+                playSound(3, 0.1F);
+
             this.collidableObjects.addAll(monsterRoom.getActiveDoors());
             //System.out.println(this.collidableObjects);
         }
@@ -119,10 +125,12 @@ public class  DungeonState implements State{
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);
                 e.gotHit(1);
+                playSound(2, 0.1F);
             }
             for (Projectile p: e.getRangedAttacks()){
                 if (p.getHitbox().isHitting(dungeonPlayer.getHitbox())) {
                     dungeonPlayer.gotHit(e.getWeapon().getDamage());
+                    playSound(2, 0.1F);
                     p.setCollided(true);
                 }
                 for (CollidableObject collidable: this.collidableObjects){
@@ -148,8 +156,12 @@ public class  DungeonState implements State{
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
         if (dungeonPlayer.getAttributes().isDead()){
-            this.playSound(0);
+            this.playSound(0, 0.5F);
             this.setMapNum(-1);
+        }
+
+        if (mouseHandler.isMousePress() && dungeonPlayer.getWeapon().canShoot()) {
+            playSound(4, 0.1F);
         }
         enemies.clear();
 
@@ -199,16 +211,16 @@ public class  DungeonState implements State{
         this.dungeonPlayer.getAttributes().draw(g2d);
     }
 
-    public void playMusic (int index) {
+    public void playMusic (int index, float volume) {
         sound.setMusicFile(index);
         sound.playMusic();
         sound.loop();
-        sound.setVolume(0.1F, "MUSIC");
+        sound.setVolume(volume, "MUSIC");
     }
 
-    public void playSound(int index) {
+    public void playSound(int index, float volume) {
         sound.setSoundFile(index);
-        sound.setVolume(0.5F, "SOUND");
+        sound.setVolume(volume, "SOUND");
         sound.playSound();
     }
 

@@ -8,6 +8,9 @@ public class MapSound extends GameSound {
         musicURL[0] = getClass().getResource("/resources/sounds/Adventure_Begin.wav");
         musicURL[1] = getClass().getResource("/resources/sounds/Peaceful.wav");
         musicURL[2] = getClass().getResource("/resources/sounds/End_Theme.wav");
+
+        soundURL = new URL[2];
+        soundURL[0] = getClass().getResource("/resources/sounds/Voice1.wav");
     }
 
 }
