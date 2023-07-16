@@ -51,7 +51,7 @@ public class MapPlayer extends GameEntity{
         this.setDirection(DirectionUpdater.updateDirection(keyHandler, drawMethod));
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.hitbox.setPosition(this.position);
-        if ((drawMethod.getSpriteCounter() * velocity) % 10  == 0 && getDirection() != Constants.NULL_VECTOR)
+        if (drawMethod.getSpriteCounter() == 0 && getDirection() != Constants.NULL_VECTOR)
             playSound(0, 0.1F);
 
     }
