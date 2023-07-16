@@ -7,8 +7,6 @@ import game_entity.Vector;
 import game_entity.npcs.OldManNpc;
 import game_entity.npcs.MovableNpc;
 import game_entity.npcs.PatrolStrategy;
-import game_entity.static_entities.CollidableObject;
-import game_entity.static_entities.Door;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.Map;
@@ -53,12 +51,10 @@ public class MapState implements State{
                 mapPlayer,
                 new EstacionamentoStrategy());
 
-        CollidableObject randomDoor = new Door(275, 566, 50 ,50);
         MovableNpc convictus1 = new OldManNpc(300, 600, 2);
         convictus1.setStrategy(new PatrolStrategy((GameEntity) convictus1, new Vector(300, 900)));
 
         Map estacionamento = new Map(estacionamentoMap);
-        estacionamento.addCollidable(randomDoor);
         estacionamento.addNpc(convictus1);
         maps.add(estacionamento);
 
@@ -67,9 +63,14 @@ public class MapState implements State{
                 "/src/resources/maps/BienioSup/BienioSup.xml",
                 mapPlayer,
                 new BienioSupStrategy());
-        CollidableObject randomDoor2 = new Door(1361, 1243, 50 ,50);
+        MovableNpc convictus2 = new OldManNpc(512, 2160, 3);
+        convictus2.setStrategy(new PatrolStrategy((GameEntity) convictus2, new Vector(890, 2160)));
+        MovableNpc convictus3 = new OldManNpc(197, 1134, 2);
+        convictus3.setStrategy(new PatrolStrategy((GameEntity) convictus3, new Vector(682, 1134)));
+
         Map bienioSup = new Map(bienioSupMap);
-        bienioSup.addCollidable(randomDoor2);
+        bienioSup.addNpc(convictus2);
+        bienioSup.addNpc(convictus3);
         maps.add(bienioSup);
 
         this.currentState = MapPlayerStateEnum.DEFAULT; //Estado inicial
@@ -80,6 +81,7 @@ public class MapState implements State{
     @Override
     public void tick() {
         mapPlayer.tick(keyHandler);
+        System.out.println("x: " + mapPlayer.getPosition().x + "y: " + mapPlayer.getPosition().y);
 
         //Verifica colisão com o player
         Layer layer = maps.get(mapNum).getTilemap().getCollisionLayer();
