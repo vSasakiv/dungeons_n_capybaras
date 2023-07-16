@@ -1,10 +1,7 @@
 package game_entity.weapons.projectiles;
 
 import game_entity.Vector;
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Classe que implementa uma fábrica abstrata de projéteis, utilizada para criar objetos da classe
@@ -19,10 +16,10 @@ public class BulletFactory implements ProjectileFactory {
      * @param velocity velocidade de cada projétil
      * @param hitboxRadius raio da hitbox de cada projétil
      */
-    public BulletFactory(int velocity, float hitboxRadius) {
+    public BulletFactory(int velocity, float hitboxRadius, String projectileType) {
         this.velocity = velocity;
         this.hitboxRadius = hitboxRadius;
-        this.getImage();
+        this.image = ProjectileSpriteProvider.getProjectileSprite(projectileType);
     }
 
     /**
@@ -39,17 +36,9 @@ public class BulletFactory implements ProjectileFactory {
                 this.velocity,
                 direction,
                 new ProjectileHitbox(new Vector(posX, posY), this.hitboxRadius),
-                this.image);
+                this.image
+        );
     }
 
-    /**
-     * Método responsável por carregar sprites
-     */
-    private void getImage () {
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Arrow.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

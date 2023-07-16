@@ -2,7 +2,7 @@ package game_entity.mobs;
 
 import game_entity.*;
 import game_entity.entity_sprites.*;
-import game_entity.entity_sprites.mobs.LarvaSprite;
+import game_entity.entity_sprites.mobs.AntSprite;
 import game_entity.weapons.AttackResults;
 import game_entity.weapons.Weapon;
 import gameloop.Constants;
@@ -33,7 +33,7 @@ public class Enemy extends AttackingEntity {
         this.setHitbox(hitbox);
         this.setAttributes(atributos);
         ArrayList<MovingEntitySprites> sprites = new ArrayList<>();
-        sprites.add(new LarvaSprite());
+        sprites.add(new AntSprite());
         this.drawMethod = new DrawMovingEntity(this, sprites);
         this.setSpriteSizeX(Constants.TILE_SIZE);
         this.setSpriteSizeY(Constants.TILE_SIZE);

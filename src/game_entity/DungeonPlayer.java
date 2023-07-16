@@ -67,7 +67,7 @@ public class DungeonPlayer extends AttackingEntity{
             direction = Vector.unitVector(direction);
             results = this.getWeapon().attack(
                     (int) this.getWorldPosX(),
-                    (int) this.getWorldPosY(),
+                    (int) (this.getWorldPosY() + this.getSpriteSizeY()/6),
                     direction
             );
         }

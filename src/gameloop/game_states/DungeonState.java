@@ -7,8 +7,8 @@ import game_entity.DungeonPlayer;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
 import game_entity.static_entities.CollidableObject;
+import game_entity.weapons.AutomaticWeapon;
 import game_entity.weapons.MeleeWeaponAttack;
-import game_entity.weapons.MultiShotWeapon;
 import game_entity.weapons.projectiles.BulletFactory;
 import game_entity.weapons.projectiles.ClusterBulletFactory;
 import game_entity.weapons.projectiles.Projectile;
@@ -23,7 +23,6 @@ import gameloop.sound.GameSound;
 import tile.Layer;
 import tile.ZonaAbertaStrategy;
 import tile.dungeon.TileDungeonManager;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -49,11 +48,11 @@ public class  DungeonState implements State{
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
         dungeonPlayer = new DungeonPlayer(600, 600, 30);
 
-        ProjectileFactory subSubFactory = new BulletFactory(4, 6);
-        ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory );
-        ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, 6, subFactory);
+        ProjectileFactory subSubFactory = new BulletFactory(4, 6, "ENERGY");
+        ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory, "ENERGY" );
+        ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, 6, subFactory, "ENERGY");
         //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
-        dungeonPlayer.setWeapon(new MultiShotWeapon(5, 4, factory, 30, 3));
+        dungeonPlayer.setWeapon(new AutomaticWeapon(5, 4, factory, "STAFF"));
 
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
