@@ -18,7 +18,7 @@ public class MapPlayer extends GameEntity{
     private final Hitbox hitbox;
     protected ArrayList<MovingEntitySprites> playerSprites;
     DrawMovingEntity drawMethod;
-    private PlayerSound playerSound;
+    private final PlayerSound playerSound;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada

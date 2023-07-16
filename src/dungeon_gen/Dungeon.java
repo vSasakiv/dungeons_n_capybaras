@@ -15,7 +15,7 @@ public class Dungeon {
     public Dungeon() {}
 
     /**
-     * @param tipo tipo de dungeon a ser gerado, deve ser "eletrica" ou "bienio"
+     * @param type tipo de dungeon a ser gerado, deve ser "eletrica" ou "bienio"
      * @param size tamanho da dungeon a ser gerada,
      * @param maxWaves número máximo de ondas por sala de combate
      * @param minEnemies número mínimo de inimigos por onda na sala de combate

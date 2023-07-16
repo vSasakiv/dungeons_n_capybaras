@@ -14,16 +14,6 @@ public abstract class CollidableObject extends GameObject {
     /**
      * @param worldPosX posição x do objeto
      * @param worldPosY posição y do objeto
-     * @param hitbox hitbox do objeto
-     */
-    public CollidableObject(float worldPosX, float worldPosY, Hitbox hitbox) {
-        super(worldPosX, worldPosY);
-        this.hitbox = hitbox;
-    }
-
-    /**
-     * @param worldPosX posição x do objeto
-     * @param worldPosY posição y do objeto
      * @param width largura da hitbox do objeto
      * @param height altura da hitbox do objeto
      */

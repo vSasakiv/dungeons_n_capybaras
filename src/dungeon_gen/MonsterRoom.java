@@ -114,6 +114,7 @@ public class MonsterRoom extends DungeonRoom {
         }
     }
 
+    // Método para testes
     public void drawSpawnable(Graphics2D g2d, GameEntity player){
         for (int i = 0; i < this.getValidTileMatrix()[0].length; i++) {
             for (int j = 0; j < this.getValidTileMatrix().length; j++) {

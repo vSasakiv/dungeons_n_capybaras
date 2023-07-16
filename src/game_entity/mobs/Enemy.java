@@ -15,7 +15,7 @@ public class Enemy extends AttackingEntity {
     public Hitbox hitbox; // Hitbox do inimigo
     private final DrawMovingEntity drawMethod;
     private EnemyStrategy estrategia; // Estratégia que o inimigo segue
-    private String type;
+    private final String type;
 
     /**
      * Construtor da entidade, numa posição predeterminada

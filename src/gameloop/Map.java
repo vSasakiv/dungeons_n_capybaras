@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Classe que representa um mapa
  */
 public class Map {
-    private MapTileManager tilemap; //Gerenciador do mapa
+    private final MapTileManager tilemap; //Gerenciador do mapa
     ArrayList<CollidableObject> objects = new ArrayList<>(); //Lista de objetos colidíveis
     ArrayList<MovableNpc> npcs = new ArrayList<>(); // Lista de npcs
 

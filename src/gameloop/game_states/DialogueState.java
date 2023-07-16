@@ -15,7 +15,6 @@ import java.util.Objects;
 public class DialogueState implements State{
 
     private final KeyHandler keyHandler;
-    private int nextState;
     private boolean exit = false;
     private String currentDialogue;
     private BufferedImage dialogueWindow;
@@ -98,14 +97,11 @@ public class DialogueState implements State{
     @Override
     public int nextState() {
         if (exit){
-            return nextState;
+            return 0;
         }
         return 2;
     }
 
-    public void setNextState(int next){
-        this.nextState = next;
-    }
     @Override
     public void setMapNum(int mapNum) {}
 

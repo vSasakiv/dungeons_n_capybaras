@@ -209,7 +209,7 @@ public class DungeonGenerator {
     }
 
     /**
-     * estende uma matriz de colisões, isto é, para cada tile de colisão, transforma todos os adjacentes, inclusive
+     * Estende uma matriz de colisões, isto é, para cada tile de colisão, transforma todos os adjacentes, inclusive
      * diagonais em tiles de colisão
      * @param matrixCollisions matriz de colisões
      * @return matriz de colisões estendidas
