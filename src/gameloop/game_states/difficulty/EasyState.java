@@ -23,6 +23,10 @@ public class EasyState implements DifficultyState {
         enemy.getAttributes().setIncremented(0);
     }
 
+    /**
+     *  Cria player para dada dificuldade
+     * @return player da dificuldade selecionada
+     */
     @Override
     public DungeonPlayer getPlayer() {
         DungeonPlayer player = new DungeonPlayer(600, 600, 10);

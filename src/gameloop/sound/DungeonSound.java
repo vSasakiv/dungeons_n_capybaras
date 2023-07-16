@@ -2,6 +2,9 @@ package gameloop.sound;
 
 import java.net.URL;
 
+/**
+ * Classe que carrega os arquivos de áudio usados em dungeons
+ */
 public class DungeonSound extends GameSound {
     public DungeonSound () {
         musicURL = new URL[4];

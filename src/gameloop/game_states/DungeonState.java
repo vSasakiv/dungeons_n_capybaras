@@ -2,7 +2,6 @@ package gameloop.game_states;
 
 import dungeon_gen.Dungeon;
 import dungeon_gen.MonsterRoom;
-import game_entity.Hitbox;
 import game_entity.DungeonPlayer;
 import game_entity.Vector;
 import game_entity.mobs.Enemy;
@@ -42,13 +41,6 @@ public class  DungeonState implements State{
     private final GameSound sound = new DungeonSound();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-       /* dungeonPlayer = new DungeonPlayer(600, 600, 10);
-
-        ProjectileFactory subSubFactory = new BulletFactory(4, 6, "ENERGY");
-        ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory, "ENERGY" );
-        ProjectileFactory factory = new ClusterBulletFactory(4, 50, 4, 6, subFactory, "ENERGY");
-        //player.setWeapon(new MeleeWeapon(20, 4, 50, 50, 30));
-        dungeonPlayer.setWeapon(new AutomaticWeapon(5, 4, factory, "STAFF"));*/
         dungeonPlayer = difficultyState.getPlayer();
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseHandler;
@@ -174,6 +166,7 @@ public class  DungeonState implements State{
             }
         }
     }
+
     @Override
     public void tick() {
         dungeonPlayer.tick(keyHandler, mouseHandler); //Atualiza as informações do player
@@ -199,40 +192,43 @@ public class  DungeonState implements State{
         mapNum = this.tileManager.changeStrategy.changeMap(dungeonPlayer, mapNum);
     }
 
+    /**
+     * Desenha elementos da dungeon na tela
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
-        // exemplo
-        g2d.setColor(Color.BLACK);
+        Color color = new Color(21, 21, 21);
+        g2d.setColor(color);
+        g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT); //desenha fundo do mapa
 
         if (mapNum >= 0)
-            this.tileManager.draw(g2d);
-        //gameState.tm.render(g2d);
+            this.tileManager.draw(g2d); //desenha o mapa atual
 
-        for (MonsterRoom room: this.dungeon.getCombatRooms()){
+        //desenha portas
+        for (MonsterRoom room: this.dungeon.getCombatRooms())
             room.drawDoors(g2d, this.dungeonPlayer);
-            room.drawSpawnable(g2d, this.dungeonPlayer);
-        }
 
-        for (Projectile p : this.getProjectiles()){
+
+        //desenha projéteis
+        for (Projectile p : this.getProjectiles())
             p.draw(g2d, this.dungeonPlayer);
-            p.getHitbox().draw(g2d, this.dungeonPlayer);
-        }
 
-        this.dungeonPlayer.draw(g2d);
-        g2d.setColor(Color.red);
 
-        for (Enemy e: this.enemies) {
+        this.dungeonPlayer.draw(g2d); //desenha o player
+
+        //Desenha inimigos
+        for (Enemy e: this.enemies)
             e.draw(g2d);
-            e.hitbox.draw(g2d, this.dungeonPlayer);
-        }
-        for (Hitbox h: this.getWeaponHitbox())
-            h.draw(g2d, this.dungeonPlayer);
-        this.dungeonPlayer.getHitbox().draw(g2d, this.dungeonPlayer);
-        this.dungeonPlayer.getAttributes().draw(g2d);
+
+        this.dungeonPlayer.getAttributes().draw(g2d); //Desenha barras de atributos
     }
 
+    /**
+     * Toca músicas do mapa em loop
+     * @param index index da música
+     * @param volume volume
+     */
     public void playMusic (int index, float volume) {
         sound.setMusicFile(index);
         sound.playMusic();
@@ -240,12 +236,20 @@ public class  DungeonState implements State{
         sound.setVolume(volume, "MUSIC");
     }
 
+    /**
+     * Toca efeitos sonoros no mapa
+     * @param index índice do efeito sonoro na lista
+     * @param volume volume
+     */
     public void playSound(int index, float volume) {
         sound.setSoundFile(index);
         sound.setVolume(volume, "SOUND");
         sound.playSound();
     }
 
+    /**
+     * Interrompe loop da música
+     */
     public void stopMusic () {
         sound.stop();
     }
@@ -274,11 +278,14 @@ public class  DungeonState implements State{
     public void setMapNum(int mapNum) {
         this.mapNum = mapNum;
     }
-
     public void setDefaultPosition(int x, int y) {
         this.dungeonPlayer.setPosition(new Vector(x, y));
     }
 
+    /**
+     * Altera dificuldade da dungeon
+     * @param difficultyState Nova dificuldade
+     */
     public void setDifficultyState(DifficultyState difficultyState) {
         this.difficultyState = difficultyState;
         this.dungeonPlayer = difficultyState.getPlayer();

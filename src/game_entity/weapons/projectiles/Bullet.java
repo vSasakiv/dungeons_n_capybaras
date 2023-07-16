@@ -57,21 +57,6 @@ public class Bullet extends Projectile{
      */
     public void draw(Graphics2D g2d, GameEntity entity) {
         drawMethod.draw(g2d, entity);
-        /*AffineTransform original = g2d.getTransform();
-        g2d.translate(
-                this.getWorldPosX() - entity.getWorldPosX() + entity.getScreenX() + (double) entity.getSpriteSizeX() / 2,
-                16 + this.getWorldPosY() - entity.getWorldPosY() + entity.getScreenY() + (double) entity.getSpriteSizeY() / 2
-        );
-        g2d.rotate(Vector.getDegree(this.direction));
-        g2d.drawImage(
-                this.image,
-                -this.getSpriteSizeX() / 2,
-                -this.getSpriteSizeY() / 2,
-                this.getSpriteSizeX(),
-                this.getSpriteSizeY(),
-                null
-        );
-        g2d.setTransform(original);*/
     }
 
     /**

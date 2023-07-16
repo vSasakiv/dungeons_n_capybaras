@@ -9,11 +9,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Desenha entidades que se movem na tela
+ */
 public class DrawMovingEntity implements Draw {
     protected String spriteDirection;
     private final GameEntity entity;
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
-    protected int spriteNumber = 0;
+    protected int spriteNumber = 0; //Número do sprite na animação
     protected final ArrayList<MovingEntitySprites> entitySprites;
     protected Vector direction;
     protected int spritesSelect;
@@ -24,6 +27,10 @@ public class DrawMovingEntity implements Draw {
         this.entitySprites = movingEntitySprites;
     }
 
+    /**
+     * Desenha os elementos na tela
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw(Graphics2D g2d) {
         BufferedImage playerImage = getEntityImage();
@@ -39,8 +46,8 @@ public class DrawMovingEntity implements Draw {
     }
 
     /**
-     * Atualiza a direção do sprite, com base na movimentação do player
-     * @param direction Direção do movimento do player
+     * Atualiza a direção do sprite, com base na movimentação da entidade
+     * @param direction Direção do movimento da entidade
      */
     public void spriteUpdate(Vector direction) {
         if (Vector.vectorEquals(direction, Constants.DIRECTION_UP)) {
@@ -59,6 +66,10 @@ public class DrawMovingEntity implements Draw {
         }
     }
 
+    /**
+     * Seleciona sprite da entidade com base na sua direção
+     * @return Sprite na direção atualizada
+     */
     protected BufferedImage getEntityImage() {
         BufferedImage playerImage = null;
         switch (spriteDirection) {

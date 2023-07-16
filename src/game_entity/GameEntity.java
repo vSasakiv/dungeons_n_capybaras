@@ -8,7 +8,6 @@ public abstract class GameEntity extends GameObject{
     protected int velocity;
     private int SpriteSizeX;
     private int SpriteSizeY;
-
     private Vector direction = null;
 
     /**

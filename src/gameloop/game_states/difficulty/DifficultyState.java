@@ -11,5 +11,5 @@ public interface DifficultyState {
      * @param enemy Inimigo do qual devemos atualizar os atributos
      */
     void updateAttributes(Enemy enemy);
-    DungeonPlayer getPlayer();
+    DungeonPlayer getPlayer(); //Retorna o player da dificuldade selecionada
 }

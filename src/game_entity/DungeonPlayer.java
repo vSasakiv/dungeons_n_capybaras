@@ -49,6 +49,7 @@ public class DungeonPlayer extends AttackingEntity{
         this.hitbox.setPosition(this.position);
     }
 
+    //Carrega os sprites do player
     protected void loadSprites() {
         playerSprites = new ArrayList<>();
         playerSprites.add(PlayerSpriteFactory.create("default"));

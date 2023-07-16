@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Fábrica que retorna o sprite de um projétil selecionado por "type"
+ */
 public class ProjectileSpriteProvider {
     public static HashMap<String, BufferedImage> spriteMap = new HashMap<>();
     public static BufferedImage getProjectileSprite(String type){
@@ -20,7 +23,6 @@ public class ProjectileSpriteProvider {
             spriteMap.put("FLAME", ImageIO.read(Objects.requireNonNull(ProjectileSpriteProvider.class.getResourceAsStream("/resources/mobs/flame/flameProjectile.png"))));
             spriteMap.put("SHURIKEN", ImageIO.read(Objects.requireNonNull(ProjectileSpriteProvider.class.getResourceAsStream("/resources/weapons/Shuriken.png"))));
             spriteMap.put("ENERGY", ImageIO.read(Objects.requireNonNull(ProjectileSpriteProvider.class.getResourceAsStream("/resources/weapons/staffProjectile.png"))));
-
         } catch (Exception e) {
             e.printStackTrace();
         }

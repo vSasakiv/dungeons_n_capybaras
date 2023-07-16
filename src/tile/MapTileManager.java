@@ -132,7 +132,4 @@ public class MapTileManager implements TileManager{
     }
 
 
-    public ChangeTileStrategy getChangeStrategy() {
-        return changeStrategy;
-    }
 }

@@ -3,9 +3,13 @@ package game_entity.weapons;
 import game_entity.weapons.projectiles.BulletFactory;
 import game_entity.weapons.projectiles.ProjectileFactory;
 
+/**
+ * Templates para armas e projéteis usados pelas entidades
+ */
 public final class WeaponTemplates {
     private WeaponTemplates(){}
 
+    //Templates de projéteis
     public static final ProjectileFactory WEB = new BulletFactory(5, 10, "WEB");
     public static final ProjectileFactory EYE = new BulletFactory(7, 10, "EYE");
     public static final ProjectileFactory SLIME = new BulletFactory(3, 5, "SLIME");
@@ -15,6 +19,7 @@ public final class WeaponTemplates {
     public static final ProjectileFactory TWIG = new BulletFactory(5, 10, "TWIG");
     public static final ProjectileFactory FLAME = new BulletFactory(12, 5, "FLAME");
 
+    //Template de armas
     public static final Weapon WEB_WEAPON = new AutomaticWeapon(5, 2, WEB, "BOW");
     public static final Weapon EYE_WEAPON = new AutomaticWeapon(12, 1, EYE, "BOW");
     public static final Weapon SLIME_WEAPON = new AutomaticWeapon(8, 4, SLIME, "BOW");

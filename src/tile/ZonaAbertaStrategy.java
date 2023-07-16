@@ -13,7 +13,6 @@ public class ZonaAbertaStrategy extends ChangeTileStrategy{
     public ZonaAbertaStrategy() {
         regions = new ArrayList<>();
         regions.add(new int[]{Constants.TILE_SIZE * 19, Constants.TILE_SIZE * 28, Constants.TILE_SIZE * 49, Constants.TILE_SIZE * 49});
-
     }
 
     /**

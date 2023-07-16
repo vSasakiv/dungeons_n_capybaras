@@ -2,6 +2,9 @@ package gameloop.render;
 
 import java.awt.*;
 
-public interface    Draw {
+/**
+ * Interface para as classes responsáveis por desenhar elementos na tela
+ */
+public interface Draw {
     void draw (Graphics2D g2d);
 }

@@ -23,6 +23,7 @@ public class MenuState implements State {
     private BufferedImage dialogueWindow;
     private Font pixeled;
     private String currentDialogue;
+
     public MenuState(KeyHandler keyHandler) {
        this.keyHandler = keyHandler;
        this.difficulty = new EasyState();
@@ -60,6 +61,10 @@ public class MenuState implements State {
         }
     }
 
+    /**
+     * Desenha uma interface gráfica na tela: o menu de dificuldades.
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw(Graphics2D g2d) {
         String defaultText = "Seleciona a dificuldade desejada apertando no telcado o botão indicado:\nF - Fácil\nM - Médio\nD - Difícil";
@@ -91,6 +96,9 @@ public class MenuState implements State {
         g2d.drawString(currentDialogue, x, y);
     }
 
+    /**
+     * Carrega os recursos usados pela interface gráfica: fonte de texto e imagem do menu
+     */
     private void loadImage() {
         try {
             InputStream is = getClass().getResourceAsStream("/resources/UI/fonts/VCRosdNEUE.ttf");
@@ -110,6 +118,10 @@ public class MenuState implements State {
     public void stopMusic() {
     }
 
+    /**
+     * Método que decide o próximo estado
+     * @return índice do próximo estado
+     */
     @Override
     public int nextState() {
         if (this.exit){
@@ -120,17 +132,14 @@ public class MenuState implements State {
 
     @Override
     public void setMapNum(int mapNum) {
-
     }
 
     @Override
     public void setDefaultPosition(int x, int y) {
-
     }
 
     @Override
     public void setCurrentDialogue(String text) {
-
     }
 
     @Override

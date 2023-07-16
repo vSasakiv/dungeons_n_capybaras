@@ -2,6 +2,9 @@ package tile.dungeon;
 
 import java.util.ArrayList;
 
+/**
+ * Fábrica que cria espaços relacionados à dungeon do Eletrica.
+ */
 public class EletricaDungeonFactory implements DungeonAbstractFactory{
     @Override
     public ArrayList<DungeonTile> createRoom() {

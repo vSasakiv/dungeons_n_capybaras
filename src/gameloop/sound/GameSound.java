@@ -7,9 +7,13 @@ import java.util.Objects;
 public class GameSound {
     protected Clip musicClip;
     protected Clip soundClip;
-    protected URL[] musicURL;
-    protected URL[] soundURL;
+    protected URL[] musicURL; //Caminho para as músicas
+    protected URL[] soundURL; //Caminho para os sons
 
+    /**
+     * Atribui ao clip a música  número "index" da lista "musicURl".
+     * @param index número da música na lista
+     */
     public void setMusicFile(int index) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(musicURL[index]);
@@ -20,6 +24,10 @@ public class GameSound {
         }
     }
 
+    /**
+     * Atribui ao clip o som número "index" da lista "soundURl".
+     * @param index número do som na lista
+     */
     public void setSoundFile(int index) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[index]);
@@ -30,6 +38,9 @@ public class GameSound {
         }
     }
 
+    /*
+     Métodos que tocam os clips
+     */
     public void playMusic() {
         musicClip.start();
     }
@@ -37,14 +48,25 @@ public class GameSound {
         soundClip.start();
     }
 
+    /**
+     * Deixa a música tocando em loop
+     */
     public void loop() {
         musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Interrompe o loop da música
+     */
     public void stop() {
         musicClip.stop();
     }
 
+    /**
+     * Altera volume de uma música ou um som
+     * @param volume novo volume
+     * @param type parâmetro para alterar música ("MUSIC") ou som ("SOUND")
+     */
     public void setVolume(float volume, String type) {
         if (volume < 0f || volume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volume);

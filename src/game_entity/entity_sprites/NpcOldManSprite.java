@@ -2,6 +2,9 @@ package game_entity.entity_sprites;
 
 import tile.AnimationSprite;
 
+/**
+ * Carrega os sprites do npc Old Man
+ */
 public class NpcOldManSprite extends MovingEntitySprites {
 
     @Override

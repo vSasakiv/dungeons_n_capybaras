@@ -8,15 +8,21 @@ import java.util.Objects;
 
 import static game_entity.weapons.WeaponTemplates.*;
 
+/**
+ *  Templates para inimigos e seus atributos usados nas dungeons
+ */
 public final class EnemyTemplates {
 
     private EnemyTemplates(){}
 
+    //Template dos atributos dos inimigos
     public static final Attributes ATRIBUTOS_BASICO = new Attributes(2, 1, 0, 3);
     public static final Attributes ATRIBUTOS_TANQUE = new Attributes(5, 2, 0, 2);
     public static final Attributes ATRIBUTOS_FRACO = new Attributes(1, 1, 0, 1);
     public static final Hitbox HITBOX_NORMAL = new Hitbox(16, 16, new Vector(0, 0));
     public static final Hitbox HITBOX_GRANDE = new Hitbox(32, 32, new Vector(0, 0));
+
+    //Template dos inimigos
     public static final EnemyStrategy PASSIVE_BASICO = new PassiveStrategy(200, 400, 100, 10, 20);
     public static final EnemyStrategy AGGRESIVE_BASICO = new AggresiveStrategy(200, 300, 10, 20);
     public static final Enemy ANT = new Enemy(0, 0, 2, AGGRESIVE_BASICO, WEB_WEAPON, HITBOX_NORMAL, ATRIBUTOS_FRACO, "ANT");
@@ -30,6 +36,11 @@ public final class EnemyTemplates {
     public static final Enemy TWIG = new Enemy(0, 0, 2, PASSIVE_BASICO, TWIG_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "TWIG");
 
 
+    /**
+     * Seleciona o template com base no tipo de dungeon
+     * @param type tipo de dungeon
+     * @return templete selecionado
+     */
     public static ArrayList<Enemy> getEnemyTemplates(String type){
         ArrayList<Enemy> enemyTemplatesEletrica = new ArrayList<>();
         ArrayList<Enemy> enemyTemplatesBienio = new ArrayList<>();

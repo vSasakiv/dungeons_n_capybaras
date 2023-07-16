@@ -3,6 +3,9 @@ package game_entity.entity_sprites.mobs;
 import game_entity.entity_sprites.MovingEntitySprites;
 import tile.AnimationSprite;
 
+/**
+ * Carrega sprites do mob flame
+ */
 public class FlameSprite extends MovingEntitySprites {
     @Override
     protected void loadSprites() {

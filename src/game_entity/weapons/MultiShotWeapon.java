@@ -23,11 +23,13 @@ public class MultiShotWeapon extends Weapon{
     String weaponSprite;
 
     /**
+     *
      * @param fireRate velocidade de ataque da arma
      * @param damage dano de cada projétil da arma
      * @param projectileFactory Fábrica de projéteis
      * @param angulo angulo entre cada projétil
      * @param numeroProjeteis numero de projéteis por tiro
+     * @param weaponSprite Tipo de sprite da arma
      */
     public MultiShotWeapon(int fireRate, int damage, ProjectileFactory projectileFactory, int angulo, int numeroProjeteis, String weaponSprite) {
         super(fireRate, damage);

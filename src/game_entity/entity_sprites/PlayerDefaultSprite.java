@@ -2,6 +2,9 @@ package game_entity.entity_sprites;
 
 import tile.AnimationSprite;
 
+/**
+ * Carrega os sprites do player default
+ */
 public class PlayerDefaultSprite extends MovingEntitySprites{
     @Override
     protected void loadSprites() {

@@ -54,7 +54,4 @@ public class TileDungeonManager implements TileManager {
         return this.layers.get(this.layers.size() - 1);
     }
 
-    public ChangeTileStrategy getChangeStrategy() {
-        return changeStrategy;
-    }
 }

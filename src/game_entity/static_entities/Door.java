@@ -30,13 +30,15 @@ public class Door extends CollidableObject {
     }
 
     /**
+     * Desenha as portas com base na posição de uma entidade
      * @param g2d    Graphics2D java
-     * @param player Entidade a qual será desenhado relativo a
+     * @param player Entidade de referência
      */
     @Override
     public void draw(Graphics2D g2d, GameEntity player){
         spriteCounterUpdate();
         this.hitbox.draw(g2d, player);
+        //Portas horizontais
         if (this.width >= this.height) {
             for (int i = 1; i < width/Constants.TILE_SIZE - 1; i++) {
                 g2d.drawImage(
@@ -48,7 +50,7 @@ public class Door extends CollidableObject {
                         null
                 );
             }
-        } else {
+        } else { //Portas verticais
             for (int j = 2; j < height / Constants.TILE_SIZE - 1; j++) {
                 g2d.drawImage(
                         animation.getSpriteArray()[spriteNumber],
@@ -63,6 +65,9 @@ public class Door extends CollidableObject {
 
     }
 
+    /**
+     * Carrega sprites das portas
+     */
     private void loadImage () {
         try {
             int width = 16;
@@ -73,6 +78,9 @@ public class Door extends CollidableObject {
         }
     }
 
+    /**
+     * Contador para os sprites das portas, para fins de animação
+     */
     public void spriteCounterUpdate() {
         /*
          * Quando o contador spriteCounter atinge certo valor, ele atualiza o spriteNumber,

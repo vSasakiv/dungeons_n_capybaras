@@ -22,6 +22,7 @@ public class AutomaticWeapon extends Weapon{
      * @param fireRate taxa de disparo da arma (quanto maior mais rápida é a arma)
      * @param damage dano infligido por cada projétil
      * @param projectileFactory fábrica a partir da qual os projéteis serão gerados
+     * @param weaponSprite tipo de sprite da arma
      */
     public AutomaticWeapon(int fireRate, int damage, ProjectileFactory projectileFactory, String weaponSprite) {
         super(fireRate, damage);

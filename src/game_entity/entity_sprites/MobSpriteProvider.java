@@ -3,7 +3,9 @@ package game_entity.entity_sprites;
 import game_entity.entity_sprites.mobs.*;
 import java.util.HashMap;
 
-
+/**
+ * Fábrica que retorna os sprites de entidades que se movem com base no tipo selecionado
+ */
 public class MobSpriteProvider {
     public static HashMap<String, MovingEntitySprites> spriteMap = new HashMap<>();
 

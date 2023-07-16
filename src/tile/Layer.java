@@ -9,9 +9,9 @@ import gameloop.Constants;
 import java.awt.image.BufferedImage;
 
 public class Layer {
-    //Matriz com as imagens carregadas de uma layer que forma um mapa
-    private final BufferedImage[][] tileMap;
-    private CollidableTile[][] collisionLayer = null;
+    private final BufferedImage[][] tileMap; //Matriz com as imagens carregadas de uma layer que forma um mapa
+
+    private CollidableTile[][] collisionLayer = null; //Layer com tiles de colisão
     private boolean collision;
 
     /**
@@ -25,6 +25,7 @@ public class Layer {
     public Layer(String[] data, int width, int height, int fistGrid, Sprite sprite) {
         this.tileMap = loadLayer(data, width, height, fistGrid, sprite);
     }
+
     public Layer(int[][] data, int width, int height, int fistGid, Sprite sprite) {
         this.tileMap = loadLayer(data, width, height, fistGid, sprite);
     }
@@ -82,6 +83,12 @@ public class Layer {
         return tiles;
     }
 
+    /**
+     * Detecta colisão de uma entidade com os tiles de colisão da player.
+     * Corrige posição caso haja colisão.
+     * @param entity entidade
+     * @param hitbox hitbox considerada pra colisão
+     */
     public void collisionDetector(GameEntity entity, Hitbox hitbox) {
         if (collision) {
             float oldPosY = entity.getPosition().y;
@@ -106,6 +113,11 @@ public class Layer {
         }
     }
 
+    /**
+     * Detecta colisão de projéteis com os tiles de colisão.
+     * Corrige posição caso haja colisão.
+     * @param projectile projétil que colide
+     */
     public void collisionDetectorProjectile(Projectile projectile){
         if (collision) {
             int tileX = (int) (projectile.getWorldPosX() / Constants.TILE_SIZE);
@@ -120,6 +132,9 @@ public class Layer {
         }
     }
 
+    /**
+     * Atribui os tiles de colisão à layer de colisão caso colisão seja ativada.
+     */
     private void changeCollisionLayer () {
         if (collision) {
             collisionLayer = new CollidableTile[tileMap.length][tileMap[0].length];
@@ -148,7 +163,4 @@ public class Layer {
         changeCollisionLayer();
     }
 
-    public CollidableTile[][] getCollisionLayer() {
-        return collisionLayer;
-    }
 }

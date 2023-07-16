@@ -3,10 +3,9 @@ package game_entity;
 import game_entity.entity_sprites.MovingEntitySprites;
 import gameloop.Constants;
 import gameloop.KeyHandler;
-import gameloop.game_states.PlayerSound;
+import gameloop.sound.PlayerSound;
 import gameloop.render.DrawMovingEntity;
 import gameloop.render.DrawPlayer;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -40,6 +39,9 @@ public class MapPlayer extends GameEntity{
         playerSound = new PlayerSound();
     }
 
+    /**
+     * Carrega os sprites usados pelo player
+     */
     protected void loadSprites() {
         playerSprites = new ArrayList<>();
         playerSprites.add(PlayerSpriteFactory.create("default"));
@@ -56,6 +58,11 @@ public class MapPlayer extends GameEntity{
 
     }
 
+    /**
+     * Toca efeitos sonoros
+     * @param index índice do efeito sonoro na lista
+     * @param volume volume
+     */
     public void playSound (int index, float volume) {
         playerSound.setSoundFile(index);
         playerSound.setVolume(volume, "SOUND");
@@ -71,7 +78,10 @@ public class MapPlayer extends GameEntity{
         drawMethod.draw(g2d);
     }
 
-
+    /**
+     * Atualiza estado do player com base na tecla pressionada "n"
+     * @param keyHandler Entradas do teclado
+     */
     private void updateState(KeyHandler keyHandler){
         if (keyHandler.isKeyN()) {
             keyHandler.setKeyN(false);
@@ -101,6 +111,4 @@ public class MapPlayer extends GameEntity{
     public Hitbox getHitbox() {
         return hitbox;
     }
-
-
 }

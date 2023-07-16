@@ -2,6 +2,9 @@ package gameloop.sound;
 
 import java.net.URL;
 
+/**
+ * Classe que carrega os arquivos de áudio usados nos mapas
+ */
 public class MapSound extends GameSound {
     public MapSound () {
         musicURL = new URL[3];

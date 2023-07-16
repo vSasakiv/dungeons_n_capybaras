@@ -7,6 +7,9 @@ import tile.Layer;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Desenha um mapa na tela
+ */
 public class DrawTileManager implements Draw{
     int WorldRolls;
     int WorldColumns;
@@ -19,8 +22,13 @@ public class DrawTileManager implements Draw{
         this.player = player;
     }
 
+    /**
+     * Desenha um mapa na tela
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw (Graphics2D g2d) {
+        //Passa por todos os tiles do mapa
         for (int worldRow = 0; worldRow < WorldRolls; worldRow++) {
             for (int worldColumn = 0; worldColumn < WorldColumns; worldColumn++) {
                 int worldX = worldColumn * Constants.TILE_SIZE;
@@ -35,6 +43,7 @@ public class DrawTileManager implements Draw{
                         worldY - Constants.TILE_SIZE < player.getWorldPosY() + (float) Constants.HEIGHT /2) {
                     for (int i = 0; i < layers.size() - 1; i++) {
                         if (layers.get(i).getTileMap()[worldRow][worldColumn] != null)
+                            //Desenha mapa com o player centralizado no meio
                             g2d.drawImage(
                                     layers.get(i).getTileMap()[worldRow][worldColumn],
                                     screenX, screenY,
@@ -43,10 +52,6 @@ public class DrawTileManager implements Draw{
                                     null
                             );
                     }
-                    if (layers.get(layers.size() - 1).getTileMap()[worldRow][worldColumn] != null) {
-                        layers.get(layers.size() - 1).getCollisionLayer()[worldRow][worldColumn].draw(g2d, player);
-                    }
-
                 }
             }
         }

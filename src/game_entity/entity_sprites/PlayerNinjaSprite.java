@@ -2,6 +2,9 @@ package game_entity.entity_sprites;
 
 import tile.AnimationSprite;
 
+/**
+ * Carrega os sprites do player ninja
+ */
 public class PlayerNinjaSprite extends MovingEntitySprites{
     @Override
     protected void loadSprites() {

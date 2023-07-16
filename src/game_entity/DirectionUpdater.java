@@ -40,6 +40,11 @@ public class DirectionUpdater {
         return direction;
     }
 
+    /**
+     * Recebe uma direção qualquer e retorna uma direção conhecida aproximada
+     * @param direction direção qualquer
+     * @return direção conhecida
+     */
     public static Vector updateDirection(Vector direction) {
         Vector newDirection = Constants.NULL_VECTOR;
         double degree = Math.toDegrees(Vector.getDegree(direction));

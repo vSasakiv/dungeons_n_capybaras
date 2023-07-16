@@ -14,11 +14,11 @@ public class TilesetDocument extends MapDocument {
     /**
      * Classe que armazena atributos de um documento xml referente a um tileset
      * @param path caminho para o arquivo xml
-     * @param fistgid Número de identificação, no "data", do primeiro sprite
+     * @param firstgid Número de identificação, no "data", do primeiro sprite
      */
-    public TilesetDocument(String path, int fistgid) {
+    public TilesetDocument(String path, int firstgid) {
         this.getAttributes(path);
-        this.firstgid = fistgid;
+        this.firstgid = firstgid;
     }
 
     private void getAttributes(String path) {

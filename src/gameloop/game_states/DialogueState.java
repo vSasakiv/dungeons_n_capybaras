@@ -38,6 +38,9 @@ public class DialogueState implements State{
         }
     }
 
+    /**
+     * Carrega os recursos usados pela interface gráfica: fonte de texto e imagem do menu
+     */
     private void loadImage () {
         try {
             InputStream is = getClass().getResourceAsStream("/resources/UI/fonts/VCRosdNEUE.ttf");
@@ -49,6 +52,10 @@ public class DialogueState implements State{
         }
     }
 
+    /**
+     * Desenha uma interface gráfica na tela: a caixa de diálogo
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw(Graphics2D g2d) {
         int x = Constants.TILE_SIZE * 4;
@@ -76,18 +83,18 @@ public class DialogueState implements State{
             g2d.drawString(line, x, y);
             y += 40;
         }
-
     }
 
     @Override
-    public void playMusic(int index, float volume) {
-    }
+    public void playMusic(int index, float volume) {}
 
     @Override
-    public void stopMusic() {
+    public void stopMusic() {}
 
-    }
-
+    /**
+     * Método que decide o próximo estado
+     * @return índice do próximo estado
+     */
     @Override
     public int nextState() {
         if (exit){

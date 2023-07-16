@@ -45,7 +45,9 @@ public class MapState implements State{
     public MapState(KeyHandler keyHandler) {
         this.dungeonEntrance = false;
         maps = new ArrayList<>();
-        this.mapPlayer = new MapPlayer(200, 200, 3);
+        this.mapPlayer = new MapPlayer(200, 200, 5); //player do mapa
+
+        //Mapa do estacionamento
         MapTileManager estacionamentoMap = new MapTileManager(
                 "/src/resources/maps/estacionamento/estacionamento.xml",
                 mapPlayer,
@@ -60,18 +62,17 @@ public class MapState implements State{
         estacionamento.addNpc(convictus1);
         maps.add(estacionamento);
 
+        //Mapa bienioSup
         MapTileManager bienioSupMap = new MapTileManager(
                 "/src/resources/maps/BienioSup/BienioSup.xml",
                 mapPlayer,
                 new BienioSupStrategy());
-
         CollidableObject randomDoor2 = new Door(1361, 1243, 50 ,50);
-
         Map bienioSup = new Map(bienioSupMap);
         bienioSup.addCollidable(randomDoor2);
         maps.add(bienioSup);
 
-        this.currentState = MapPlayerStateEnum.DEFAULT;
+        this.currentState = MapPlayerStateEnum.DEFAULT; //Estado inicial
         this.keyHandler = keyHandler;
         loadImage();
     }
@@ -80,18 +81,21 @@ public class MapState implements State{
     public void tick() {
         mapPlayer.tick(keyHandler);
 
+        //Verifica colisão com o player
         Layer layer = maps.get(mapNum).getTilemap().getCollisionLayer();
         layer.collisionDetector(mapPlayer, mapPlayer.getHitbox());
 
         maps.get(mapNum).tick(mapPlayer.getPosition());
+
         nextState = mapNum;
         mapNum = this.maps.get(mapNum).getTilemap().changeStrategy.changeMap(mapPlayer, mapNum);
         if (this.keyHandler.isKeyEnter()) {
             if (mapNum < 0)
-                nextState = mapNum;
+                nextState = mapNum; //Entra na dungeon
             else
                 for (MovableNpc npc: maps.get(mapNum).getNpcs()){
                     if (npc.isColliding(this.mapPlayer.getHitbox())){
+                        //Interage com npc
                         playSound(0, 0.5F);
                         nextState = -2;
                         this.currentDialogue = npc.getDialogues()[0];
@@ -100,11 +104,13 @@ public class MapState implements State{
             this.keyHandler.setKeyEnter(false);
         } else if (mapNum < 0) {
             if (!dungeonEntrance)
-                playSound(0, 0.5F);
+                playSound(0, 0.5F); // Dialogo na entrada da dungeon
             mapNum = nextState;
             dungeonEntrance = true;
             currentDialogue = "Você está na entrada de uma dungeon!\nAperte ENTER se quiser entrar.\nCuidado! Uma vez dentro, não há como voltar...";
         } else if (this.keyHandler.isKeyEsc()){
+            //Abre menu de dificuldades
+            playSound(0, 0.5F);
             this.nextState = -4;
             this.keyHandler.setKeyEsc(false);
         } else
@@ -113,19 +119,21 @@ public class MapState implements State{
         this.mapPlayer.setVelocity(currentState.estadoAtual);
     }
 
+    /**
+     * Desenha elementos na tela
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw(Graphics2D g2d) {
         if (this.mapNum >= 0) {
-            g2d.setColor(Color.WHITE);
-            g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
-            // exemplo
-            g2d.setColor(Color.BLACK);
+            Color color = new Color(220, 241, 255);
+            g2d.setColor(color);
+            g2d.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT); //desenha fundo do mapa
 
-            this.maps.get(mapNum).draw(g2d, this.mapPlayer);
-            this.mapPlayer.draw(g2d);
-            g2d.setColor(Color.red);
-            this.mapPlayer.getHitbox().draw(g2d, this.mapPlayer);
+            this.maps.get(mapNum).draw(g2d, this.mapPlayer); // desenha o mapa atual
+            this.mapPlayer.draw(g2d); //desenha o player
         }
+        //Se está na entrada de uma dungeon, desenha caixa de dialogo
         if (dungeonEntrance) {
             int x = Constants.TILE_SIZE * 4;
             int y = Constants.TILE_SIZE ;
@@ -154,7 +162,9 @@ public class MapState implements State{
         }
     }
 
-
+    /**
+     * Carrega os recursos usados pela interface gráfica: fonte de texto e imagem do menu
+     */
     private void loadImage () {
         try {
             InputStream is = getClass().getResourceAsStream("/resources/UI/fonts/VCRosdNEUE.ttf");
@@ -166,6 +176,11 @@ public class MapState implements State{
         }
     }
 
+    /**
+     * Toca músicas do mapa em loop
+     * @param index index da música
+     * @param volume volume
+     */
     public void playMusic (int index, float volume) {
         sound.setMusicFile(index);
         sound.setVolume(volume, "MUSIC");
@@ -177,12 +192,20 @@ public class MapState implements State{
         return mapNum;
     }
 
+    /**
+     * Toca efeitos sonoros no mapa
+     * @param index índice do efeito sonoro na lista
+     * @param volume volume
+     */
     public void playSound(int index, float volume) {
         sound.setSoundFile(index);
         sound.setVolume(volume, "SOUND");
         sound.playSound();
     }
 
+    /**
+     * Interrompe loop da música
+     */
     public void stopMusic () {
         sound.stop();
     }

@@ -72,12 +72,11 @@ public class OldManNpc extends GameEntity implements MovableNpc{
 
     /**
      * @param g2d    Graphics2D java
-     * @param player Entidade na qual será desenhado relativo a
+     * @param player Entidade referência
      */
     @Override
     public void draw(Graphics2D g2d, GameEntity player) {
         drawMethod.draw(g2d);
-        this.hitbox.draw(g2d, player);
     }
 
     private void setDialogues () {

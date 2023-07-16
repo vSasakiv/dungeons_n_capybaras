@@ -10,7 +10,9 @@ import game_entity.weapons.projectiles.ProjectileFactory;
  * Estado para representar dificuldade difícil, todos os inimigos têm 2 pontos de vida e armadura a mais que o normal
  */
 public class HardState implements DifficultyState{
-
+    /**
+     * @param enemy Inimigo do qual devemos atualizar os atributos
+     */
     @Override
     public void updateAttributes(Enemy enemy) {
         int currentIncrement = enemy.getAttributes().getIncremented();
@@ -20,6 +22,10 @@ public class HardState implements DifficultyState{
         enemy.getAttributes().setIncremented(2);
     }
 
+    /**
+     *  Cria player para dada dificuldade
+     * @return player da dificuldade selecionada
+     */
     @Override
     public DungeonPlayer getPlayer() {
         DungeonPlayer player = new DungeonPlayer(600, 600, 8);
