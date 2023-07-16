@@ -15,14 +15,15 @@ public final class EnemyTemplates {
     public static final Attributes ATRIBUTOS_BASICO = new Attributes(2, 1, 0, 2);
     public static final Hitbox HITBOX_NORMAL = new Hitbox(16, 16, new Vector(0, 0));
     public static final EnemyStrategy PASSIVE_BASICO = new PassiveStrategy(200, 400, 100, 10, 20);
-    public static final Enemy ANT = new Enemy(0, 0, 3, PASSIVE_BASICO, WEB_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "ANT");
+    public static final EnemyStrategy AGGRESIVE_BASICO = new AggresiveStrategy(200, 300, 10, 20);
+    public static final Enemy ANT = new Enemy(0, 0, 3, AGGRESIVE_BASICO, WEB_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "ANT");
     public static final Enemy BRAIN = new Enemy(0, 0, 3, PASSIVE_BASICO, BRAIN_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "BRAIN");
     public static final Enemy EYE = new Enemy(0, 0, 3, PASSIVE_BASICO, EYE_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "EYE");
     public static final Enemy FLAME = new Enemy(0, 0, 3, PASSIVE_BASICO, FLAME_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "FLAME");
-    public static final Enemy FLY = new Enemy(0, 0, 3, PASSIVE_BASICO, FLY_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "FLY");
+    public static final Enemy FLY = new Enemy(0, 0, 3, AGGRESIVE_BASICO, FLY_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "FLY");
     public static final Enemy IMP = new Enemy(0, 0, 3, PASSIVE_BASICO, IMP_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "IMP");
-    public static final Enemy LARVA = new Enemy(0, 0, 3, PASSIVE_BASICO, EYE_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "LARVA");
-    public static final Enemy SLIME = new Enemy(0, 0, 3, PASSIVE_BASICO, SLIME_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "SLIME");
+    public static final Enemy LARVA = new Enemy(0, 0, 3, AGGRESIVE_BASICO, EYE_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "LARVA");
+    public static final Enemy SLIME = new Enemy(0, 0, 3, AGGRESIVE_BASICO, SLIME_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "SLIME");
     public static final Enemy TWIG = new Enemy(0, 0, 3, PASSIVE_BASICO, TWIG_WEAPON, HITBOX_NORMAL, ATRIBUTOS_BASICO, "TWIG");
 
 
