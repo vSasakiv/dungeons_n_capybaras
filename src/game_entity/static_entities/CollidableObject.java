@@ -32,13 +32,28 @@ public abstract class CollidableObject extends GameObject {
         this.hitbox = new Hitbox(width, height, this.position);
     }
 
+    /**
+     * @param entity a se checar hitbox
+     * @param hitbox da entidade
+     */
     public void checkCollision(GameEntity entity, Hitbox hitbox){
         if (this.hitbox.isHitting(hitbox)){
             this.handleCollision(entity, hitbox);
         }
     }
 
+    /**
+     * @param entity a se checar hitbox
+     * @param hitbox hitbox da entidade
+     */
     private void handleCollision(GameEntity entity, Hitbox hitbox){
+        /*
+        Para processar colisões, como temos 8 direções de movimento, devemos inicialmente obter a posição da entidade
+        antes dela colidir com a hitbox, em seguida, adicionamos à posição antiga, apenas a coordenada em x do deslocamento
+        e vemos se existe colisão devido à componente x, caso exista, modificamos a velocidade da entidade em x para ela
+        não entrar na hitbox, repetimos o processo com a componente em y, assim é possível, por exemplo, andar enquanto
+        encostado em uma parede, tornando movimento mais fluído.
+         */
         Vector previousPosition = Vector.add(
                 hitbox.getPosition(),
                 Vector.scalarMultiply(entity.getDirection(), -1 * entity.getVelocity()));

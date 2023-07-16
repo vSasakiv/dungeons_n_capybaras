@@ -6,13 +6,16 @@ import gameloop.Constants;
 
 import java.util.ArrayList;
 
+/**
+ * Classe para representar uma sala da dungeon
+ */
 public class DungeonRoom {
-    private final int x, y;
-    private final int width, height;
-    private static final int tolerance = 16;
-    private final int[][] validTileMatrix;
+    private final int x, y; // posição x e y do centro da sala
+    private final int width, height; // altura e largura da sala
+    private static final int tolerance = 16; // tolerância, deixamos a sala menor para evitar problemas de entrada
+    private final int[][] validTileMatrix; // matriz com os tiles válidos para gerar monstros
 
-    private final ArrayList<Door> doors;
+    private final ArrayList<Door> doors; // lista contendo todas as portas para entrada/saída da sala
 
     public DungeonRoom(int x, int y, int width, int height, int[][] validTileMatrix, ArrayList<Door> doors) {
         this.x = x;
@@ -36,6 +39,11 @@ public class DungeonRoom {
     public int getMinX(){
         return (this.x * Constants.TILE_SIZE - (this.width/2)* Constants.TILE_SIZE) - Constants.TILE_SIZE/2 + tolerance;
     }
+
+    /**
+     * @param position posição de algum objeto/entidade
+     * @return true caso esteja dentro da sala
+     */
     public boolean isInside(Vector position){
         int maxY = this.getMaxY() - 10;
         int minY = this.getMinY() + 10;

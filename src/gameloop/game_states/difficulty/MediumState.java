@@ -2,6 +2,9 @@ package gameloop.game_states.difficulty;
 
 import game_entity.mobs.Enemy;
 
+/**
+ * Estado para dificuldade normal, todos os inimigos têm 1 ponto a mais de vida e armadura
+ */
 public class MediumState implements DifficultyState{
 
     @Override

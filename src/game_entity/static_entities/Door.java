@@ -11,11 +11,17 @@ import java.awt.*;
  */
 public class Door extends CollidableObject {
     public AnimationSprite animation;
-    int width;
-    int height;
+    int width; // largura da hitbox da porta
+    int height; // altura da hitbox da porta
     private int spriteCounter = 0; // Conta quantos sprites foram renderizados
     private int spriteNumber = 0;
 
+    /**
+     * @param worldPosX posição x do centro da porta
+     * @param worldPosY posição y do centro da porta
+     * @param width largura da porta
+     * @param height altura da porta
+     */
     public Door(float worldPosX, float worldPosY, int width, int height) {
         super(worldPosX, worldPosY, width, height);
         this.width = width;
@@ -23,6 +29,10 @@ public class Door extends CollidableObject {
         loadImage();
     }
 
+    /**
+     * @param g2d    Graphics2D java
+     * @param player Entidade a qual será desenhado relativo a
+     */
     @Override
     public void draw(Graphics2D g2d, GameEntity player){
         spriteCounterUpdate();

@@ -9,10 +9,13 @@ import gameloop.game_states.difficulty.MediumState;
 
 import java.awt.*;
 
+/**
+ * Classe para representar um estado de Menu do jogo
+ */
 public class MenuState implements State {
     private final KeyHandler keyHandler;
     private boolean exit = false;
-    private DifficultyState difficulty;
+    private DifficultyState difficulty; // dificuldade atual selecionada
     public MenuState(KeyHandler keyHandler) {
        this.keyHandler = keyHandler;
        this.difficulty = new EasyState();
@@ -27,6 +30,9 @@ public class MenuState implements State {
         }
     }
 
+    /**
+     * Caso apertemos F no menu, muda a dificuldade para fácil, caso apertemos M, muda para médio, e caso D, muda para difícil
+     */
     private void updateDifficulty(){
         if (this.keyHandler.isKeyF()){
             this.difficulty = new EasyState();
