@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Estado para representar um diálogo ocorrendo.
+ */
 public class DialogueState implements State{
 
     private final KeyHandler keyHandler;
@@ -23,6 +26,10 @@ public class DialogueState implements State{
         this.keyHandler = keyHandler;
         loadImage();
     }
+
+    /**
+     * Caso Enter seja pressionado, sai do diálogo
+     */
     @Override
     public void tick() {
         this.exit = this.keyHandler.isKeyEnter();

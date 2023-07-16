@@ -13,6 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Classe para representar um estado de Menu do jogo
+ */
 public class MenuState implements State {
     private final KeyHandler keyHandler;
     private boolean exit = false;
@@ -20,11 +23,10 @@ public class MenuState implements State {
     private BufferedImage dialogueWindow;
     private Font pixeled;
     private String currentDialogue;
-
     public MenuState(KeyHandler keyHandler) {
        this.keyHandler = keyHandler;
        this.difficulty = new EasyState();
-        this.currentDialogue = "Dificuldade atual: fácil.";
+       this.currentDialogue = "Dificuldade atual: fácil.";
        loadImage();
     }
 
@@ -37,6 +39,9 @@ public class MenuState implements State {
         }
     }
 
+    /**
+     * Caso apertemos F no menu, muda a dificuldade para fácil, caso apertemos M, muda para médio, e caso D, muda para difícil
+     */
     private void updateDifficulty(){
         if (this.keyHandler.isKeyF()){
             this.difficulty = new EasyState();

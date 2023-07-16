@@ -189,8 +189,14 @@ public class DungeonGenerator {
                 sourceMatrix[j2][i2] = insertMatrix[j][i];
     }
 
+    /**
+     * @param matrixRoom matriz representando os tiles de chão da sala
+     * @param matrixCollisions matriz representando colisões da sala
+     * @return matriz com os espaços válidas para gerar inimigos
+     */
     private static int[][] validSpawnMatrix(int[][] matrixRoom, int[][] matrixCollisions){
         int [][] matrixValida = new int[matrixRoom.length][matrixRoom[0].length];
+        // estendemos a matriz de colisões para obter uma geração mais segura
         int [][] matrixCollisionExtended = DungeonGenerator.extendCollisionMatrix(matrixCollisions);
         for (int i = 0; i < matrixRoom.length; i++){
             for (int j = 0; j < matrixRoom[0].length; j++){
@@ -202,10 +208,17 @@ public class DungeonGenerator {
         return matrixValida;
     }
 
+    /**
+     * estende uma matriz de colisões, isto é, para cada tile de colisão, transforma todos os adjacentes, inclusive
+     * diagonais em tiles de colisão
+     * @param matrixCollisions matriz de colisões
+     * @return matriz de colisões estendidas
+     */
     private static int[][] extendCollisionMatrix(int[][] matrixCollisions) {
         int[][] matrixSurrounded = new int[matrixCollisions.length][matrixCollisions[0].length];
         int[][] direcoes = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
         int cx, cy;
+        // para cada direção, verifica se é um tile válido, caso seja, o transforma em um tile de colisão
         for (int i = 0; i < matrixCollisions.length; i++) {
             for (int j = 0; j < matrixCollisions[0].length; j++) {
                 if (matrixCollisions[i][j] != 0) {

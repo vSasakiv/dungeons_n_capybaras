@@ -2,6 +2,9 @@ package gameloop.game_states.difficulty;
 
 import game_entity.mobs.Enemy;
 
+/**
+ * Estado para representar dificuldade difícil, todos os inimigos têm 2 pontos de vida e armadura a mais que o normal
+ */
 public class HardState implements DifficultyState{
 
     @Override

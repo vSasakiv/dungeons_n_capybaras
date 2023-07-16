@@ -11,27 +11,39 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Classe para representar uma sala com monstros
+ */
 public class MonsterRoom extends DungeonRoom {
 
-    private final Random random = new Random();
-    private int currentWave = 0;
-    private boolean hasWaves = true;
-    private boolean startWaves = false;
-    private final ArrayList<ArrayList<Enemy>> enemyWaves;
+    private final Random random = new Random(); // gerador de número aleatórios para geração das ondas
+    private int currentWave = 0; // onda de monstros atual
+    private boolean hasWaves = true; // true caso ainda hajam ondas a serem derrotadas
+    private boolean startWaves = false; // true caso devamos ativar os monstros
+    private final ArrayList<ArrayList<Enemy>> enemyWaves; // lista de lista de inimigos, representando as ondas
     public MonsterRoom(int x, int y, int width, int height, int enemyWaves, int minEnemies, int maxEnemies, ArrayList<Enemy> enemyTemplates, int[][] validTileMatrix, ArrayList<Door> doors) {
         super(x, y, width, height, validTileMatrix, doors);
         this.enemyWaves = new ArrayList<>();
         generateEnemies(minEnemies, maxEnemies, enemyWaves, enemyTemplates);
     }
 
+    /**
+     * @param minEnemies número mínimo de inimigos por onda
+     * @param maxEnemies número máximo de inimigos por onda
+     * @param enemyWaves número de ondas
+     * @param enemyTemplates lista com protótipos de inimigos
+     */
     private void generateEnemies(int minEnemies, int maxEnemies, int enemyWaves, ArrayList<Enemy> enemyTemplates){
         int numEnemies;
         int minY = this.getMinY();
         int minX = this.getMinX();
         for (int i = 0; i < enemyWaves; i++){
+            // para cada wave geramos um número de inimigos entre min e max para serem gerador
             numEnemies = random.nextInt(minEnemies, maxEnemies+1);
             this.enemyWaves.add(new ArrayList<>());
             for (int j = 0; j < numEnemies;){
+                // para cada inimigo, geramos uma posição aleatória, verificamos se a posição é válida, caso seja
+                // escolhemos um inimigo aleatório da lista de templates e o adicionamos
                 int randomEnemyIndex = random.nextInt(0, enemyTemplates.size());
                 int randomEnemyPosX = random.nextInt(0, this.getValidTileMatrix()[0].length);
                 int randomEnemyPosY = random.nextInt(0, this.getValidTileMatrix().length);
@@ -45,6 +57,9 @@ public class MonsterRoom extends DungeonRoom {
         }
     }
 
+    /**
+     * Atualiza para a próxima wave
+     */
     public void nextWave(){
         if (enemyWaves.get(this.currentWave).isEmpty()){
             this.currentWave += 1;
@@ -54,12 +69,19 @@ public class MonsterRoom extends DungeonRoom {
         }
     }
 
+    /**
+     * iniciamos as waves caso o player entre na sala
+     * @param player player
+     */
     public void startWaves(GameEntity player){
        if (this.isInside(player.getPosition())) {
            this.startWaves = true;
        }
     }
 
+    /**
+     * @return lista de inimigos da onda atual
+     */
     public ArrayList<Enemy> getCurrentWave(){
         if (this.startWaves && this.hasWaves){
             return enemyWaves.get(this.currentWave);
@@ -73,6 +95,9 @@ public class MonsterRoom extends DungeonRoom {
         return this.hasWaves;
     }
 
+    /**
+     * @return true caso um inimigo tenha sido morto
+     */
     public boolean killEnemies(){
         boolean removed = false;
         if (this.hasWaves)

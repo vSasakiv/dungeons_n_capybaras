@@ -30,14 +30,14 @@ import java.util.ArrayList;
  * Classe que cuida de toda a lógica do jogo numa dungeon
  */
 public class  DungeonState implements State{
-    public final DungeonPlayer dungeonPlayer;
+    public final DungeonPlayer dungeonPlayer; // player da dungeon
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
     private String currentDialogue;
     private int mapNum;
     private final Dungeon dungeon = new Dungeon();
     private TileDungeonManager tileManager;
-    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    private final ArrayList<Enemy> enemies = new ArrayList<>(); // lista de inimigos ativos
 
     private final ArrayList<CollidableObject> collidableObjects = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class  DungeonState implements State{
     private final GameSound sound = new DungeonSound();
 
     public DungeonState(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        dungeonPlayer = new DungeonPlayer(600, 600, 30);
+        dungeonPlayer = new DungeonPlayer(600, 600, 10);
 
         ProjectileFactory subSubFactory = new BulletFactory(4, 6, "ENERGY");
         ProjectileFactory subFactory = new ClusterBulletFactory(2, 20, 8, 6, subSubFactory, "ENERGY" );
@@ -58,7 +58,12 @@ public class  DungeonState implements State{
         this.mouseHandler = mouseHandler;
     }
 
+    /**
+     * @param tipo de dungeon a ser gerada, "eletrica" ou "bienio"
+     * @param size tamanho total do mapa da dungeon
+     */
     public void generateDungeon(String tipo, int size){
+        // gera a dungeon com os atributos passados
         this.dungeon.geraDungeon(tipo, size, 4, 2, 10);
         this.tileManager = new TileDungeonManager(
                 this.dungeon.getDungeonTiles(),
@@ -68,6 +73,7 @@ public class  DungeonState implements State{
         );
         this.dungeonPlayer.getAttributes().restore();
         this.dungeonPlayer.setPosition(new Vector(600, 600));
+        // atualiza os monstros de acordo com a dificuldade
         for (MonsterRoom monsterRoom: this.dungeon.getCombatRooms()){
             for (ArrayList<Enemy> enemyList : monsterRoom.getEnemyWaves()){
                 for (Enemy enemy: enemyList){
@@ -77,6 +83,9 @@ public class  DungeonState implements State{
         }
     }
 
+    /**
+     * Atualiza a sala, ativa os monstros e portas
+     */
     public void updateRooms(){
         boolean enemyKilled;
         for (MonsterRoom monsterRoom: this.dungeon.getCombatRooms()){
@@ -96,6 +105,9 @@ public class  DungeonState implements State{
         }
     }
 
+    /**
+     * Verifica todas as colisões entre entidades e objetos estáticos collectives
+     */
     private void checkCollidable(){
         for (CollidableObject collidable: this.collidableObjects){
             collidable.checkCollision(dungeonPlayer, dungeonPlayer.getHitbox());
@@ -105,6 +117,10 @@ public class  DungeonState implements State{
         }
     }
 
+    /**
+     * verifica colisão do player e seus projéteis com o resto do mapa
+     * @param layer layer de colisão
+     */
     private void checkPlayer(Layer layer){
         layer.collisionDetector(dungeonPlayer, dungeonPlayer.getHitbox());
         for (Projectile p : dungeonPlayer.getRangedAttacks()) {
@@ -117,33 +133,44 @@ public class  DungeonState implements State{
         }
     }
 
+    /**
+     * Verifica colisão de todos os inimigos e seus projéteis com o resto do mapa,e e com o player e seus projéteis
+     * @param layer layer de colisão
+     */
     private void checkEnemies(Layer layer){
         for (Enemy e: enemies) {
+            // verifica colisão com o mapa
             layer.collisionDetector(e, e.hitbox);
             e.tick(new Vector(dungeonPlayer.getWorldPosX(), dungeonPlayer.getWorldPosY()));
+            // verifica colisão direta com o player
             if (e.hitbox.isHitting(dungeonPlayer.getHitbox())) {
                 dungeonPlayer.gotHit(1);
                 e.gotHit(1);
                 playSound(2, 0.1F);
             }
             for (Projectile p: e.getRangedAttacks()){
+                // verifica colisão de projéteis com o player
                 if (p.getHitbox().isHitting(dungeonPlayer.getHitbox())) {
                     dungeonPlayer.gotHit(e.getWeapon().getDamage());
                     playSound(2, 0.1F);
                     p.setCollided(true);
                 }
+                // verifica colisão de projéteis com objetos estáticos
                 for (CollidableObject collidable: this.collidableObjects){
                     if (p.getHitbox().isHitting(collidable.hitbox)){
                         p.setCollided(true);
                     }
                 }
+                // verifica colisão de projéteis com o mapa
                 layer.collisionDetectorProjectile(p);
             }
             for (MeleeWeaponAttack hitbox: dungeonPlayer.getMeleeAttacks())
+                // verifica colisão de inimigos com ataques melees do player
                 if (e.hitbox.isHitting(hitbox))
                     e.gotHit(hitbox.getDamage());
 
             for (Projectile p: dungeonPlayer.getRangedAttacks()) {
+                // verifica colisão de projéteis do player com os inimigos
                 if (p.getHitbox().isHitting(e.hitbox)) {
                     e.gotHit(dungeonPlayer.getWeapon().getDamage());
                     p.setCollided(true);

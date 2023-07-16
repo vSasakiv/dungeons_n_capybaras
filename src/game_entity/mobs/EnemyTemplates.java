@@ -13,7 +13,7 @@ public final class EnemyTemplates {
 
     private EnemyTemplates(){}
 
-    public static final Attributes ATTRIBUTOS_BASICO = new Attributes(2, 1, 0, 2);
+    public static final Attributes ATRIBUTOS_BASICO = new Attributes(2, 1, 0, 2);
     public static final Hitbox HITBOX_NORMAL = new Hitbox(16, 16, new Vector(0, 0));
     public static final EnemyStrategy PASSIVE_BASICO = new PassiveStrategy(200, 400, 100, 10, 20);
     public static final Enemy ANT = new Enemy(0, 0, 3, PASSIVE_BASICO, PISTOL, HITBOX_NORMAL, ATTRIBUTOS_BASICO, "ANT");

@@ -42,6 +42,7 @@ public class GameState {
         switch (currentState) {
             case mapState -> {
                 if (stateList[0].nextState() == -1) {
+                    // caso estejamos em mapState e tentarmos entrar no bienio, mudamos para dungeonState
                     stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dungeonState;
                     DungeonState state = (DungeonState) stateList[1];
@@ -51,11 +52,13 @@ public class GameState {
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 43, Constants.TILE_SIZE * 41);
                     stateList[currentState.estadoAtual].playMusic(0, 0.1F);
                 } else if (stateList[0].nextState() == -2) {
+                    // caso iniciemos diálogo com um npc, entramos em dialogueState
                     this.currentState = StateEnum.dialogueState;
                     stateList[2].setCurrentDialogue(stateList[0].getCurrentDialogue());
                     MapState mapState = (MapState) stateList[0];
                     stateList[0].setMapNum(mapState.getMapNum());
                 } else if (stateList[0].nextState() == -3) {
+                    // caso tentarmos entrar na eletrica, mudamos para dungeonState
                     stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.dungeonState;
                     DungeonState state = (DungeonState) stateList[1];
@@ -65,6 +68,7 @@ public class GameState {
                     stateList[currentState.estadoAtual].setDefaultPosition(Constants.TILE_SIZE * 42, Constants.TILE_SIZE * 42);
                     stateList[currentState.estadoAtual].playMusic(0, 0.1F);
                 } else if (stateList[0].nextState() == -4){
+                    // caso abrirmos o menu, mudamos para menuState
                     this.currentState = StateEnum.menuState;
                     MapState mapState = (MapState) stateList[0];
                     stateList[0].setMapNum(mapState.getMapNum());
@@ -72,6 +76,7 @@ public class GameState {
             }
             case dungeonState -> {
                 if (stateList[1].nextState() == -1) {
+                    // caso morrermos ou completarmos a dungeon, voltamos para o mapState
                     stateList[currentState.estadoAtual].stopMusic();
                     this.currentState = StateEnum.mapState;
                     stateList[1].setMapNum(0);
@@ -81,11 +86,13 @@ public class GameState {
             }
             case dialogueState -> {
                 if (stateList[2].nextState() != 2){
+                    // caso finalizemos o dialogo, voltamos para o mapa
                     this.currentState = StateEnum.mapState;
                 }
             }
             case menuState -> {
                 if (stateList[3].nextState() != 3){
+                    // caso terminemos de configurar, saímos do menu e voltamos para o mapa
                     this.currentState = StateEnum.mapState;
                     MenuState menu = (MenuState) stateList[3];
                     DungeonState dungeon = (DungeonState) stateList[1];

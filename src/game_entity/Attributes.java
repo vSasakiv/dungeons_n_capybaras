@@ -49,6 +49,9 @@ public class Attributes {
         this.regenTimer.start();
     }
 
+    /**
+     * Atualiza o temporizador de regeneração de armadura e tenta regenerar
+     */
     public void tick(){
         this.regenTimer.tick();
         this.armorRegen();
@@ -66,6 +69,9 @@ public class Attributes {
         this.regenTimer.start();
     }
 
+    /**
+     * Regenera um ponto de armadura caso o temporizar tenha terminado de contar
+     */
     public void armorRegen(){
         if (this.regenTimer.isZero()){
             if (this.currentArmor < this.maxArmor){
@@ -75,6 +81,9 @@ public class Attributes {
         }
     }
 
+    /**
+     * Restaura toda a vida, armadura e mana.
+     */
     public void restore(){
         this.currentArmor = this.maxArmor;
         this.currentHealth = this.maxHealth;
