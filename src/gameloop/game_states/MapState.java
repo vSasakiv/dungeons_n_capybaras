@@ -104,6 +104,9 @@ public class MapState implements State{
             mapNum = nextState;
             dungeonEntrance = true;
             currentDialogue = "Você está na entrada de uma dungeon!\nAperte ENTER se quiser entrar.\nCuidado! Uma vez dentro, não há como voltar...";
+        } else if (this.keyHandler.isKeyEsc()){
+            this.nextState = -4;
+            this.keyHandler.setKeyEsc(false);
         } else
             dungeonEntrance = false;
 
@@ -168,6 +171,10 @@ public class MapState implements State{
         sound.setVolume(volume, "MUSIC");
         sound.playMusic();
         sound.loop();
+    }
+
+    public int getMapNum() {
+        return mapNum;
     }
 
     public void playSound(int index, float volume) {

@@ -75,7 +75,6 @@ public class  DungeonState implements State{
                 }
             }
         }
-
     }
 
     public void updateRooms(){
