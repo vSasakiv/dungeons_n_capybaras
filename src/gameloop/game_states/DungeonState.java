@@ -174,6 +174,10 @@ public class  DungeonState implements State{
             this.playSound(0, 0.5F);
             this.setMapNum(-1);
         }
+        // caso todas as salas tenham sido limpas, sai da dungeon
+        if (this.checkRooms()){
+            this.setMapNum(-1);
+        }
 
         if (mouseHandler.isMousePress() && dungeonPlayer.getWeapon().canShoot()) {
             playSound(4, 0.1F);
@@ -272,6 +276,17 @@ public class  DungeonState implements State{
         return attacks;
     }
 
+    /**
+     * @return true caso todas as salas tenham sido limpas de monstros
+     */
+    private boolean checkRooms(){
+        for (MonsterRoom room: this.dungeon.getCombatRooms()) {
+            if (room.hasWaves()){
+                return false;
+            }
+        }
+        return true;
+    }
     public int nextState() {
         return mapNum;
     }
