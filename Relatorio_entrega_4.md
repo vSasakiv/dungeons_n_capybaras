@@ -11,26 +11,24 @@
 **Dungeons and capybaras** é um jogo no estilo RogueLike escrito na linguagem Java, com temática fortemente inspirada na **Universidade de São Paulo**, especialmente na **Escola Politécnica** e seus arredores. O jogo mescla as mecânicas de RPG clássicos com as de combate e exploração em **dungeons**, trazendo uma adaptação ao estilo escolhido.
 
 # Como rodar este projeto?
+OBS: O jogo foi testado e aberto apenas usando Visual Studio Code (VSC) e IntelliJ (IJ).
 
 Comece clonando o repositório para sua máquina local:
 ```
 git clone git@gitlab.uspdigital.usp.br:henrique_eduardo_souza/dungeons-and-capybaras.git
 ```
 
-Em seguida, abra o diretório do projeto
-```
-cd dungeons-n-capybaras
-```
+Em seguida, abra o diretório do projeto no VSC ou no IJ.
+Vá até o arquivo "App.java", na pasta src, e execute o jogo atráves da main.
 
-Compile o jogo, executando o Game.java:
-```
-javac Game.java
-```
+No VSC, clique em "Run":
 
-Depois, execute o jogo:
-```
-java Game
-```
+![](assets/ExecuteJogo.png)
+No IJ, clique no sinal de "play" verde:
+
+![](assets/ExecuteJogoIJ.png)
+
+
 
 > Certifique-se de ter em sua máquina uma versão igual ou superior ao java 17.
 
