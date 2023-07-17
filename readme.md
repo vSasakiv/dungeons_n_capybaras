@@ -23,6 +23,7 @@ Vá até o arquivo "App.java", na pasta src, e execute o jogo atráves da main.
 No VSC, clique em "Run":
 
 ![](assets/ExecuteJogo.png)
+
 No IJ, clique no sinal de "play" verde:
 
 ![](assets/ExecuteJogoIJ.png)
