@@ -82,12 +82,12 @@ Alguns NPCs estão presentes nas áreas fora das dungeons. Para interagir com el
  ![](assets/ExemploDialogo.png)
 
 ### Menu de dificuldades
-É possível alterar a dificuldade das dungeons atráves do menu de dificuldades. Para acessá-lo, basta apertar a tecla "ESC" em qualquer lugar das áreas fora das dungeons. Um menu irá aparecer pedindo para você apertar F, M ou D para selecionar uma dificuldade. A dificuldade atualmente em curso será explicitada nesse menu. Para sair dele, bastar apertar "ESC" novamente.
+É possível alterar a dificuldade das dungeons através do menu de dificuldades. Para acessá-lo, basta apertar a tecla "ESC" em qualquer lugar das áreas fora das dungeons. Um menu irá aparecer pedindo para você apertar F, M ou D para selecionar uma dificuldade. A dificuldade atualmente em curso será explicitada nesse menu. Para sair dele, bastar apertar "ESC" novamente.
 
 ![](assets/MenuDificuldade.png)
 
 ### Entrada das dungeons
-Ao se apróximar de uma entrada de uma dungeon, uma caixa de diálogo aparecerá alertando o player. Caso o player aperte e tecla "ENTER" quando essa caixa de diálogo aparecer, ele será redirecionado para uma dungeon. Uma vez dentro, o jogador só voltará para área de fora se morrer la dentro ou se completar toda a dungeon. 
+Ao se aproximar de uma entrada de uma dungeon, uma caixa de diálogo aparecerá alertando o player. Caso o player aperte e tecla "ENTER" quando essa caixa de diálogo aparecer, ele será redirecionado para uma dungeon. Uma vez dentro, o jogador só voltará para área de fora se morrer la dentro ou se completar toda a dungeon. 
 
 ![](assets/EntradaDungeonBienioDialogo.png)
 
@@ -108,7 +108,7 @@ Atualmente, há dois comportamentos, além do padrão, para o player que podem s
 
 ## Dungeons 
 
-Há duas dungeons, as quais os locais de acesso ja foram mencionados. Todas as dungeons são geradas conectando diferentes salas atráves de corredores, em um algoritmo que sempre gera dungeons distintas. O player, ao entrar nela, inicia em uma pequena sala neutra e pode escolher algum caminho a seguir. O seu objetivo é passar pelas salas e eliminar todos os inimigos que invadiaram os locais. 
+Há duas dungeons, as quais os locais de acesso ja foram mencionados. Todas as dungeons são geradas conectando diferentes salas através de corredores, em um algoritmo que sempre gera dungeons distintas. O player, ao entrar nela, inicia em uma pequena sala neutra e pode escolher algum caminho a seguir. O seu objetivo é passar pelas salas e eliminar todos os inimigos que invadiram os locais. 
 
 Ao entrar em uma sala ainda não limpa, o espinhos surgem prendendo o player nela, sendo só possível prosseguir para a próxima depois que todos os inimigos forem eliminados. Os monstros aparecem seguindo um sistema de "waves", no qual uma certa quantidade de monstros aparecem por vez. Ao final de uma wave, o jogador escutará um efeito sonoro e a próxima começará. No termino das waves, os espinhos somem e o jogador é liberado para continuar explorando. 
 

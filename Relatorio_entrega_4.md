@@ -55,7 +55,7 @@ O menu pode ser acessado pelo jogador apertando a tecla "ESC" em qualquer locali
 
 As dificuldades implementadas são: fácil, médio e difícil. Elas alteram os atributos dos inimigos que são encontrados nas dungeons, além de mudar os equipamentos do player. 
 * Fácil: player equipado com um cajado que dispara bolas de energia que se espalham. Inimigos mais fracos.
-* Médio: player equiapdo com um arco que dispara flechas velozes. Inimigos razoáveis.
+* Médio: player equipado com um arco que dispara flechas velozes. Inimigos razoáveis.
 * Difícil: player equipado com shurikens. Inimigos mais fortes.
 
 ## Requisito 6 - Músicas e efeitos sonoros
@@ -72,14 +72,14 @@ Além disso, diversos efeitos sonoros foram adicionados e são acionados a parti
 
 ## Observações finais
 
-Nessa entrega, o jogador ja é capaz de andar pelo mapa, interagir com npcs, selecionar dificuldades, mudar o estado do player e entrar nas dungeons. Dentro das dungeons, há diversos caminhos e salas com inimigos esperando, os quais devem ser derrotados para que o player possa prosseguir explorando. A mecânica de combate envolve habilidades de esquiva, de mira, reflexo e certa inteligência (como por exemplo, usar paredes ou outros objetos com colisão para se projeter). O jogo está desafiador, exigindo certo tempo e habilidade para que se possa limpar uma dungeon. Diferentes inimigos aparecem em dungeons diferentes, tendo diferentes comportamentos, estados e atributos. 
+Nessa entrega, o jogador ja é capaz de andar pelo mapa, interagir com NPCs, selecionar dificuldades, mudar o estado do player e entrar nas dungeons. Dentro das dungeons, há diversos caminhos e salas com inimigos esperando, os quais devem ser derrotados para que o player possa prosseguir explorando. A mecânica de combate envolve habilidades de esquiva, de mira, reflexo e certa inteligência (como por exemplo, usar paredes ou outros objetos com colisão para se proteger). O jogo está desafiador, exigindo certo tempo e habilidade para que se possa limpar uma dungeon. Diferentes inimigos aparecem em dungeons diferentes, tendo diferentes comportamentos, estados e atributos. 
 
-Recaptulando as outras entregas: 
-* O jogo possue mapas inspirados fortemente na USP, principalmente na Escola Politécnica, usando-a como referência para as áreas que não são dungeons e como tema paras dungeons. (Requisito 1).
+Recapitulando as outras entregas: 
+* O jogo possui mapas inspirados fortemente na USP, principalmente na Escola Politécnica, usando-a como referência para as áreas que não são dungeons e como tema paras dungeons. (Requisito 1).
 * O jogador se move livremente pelos mapas, passando pelas localidades através do teclado. Também é capaz de alterar atributos relacionados a isso através da mudança de seu estado, transformando-se em um ninja apertando a tecla "N". (Requisito 2 adaptado).
 * As entidades foram implementadas, sendo as principais: NPCs e inimigos. Os NPCs se encontram nos mapas, podendo o jogador interagir com eles apertando "ENTER" fazendo aparecer uma caixa de diálogo. Os inimigos estão presentes nas dungeons e possuem diferentes comportamentos, visuais, estados e atributos. (Requisito 3 adaptado).
 * Diferentes "look-and-feel" foram implementados usando padrões como Fábrica e Fábrica Abstrata, os quais são usados para criar espaços para dungeons com temáticas diferentes. As duas implementadas, presente nas duas dungeons, são as temáticas de "Biênio" e de "Elétrica", inspiradas nos departamentos da Poli. (Requisito 4).
 * O padrão State foi utilizado para implementar 3 dificuldades diferentes, as quais alteram atributos dos inimigos e os equipamentos do player dentro das dungeons. (Requisito 5).
-* Há diferentes músicas de fundo para duas regiões (mapas e dungeons), além de efeitos sonoros distintos para difentes tipos de interações presentes no jogo. (Requisito 6).
+* Há diferentes músicas de fundo para duas regiões (mapas e dungeons), além de efeitos sonoros distintos para diferentes tipos de interações presentes no jogo. (Requisito 6).
 
 Os relatórios das outras entregas, os quais possuem outros detalhamentos, podem ser encontrados na pasta "docs", presente na raiz do projeto. Com o exposto, acredita-se que todos os requisitos foram cumpridos de maneira satisfatória, considerando a adaptação temática do jogo para um do tipo "roguelike" parecido com o Soul Knight. Obrigado, e aproveitem o jogo! 
