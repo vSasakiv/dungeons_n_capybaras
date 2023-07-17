@@ -46,6 +46,7 @@ No estado atual do jogo, existem 2 mapas: Estacionamento Principal da Poli e Est
     * Entrada do prédio vermelho, localizado à direita do mapa. Ao se dirigir à entrada do prédio, o player será redirecionado a uma dungeon com estilo inspirado no departamento da Elétrica. 
     ![](assets/EntradaDungeonEletrica.png)
     * Próximo ao canto inferior esquerdo, na rua que leva para uma parte de fora do mapa. O jogador que atravessar essa área será levado para o estacionamento do Biênio.
+    
     ![](assets/EntradaEstacionamentoBienio.png)
 
 
