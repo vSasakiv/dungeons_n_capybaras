@@ -4,9 +4,7 @@ import game_entity.GameEntity;
 import game_entity.MapPlayer;
 import game_entity.MapPlayerStateEnum;
 import game_entity.Vector;
-import game_entity.npcs.OldManNpc;
-import game_entity.npcs.MovableNpc;
-import game_entity.npcs.PatrolStrategy;
+import game_entity.npcs.*;
 import gameloop.Constants;
 import gameloop.KeyHandler;
 import gameloop.Map;
@@ -63,10 +61,10 @@ public class MapState implements State{
                 "/src/resources/maps/BienioSup/BienioSup.xml",
                 mapPlayer,
                 new BienioSupStrategy());
-        MovableNpc convictus2 = new OldManNpc(512, 2160, 3);
+        MovableNpc convictus2 = new BoyNpc(512, 2160, 3);
         convictus2.setStrategy(new PatrolStrategy((GameEntity) convictus2, new Vector(890, 2160)));
-        MovableNpc convictus3 = new OldManNpc(197, 1134, 2);
-        convictus3.setStrategy(new PatrolStrategy((GameEntity) convictus3, new Vector(682, 1134)));
+        MovableNpc convictus3 = new GirlNpc(1000, 1134, 2);
+        convictus3.setStrategy(new PatrolStrategy((GameEntity) convictus3, new Vector(1350, 1134)));
 
         Map bienioSup = new Map(bienioSupMap);
         bienioSup.addNpc(convictus2);
