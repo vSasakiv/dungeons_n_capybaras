@@ -8,23 +8,29 @@ import java.awt.*;
 public class Attributes {
     private int currentHealth;
     private int currentArmor;
-    private final int currentMana;
-    private final int maxHealth;
-    private final int maxArmor;
+    private int currentMana;
+    private int maxHealth;
+    private int maxArmor;
     private final int maxMana;
+
+    private final Counter regenTimer;
+
+    private int incremented = 0;
 
     /**
      * @param health pontos de vida da entidade
      * @param armor pontos de armadura da entidade
      * @param mana pontos de mana/energia da entidade
      */
-    public Attributes(int health, int armor, int mana) {
+    public Attributes(int health, int armor, int mana, int regenRate) {
         this.maxHealth = health;
         this.currentHealth = health;
         this.maxArmor = armor;
         this.currentArmor = armor;
         this.maxMana = mana;
         this.currentMana = mana;
+        this.regenTimer = new Counter(1000, regenRate);
+        this.regenTimer.start();
     }
 
     /**
@@ -38,15 +44,74 @@ public class Attributes {
         this.currentArmor = attributes.currentArmor;
         this.maxMana = attributes.maxMana;
         this.currentMana = attributes.currentMana;
+        this.incremented = attributes.incremented;
+        this.regenTimer = new Counter(attributes.regenTimer.getThreshold(), attributes.regenTimer.getIncrement());
+        this.regenTimer.start();
+    }
+
+    /**
+     * Atualiza o temporizador de regeneração de armadura e tenta regenerar
+     */
+    public void tick(){
+        this.regenTimer.tick();
+        this.armorRegen();
     }
 
     /**
      * @param damage quantidade de dano que a entidade recebeu
      */
     public void takeDamage(int damage){
-        if (this.currentArmor == 0)
+        if (this.currentArmor <= 0)
             this.currentHealth -= damage;
         else this.currentArmor -= damage;
+        this.regenTimer.resetCounter();
+        this.regenTimer.count();
+        this.regenTimer.start();
+    }
+
+    /**
+     * Regenera um ponto de armadura caso o temporizar tenha terminado de contar
+     */
+    public void armorRegen(){
+        if (this.regenTimer.isZero()){
+            if (this.currentArmor < this.maxArmor){
+                this.currentArmor += 1;
+                this.regenTimer.start();
+            }
+        }
+    }
+
+    /**
+     * Restaura toda a vida, armadura e mana.
+     */
+    public void restore(){
+        this.currentArmor = this.maxArmor;
+        this.currentHealth = this.maxHealth;
+        this.currentMana = this.maxMana;
+    }
+
+    public void setIncremented(int increment){
+        this.incremented = increment;
+    }
+
+    public int getIncremented(){
+        return this.incremented;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void setMaxArmor(int maxArmor) {
+        this.maxArmor = maxArmor;
+    }
+
+    public int getMaxArmor() {
+        return maxArmor;
     }
 
     public boolean isDead(){

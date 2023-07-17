@@ -4,34 +4,35 @@ import game_entity.GameEntity;
 import game_entity.Vector;
 import game_entity.weapons.projectiles.Projectile;
 import game_entity.weapons.projectiles.ProjectileFactory;
-
-import javax.imageio.ImageIO;
+import gameloop.Constants;
+import gameloop.render.DrawWeapon;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Classe para geração de armas automáticas, ou seja, armas que atiram
  * um projétil por tiro.
  */
 public class AutomaticWeapon extends Weapon{
-    BufferedImage image; // sprite da arma
     private final ProjectileFactory projectileFactory; // fábrica de projéteis para gerar novos projéteis a cada ataque
+    DrawWeapon drawMethod;
+    String weaponSprite;
 
     /**
      * @param fireRate taxa de disparo da arma (quanto maior mais rápida é a arma)
      * @param damage dano infligido por cada projétil
      * @param projectileFactory fábrica a partir da qual os projéteis serão gerados
+     * @param weaponSprite tipo de sprite da arma
      */
-    public AutomaticWeapon(int fireRate, int damage, ProjectileFactory projectileFactory) {
+    public AutomaticWeapon(int fireRate, int damage, ProjectileFactory projectileFactory, String weaponSprite) {
         super(fireRate, damage);
         this.projectileFactory = projectileFactory;
-        getImage();
-        this.setSpriteSizeX(13 * 3);
-        this.setSpriteSizeY(5 * 3);
+        this.weaponSprite = weaponSprite;
+        drawMethod = new DrawWeapon(this);
+        this.image = WeaponSpriteProvider.getWeaponSprite(weaponSprite);
+        this.setSpriteSizeX(image.getWidth() * (Constants.SCALE - 1));
+        this.setSpriteSizeY(image.getHeight() * (Constants.SCALE - 1));
+
     }
 
     /**
@@ -53,9 +54,12 @@ public class AutomaticWeapon extends Weapon{
         return new AutomaticWeapon(
                 this.coolDownCounter.getIncrement(),
                 this.damage,
-                this.projectileFactory
+                this.projectileFactory,
+                this.weaponSprite
+
         );
     }
+
 
     /**
      * Método responsável por desenhar AutomaticWeapon na tela
@@ -63,31 +67,7 @@ public class AutomaticWeapon extends Weapon{
      * @param entity Entidade que AutomaticWeapon está atrelada
      */
     public void draw (Graphics2D g2d, GameEntity entity) {
-        AffineTransform original = g2d.getTransform();
-        g2d.translate(
-                entity.getScreenX() + (float) entity.getSpriteSizeX() / 2,
-                entity.getScreenY() + (float) entity.getSpriteSizeY() / 2 + 16
-        );
-        g2d.rotate(-Math.toRadians(90) + Vector.getDegree(this.getDirection()));
-        g2d.drawImage(
-                this.image,
-                -this.getSpriteSizeX() / 2,
-                -this.getSpriteSizeY() / 2,
-                this.getSpriteSizeX(),
-                this.getSpriteSizeY(),
-                null
-        );
-        g2d.setTransform(original);
+        drawMethod.draw(g2d, entity);
     }
 
-    /**
-     * Método que carrega o sprite
-     */
-    private void getImage () {
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Bow.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

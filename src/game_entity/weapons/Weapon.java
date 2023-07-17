@@ -4,12 +4,13 @@ import game_entity.Counter;
 import game_entity.GameEntity;
 import game_entity.Vector;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Classe abstrata para representar uma arma
  */
 public abstract class Weapon {
-
+    protected BufferedImage image; // sprite da arma
     protected int damage;
     protected Counter coolDownCounter;
     private Vector direction;
@@ -74,4 +75,8 @@ public abstract class Weapon {
     public int getSpriteSizeY() { return SpriteSizeY; }
 
     public int getDamage() { return damage; }
+
+    public BufferedImage getImage() {
+        return image;
+    }
 }

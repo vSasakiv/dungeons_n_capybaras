@@ -9,10 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Estado para representar um diálogo ocorrendo.
+ */
 public class DialogueState implements State{
 
     private final KeyHandler keyHandler;
-    private int nextState;
     private boolean exit = false;
     private String currentDialogue;
     private BufferedImage dialogueWindow;
@@ -23,6 +25,10 @@ public class DialogueState implements State{
         this.keyHandler = keyHandler;
         loadImage();
     }
+
+    /**
+     * Caso Enter seja pressionado, sai do diálogo
+     */
     @Override
     public void tick() {
         this.exit = this.keyHandler.isKeyEnter();
@@ -31,6 +37,9 @@ public class DialogueState implements State{
         }
     }
 
+    /**
+     * Carrega os recursos usados pela interface gráfica: fonte de texto e imagem do menu
+     */
     private void loadImage () {
         try {
             InputStream is = getClass().getResourceAsStream("/resources/UI/fonts/VCRosdNEUE.ttf");
@@ -42,6 +51,10 @@ public class DialogueState implements State{
         }
     }
 
+    /**
+     * Desenha uma interface gráfica na tela: a caixa de diálogo
+     * @param g2d Ferramenta para desenho
+     */
     @Override
     public void draw(Graphics2D g2d) {
         int x = Constants.TILE_SIZE * 4;
@@ -69,20 +82,26 @@ public class DialogueState implements State{
             g2d.drawString(line, x, y);
             y += 40;
         }
-
     }
 
     @Override
+    public void playMusic(int index, float volume) {}
+
+    @Override
+    public void stopMusic() {}
+
+    /**
+     * Método que decide o próximo estado
+     * @return índice do próximo estado
+     */
+    @Override
     public int nextState() {
         if (exit){
-            return nextState;
+            return 0;
         }
         return 2;
     }
 
-    public void setNextState(int next){
-        this.nextState = next;
-    }
     @Override
     public void setMapNum(int mapNum) {}
 

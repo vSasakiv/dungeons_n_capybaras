@@ -3,9 +3,9 @@ package game_entity;
 import game_entity.entity_sprites.MovingEntitySprites;
 import gameloop.Constants;
 import gameloop.KeyHandler;
+import gameloop.sound.PlayerSound;
 import gameloop.render.DrawMovingEntity;
 import gameloop.render.DrawPlayer;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,6 +18,7 @@ public class MapPlayer extends GameEntity{
     private final Hitbox hitbox;
     protected ArrayList<MovingEntitySprites> playerSprites;
     DrawMovingEntity drawMethod;
+    private final PlayerSound playerSound;
 
     /**
      * Construtor do player, que o inicializa numa posição pré-determinada
@@ -32,11 +33,15 @@ public class MapPlayer extends GameEntity{
         this.setScreenX(SCREEN_X - (float) this.getSpriteSizeX() / 2);
         this.setScreenY(SCREEN_Y - (float) this.getSpriteSizeY() / 2);
         this.currentState = MapPlayerStateEnum.DEFAULT;
-        this.hitbox = new Hitbox(Constants.TILE_SIZE, Constants.TILE_SIZE, new Vector(this.getWorldPosX(), this.getWorldPosY()));
+        this.hitbox = new Hitbox((float) Constants.TILE_SIZE * 2 / 3, (float) Constants.TILE_SIZE * 2 / 3, new Vector(this.getWorldPosX(), this.getWorldPosY()));
         this.loadSprites();
         drawMethod = new DrawPlayer(this, playerSprites);
+        playerSound = new PlayerSound();
     }
 
+    /**
+     * Carrega os sprites usados pelo player
+     */
     protected void loadSprites() {
         playerSprites = new ArrayList<>();
         playerSprites.add(PlayerSpriteFactory.create("default"));
@@ -48,6 +53,20 @@ public class MapPlayer extends GameEntity{
         this.setDirection(DirectionUpdater.updateDirection(keyHandler, drawMethod));
         this.position = Vector.add(this.position, Vector.scalarMultiply(this.getDirection(), velocity));
         this.hitbox.setPosition(this.position);
+        if (drawMethod.getSpriteCounter() == 0 && getDirection() != Constants.NULL_VECTOR)
+            playSound(0, 0.1F);
+
+    }
+
+    /**
+     * Toca efeitos sonoros
+     * @param index índice do efeito sonoro na lista
+     * @param volume volume
+     */
+    public void playSound (int index, float volume) {
+        playerSound.setSoundFile(index);
+        playerSound.setVolume(volume, "SOUND");
+        playerSound.playSound();
     }
 
 
@@ -59,7 +78,10 @@ public class MapPlayer extends GameEntity{
         drawMethod.draw(g2d);
     }
 
-
+    /**
+     * Atualiza estado do player com base na tecla pressionada "n"
+     * @param keyHandler Entradas do teclado
+     */
     private void updateState(KeyHandler keyHandler){
         if (keyHandler.isKeyN()) {
             keyHandler.setKeyN(false);
@@ -89,6 +111,4 @@ public class MapPlayer extends GameEntity{
     public Hitbox getHitbox() {
         return hitbox;
     }
-
-
 }

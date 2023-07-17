@@ -1,13 +1,18 @@
 package tile;
 
 import game_entity.GameEntity;
+import game_entity.Hitbox;
 import game_entity.Vector;
+import game_entity.static_entities.CollidableTile;
+import game_entity.weapons.projectiles.Projectile;
 import gameloop.Constants;
 import java.awt.image.BufferedImage;
 
 public class Layer {
-    //Matriz com as imagens carregadas de uma layer que forma um mapa
-    private final BufferedImage[][] tileMap;
+    private final BufferedImage[][] tileMap; //Matriz com as imagens carregadas de uma layer que forma um mapa
+
+    private CollidableTile[][] collisionLayer = null; //Layer com tiles de colisão
+    private boolean collision;
 
     /**
      * Layer que forma um mapa
@@ -20,6 +25,7 @@ public class Layer {
     public Layer(String[] data, int width, int height, int fistGrid, Sprite sprite) {
         this.tileMap = loadLayer(data, width, height, fistGrid, sprite);
     }
+
     public Layer(int[][] data, int width, int height, int fistGid, Sprite sprite) {
         this.tileMap = loadLayer(data, width, height, fistGid, sprite);
     }
@@ -78,49 +84,83 @@ public class Layer {
     }
 
     /**
-     * Para os tiles em volta da entidade, verifica se há colisão
-     * @param entity Entidade
+     * Detecta colisão de uma entidade com os tiles de colisão da player.
+     * Corrige posição caso haja colisão.
+     * @param entity entidade
+     * @param hitbox hitbox considerada pra colisão
      */
-    public void collisionDetector(GameEntity entity) {
-        int tileX = (int) (entity.getWorldPosX() / Constants.TILE_SIZE);
-        int tileY = (int) (entity.getWorldPosY() / Constants.TILE_SIZE);
-        for (int j = tileX - 1; j <= tileX + 1; j++){
-            for (int i = tileY -  1; i <= tileY + 1; i++) {
-                checkCollision(i, j, entity);
+    public void collisionDetector(GameEntity entity, Hitbox hitbox) {
+        if (collision) {
+            float oldPosY = entity.getPosition().y;
+            float oldPosX = entity.getPosition().x;
+            float newPosY = entity.getPosition().y;
+            float newPosX = entity.getPosition().x;
+
+            int tileX = (int) (entity.getWorldPosX() / Constants.TILE_SIZE);
+            int tileY = (int) (entity.getWorldPosY() / Constants.TILE_SIZE);
+
+            for (int j = tileX - 1; j <= tileX + 1; j++){
+                for (int i = tileY -  1; i <= tileY + 1; i++) {
+                    if (this.collisionLayer[i][j] != null && this.collisionLayer[i][j].hitbox.isHitting(hitbox)) {
+                        entity.setPosition(new Vector(oldPosX, oldPosY));
+                        this.collisionLayer[i][j].checkCollision(entity, hitbox);
+                        if (entity.getPosition().y != oldPosY) newPosY = entity.getPosition().y;
+                        if (entity.getPosition().x != oldPosX) newPosX = entity.getPosition().x;
+                    }
+                }
             }
+            entity.setPosition(new Vector(newPosX, newPosY));
         }
     }
 
     /**
-     * Aplica lógica de colisão para corrigir a posição da entidade caso ela colida com um tile sólido
-     * @param tileX Posição X do tile
-     * @param tileY Posição Y do tile
-     * @param entity Entidade
+     * Detecta colisão de projéteis com os tiles de colisão.
+     * Corrige posição caso haja colisão.
+     * @param projectile projétil que colide
      */
-    private void checkCollision (int tileX, int tileY, GameEntity entity) {
-        int difX = (int) Math.abs(tileY * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosX());
-        int difY = (int) Math.abs(tileX * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0 - entity.getWorldPosY());
-        if (tileMap[tileX][tileY] != null) {
-            if (difX <= Constants.TILE_SIZE &&  difY <= Constants.TILE_SIZE) {
-                if (difX < difY) {
-                    if (entity.getWorldPosY() <= tileX * Constants.TILE_SIZE + Constants.TILE_SIZE /2.0) {
-                        entity.setPosition(Vector.add(entity.getPosition(), Vector.scalarMultiply(Constants.DIRECTION_UP, entity.getVelocity())));
-                    } else {
-                        entity.setPosition(Vector.add(entity.getPosition(), Vector.scalarMultiply(Constants.DIRECTION_DOWN, entity.getVelocity())));
-                    }
-                } else if (difX > difY) {
-                    if (entity.getWorldPosX() <= tileY * Constants.TILE_SIZE +  Constants.TILE_SIZE /2.0) {
-                        entity.setPosition(Vector.add(entity.getPosition(), Vector.scalarMultiply(Constants.DIRECTION_LEFT, entity.getVelocity())));
-                    } else {
-                        entity.setPosition(Vector.add(entity.getPosition(), Vector.scalarMultiply(Constants.DIRECTION_RIGHT, entity.getVelocity())));
+    public void collisionDetectorProjectile(Projectile projectile){
+        if (collision) {
+            int tileX = (int) (projectile.getWorldPosX() / Constants.TILE_SIZE);
+            int tileY = (int) (projectile.getWorldPosY() / Constants.TILE_SIZE);
+            for (int j = tileX - 1; j <= tileX + 1; j++) {
+                for (int i = tileY - 1; i <= tileY + 1; i++) {
+                    if (this.collisionLayer[i][j] != null && projectile.getHitbox().isHitting(this.collisionLayer[i][j].hitbox)) {
+                        projectile.setCollided(true);
                     }
                 }
             }
         }
     }
 
+    /**
+     * Atribui os tiles de colisão à layer de colisão caso colisão seja ativada.
+     */
+    private void changeCollisionLayer () {
+        if (collision) {
+            collisionLayer = new CollidableTile[tileMap.length][tileMap[0].length];
+            for (int i = 0; i < tileMap.length; i++) {
+                for (int j = 0; j < tileMap[0].length; j++) {
+                    if (tileMap[i][j] != null) {
+                        collisionLayer[i][j] = new CollidableTile(
+                                j * Constants.TILE_SIZE + (float) Constants.TILE_SIZE /2,
+                                i * Constants.TILE_SIZE + (float) Constants.TILE_SIZE /2,
+                                Constants.TILE_SIZE,
+                                Constants.TILE_SIZE
+                                );
+                    }
+                }
+            }
+        } else
+            collisionLayer = null;
+    }
+
     public BufferedImage[][] getTileMap() {
         return tileMap;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+        changeCollisionLayer();
     }
 
 }

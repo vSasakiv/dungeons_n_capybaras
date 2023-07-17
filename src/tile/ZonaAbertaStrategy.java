@@ -13,7 +13,6 @@ public class ZonaAbertaStrategy extends ChangeTileStrategy{
     public ZonaAbertaStrategy() {
         regions = new ArrayList<>();
         regions.add(new int[]{Constants.TILE_SIZE * 19, Constants.TILE_SIZE * 28, Constants.TILE_SIZE * 49, Constants.TILE_SIZE * 49});
-
     }
 
     /**
@@ -24,7 +23,6 @@ public class ZonaAbertaStrategy extends ChangeTileStrategy{
      */
     public int changeMap (GameEntity player, int mapNum) {
         int index = changePosition(player.getPosition());
-        System.out.println(index);
         if (index == 0) {
             return -1;
         }

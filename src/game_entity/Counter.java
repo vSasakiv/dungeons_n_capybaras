@@ -6,8 +6,8 @@ package game_entity;
  */
 public class Counter {
     private int counter = 0;
-    private int threshold;
-    private int increment;
+    private final int threshold;
+    private final int increment;
 
     private boolean canCount = false;
 
@@ -92,17 +92,4 @@ public class Counter {
         return threshold;
     }
 
-    /**
-     * @param threshold novo threshold do contador
-     */
-    public void setThreshold(int threshold) {
-        this.threshold = threshold;
-    }
-
-    /**
-     * @param increment novo incremento do contador
-     */
-    public void setIncrement(int increment) {
-        this.increment = increment;
-    }
 }

@@ -3,8 +3,8 @@ package game_entity.weapons.projectiles;
 import game_entity.GameEntity;
 import game_entity.Vector;
 import gameloop.Constants;
+import gameloop.render.DrawProjectile;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -17,7 +17,9 @@ public class ClusterBullet extends Projectile{
     int timeUntilExplode; // tempo (em ticks) até a divisão
     int counter = 0; // contador inicial
     int numberProjectiles; // número de sub-projéteis gerados
+    private String projectileType;
     ProjectileFactory subProjectileFactory; // fábrica de projéteis para a criação dos sub-projéteis.
+    DrawProjectile drawMethod;
 
     /**
      * @param posX posição x da qual o projétil foi atirado
@@ -34,14 +36,17 @@ public class ClusterBullet extends Projectile{
                   ProjectileHitbox hitbox,
                   int timeUntilExplode, int numeroProjeteis,
                   ProjectileFactory subProjectileFactory,
-                  BufferedImage image) {
-        super(posX, posY, velocity, direction, hitbox);
+                  BufferedImage image,
+                  String projectileType) {
+        super(posX, posY, velocity, direction, hitbox, image);
         this.timeUntilExplode = timeUntilExplode;
         this.numberProjectiles = numeroProjeteis;
         this.subProjectileFactory = subProjectileFactory;
         this.image = image;
-        this.setSpriteSizeX(13 * 3);
-        this.setSpriteSizeY(5 * 3);
+        this.setSpriteSizeX(image.getWidth() * Constants.SCALE);
+        this.setSpriteSizeY(image.getHeight() * Constants.SCALE);
+        this.projectileType = projectileType;
+        this.drawMethod = new DrawProjectile(this);
     }
 
     /**
@@ -62,21 +67,7 @@ public class ClusterBullet extends Projectile{
      */
     @Override
     public void draw (Graphics2D g2d, GameEntity entity) {
-        AffineTransform original = g2d.getTransform();
-        g2d.translate (
-                this.getWorldPosX() - entity.getWorldPosX() + entity.getScreenX() + (double) entity.getSpriteSizeX() / 2,
-                16 + this.getWorldPosY() - entity.getWorldPosY() + entity.getScreenY() + (double) entity.getSpriteSizeX() / 2
-        );
-        g2d.rotate(Vector.getDegree(this.direction));
-        g2d.drawImage (
-                this.image,
-                -this.getSpriteSizeX() / 2,
-                -this.getSpriteSizeY() / 2,
-                this.getSpriteSizeX(),
-                this.getSpriteSizeY(),
-                null
-        );
-        g2d.setTransform(original);
+        drawMethod.draw(g2d,entity);
     }
 
     /**
@@ -84,11 +75,7 @@ public class ClusterBullet extends Projectile{
      */
     @Override
     public boolean shouldDelete() {
-        return  this.getWorldPosX() < 0 ||
-                this.getWorldPosX() > Constants.WORLD_WIDTH ||
-                this.getWorldPosY() < 0 ||
-                this.getWorldPosY() > Constants.WORLD_HEIGHT ||
-                counter > timeUntilExplode;
+        return counter > timeUntilExplode || this.collided;
     }
 
     /**
@@ -103,7 +90,10 @@ public class ClusterBullet extends Projectile{
                     subProjectileFactory.criaProjetil(
                             this.getWorldPosX(),
                             this.getWorldPosY(),
-                            Vector.rotateVector(direction, angle*i)));
+                            Vector.rotateVector(direction, angle*i)
+                            )
+            );
         return cluster;
     }
+
 }

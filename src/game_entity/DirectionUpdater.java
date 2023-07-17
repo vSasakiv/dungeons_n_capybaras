@@ -39,4 +39,24 @@ public class DirectionUpdater {
         drawMethod.spriteUpdate(direction);
         return direction;
     }
+
+    /**
+     * Recebe uma direção qualquer e retorna uma direção conhecida aproximada
+     * @param direction direção qualquer
+     * @return direção conhecida
+     */
+    public static Vector updateDirection(Vector direction) {
+        Vector newDirection = Constants.NULL_VECTOR;
+        double degree = Math.toDegrees(Vector.getDegree(direction));
+        System.out.println(degree);
+        if (degree <= 45 || degree >= 315)
+            newDirection = Constants.DIRECTION_RIGHT;
+        else if (degree >= 45 && degree < 135)
+            newDirection = Constants.DIRECTION_UP;
+        else if (degree >= 135 && degree < 225)
+            newDirection = Constants.DIRECTION_LEFT;
+        else if (degree >= 225)
+            newDirection = Constants.DIRECTION_DOWN;
+        return newDirection;
+    }
 }

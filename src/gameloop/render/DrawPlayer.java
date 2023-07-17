@@ -7,6 +7,9 @@ import gameloop.Constants;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * Desenha o player na tela
+ */
 public class DrawPlayer extends DrawMovingEntity {
 
 
@@ -14,6 +17,10 @@ public class DrawPlayer extends DrawMovingEntity {
         super(entity, movingEntitySprites);
     }
 
+    /**
+     * Carrega direções extras
+     * @return Sprite na direção atualizada
+     */
     @Override
     protected BufferedImage getEntityImage() {
         BufferedImage playerImage = super.getEntityImage();
@@ -26,6 +33,10 @@ public class DrawPlayer extends DrawMovingEntity {
         return playerImage;
     }
 
+    /**
+     * Possibilita 8 direções para o movimento
+     * @param direction Direção do movimento da entidade
+     */
     @Override
     public void spriteUpdate(Vector direction) {
         if (Vector.vectorEquals(direction, Constants.DIRECTION_UP_LEFT)) {
@@ -38,6 +49,5 @@ public class DrawPlayer extends DrawMovingEntity {
             this.spriteDirection = "DOWN_RIGHT";
         }
         super.spriteUpdate(direction);
-
     }
 }

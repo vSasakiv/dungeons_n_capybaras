@@ -21,6 +21,7 @@ public class TileDungeonManager implements TileManager {
         layers = loadLayers(dungeonNumbers, info, WorldRows, WorldColumns);
         drawMethod = new DrawTileManager(layers, WorldRows, WorldColumns, player);
         this.changeStrategy = changeStrategy;
+        this.layers.get(this.layers.size() - 1).setCollision(true);
     }
 
     private ArrayList<Layer> loadLayers (ArrayList<int[][]> dungeonNumbers,  LayerInfo info, int rows, int columns) {
@@ -53,7 +54,4 @@ public class TileDungeonManager implements TileManager {
         return this.layers.get(this.layers.size() - 1);
     }
 
-    public ChangeTileStrategy getChangeStrategy() {
-        return changeStrategy;
-    }
 }

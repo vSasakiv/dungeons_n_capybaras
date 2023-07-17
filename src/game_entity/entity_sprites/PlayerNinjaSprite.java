@@ -2,6 +2,9 @@ package game_entity.entity_sprites;
 
 import tile.AnimationSprite;
 
+/**
+ * Carrega os sprites do player ninja
+ */
 public class PlayerNinjaSprite extends MovingEntitySprites{
     @Override
     protected void loadSprites() {
@@ -16,6 +19,6 @@ public class PlayerNinjaSprite extends MovingEntitySprites{
         this.right = new AnimationSprite("/resources/player/ninjaRight.png", width, height, 0, 0, 4);
         this.left = new AnimationSprite("/resources/player/ninjaLeft.png", width, height, 0, 0, 4);
         standBack = up.getSpriteArray()[0];
-        standFront = down.getSpriteArray()[0];
+        standFront = new AnimationSprite("/resources/player/ninjaDown.png", width, height, 0, 0, 4);
     }
 }

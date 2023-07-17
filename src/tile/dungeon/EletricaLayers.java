@@ -1,5 +1,8 @@
 package tile.dungeon;
 
+/**
+ * Classe que armazena informações sobre o mapa da dungeon do Eletrica
+ */
 public final class EletricaLayers extends LayerInfo{
     public EletricaLayers () {
         fistGid = new int[]{1, 1, 392, 392, 1816, 1816, 2584};

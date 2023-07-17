@@ -9,10 +9,13 @@ import tile.MapTileManager;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Classe que representa um mapa
+ */
 public class Map {
-    MapTileManager tilemap;
-    ArrayList<CollidableObject> objects = new ArrayList<>();
-    ArrayList<MovableNpc> npcs = new ArrayList<>();
+    private final MapTileManager tilemap; //Gerenciador do mapa
+    ArrayList<CollidableObject> objects = new ArrayList<>(); //Lista de objetos colidíveis
+    ArrayList<MovableNpc> npcs = new ArrayList<>(); // Lista de npcs
 
     public Map(MapTileManager tilemap) {
         this.tilemap = tilemap;
@@ -40,6 +43,11 @@ public class Map {
     }
     public ArrayList<MovableNpc> getNpcs() {return npcs; }
 
+    /**
+     * Método responsável por desenhar os elementos na tela
+     * @param g2d Ferramenta para desenho
+     * @param player entidade central
+     */
     public void draw(Graphics2D g2d, GameEntity player){
         tilemap.draw(g2d);
         for (CollidableObject object : objects)

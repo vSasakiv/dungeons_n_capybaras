@@ -58,7 +58,7 @@ public class Hitbox {
      * @return obtém maior coordenada y da caixa
      */
     public float maxY() {
-        return this.width / 2 + this.position.y;
+        return this.height/ 2 + this.position.y;
     }
 
     /**
@@ -140,10 +140,10 @@ public class Hitbox {
     public void draw(Graphics2D g2d, int screenX, int screenY, Color color) {
         g2d.setColor(color);
         g2d.drawRect(
-                (int) (screenX),
-                (int) (screenY),
-                (int) Constants.TILE_SIZE,
-                (int) Constants.TILE_SIZE
+                (screenX),
+                (screenY),
+                Constants.TILE_SIZE,
+                Constants.TILE_SIZE
         );
     }
 

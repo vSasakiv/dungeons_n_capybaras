@@ -1,15 +1,21 @@
 package game_entity.mobs;
 
 import game_entity.*;
+import game_entity.entity_sprites.*;
 import game_entity.weapons.AttackResults;
+import game_entity.weapons.Weapon;
+import gameloop.Constants;
+import gameloop.render.DrawMovingEntity;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends AttackingEntity {
     protected Counter invincibilityCounter; // Contador de frames de invincibility
     public Hitbox hitbox; // Hitbox do inimigo
-
+    private final DrawMovingEntity drawMethod;
     private EnemyStrategy estrategia; // Estratégia que o inimigo segue
+    private final String type;
 
     /**
      * Construtor da entidade, numa posição predeterminada
@@ -19,10 +25,19 @@ public class Enemy extends AttackingEntity {
      * @param velocity  velocidade
      * @param estrategia estrategia de combate do inimigo
      */
-    public Enemy(float worldPosX, float worldPosY, int velocity, EnemyStrategy estrategia) {
+    public Enemy(float worldPosX, float worldPosY, int velocity, EnemyStrategy estrategia, Weapon weapon, Hitbox hitbox, Attributes atributos, String type) {
         super(worldPosX, worldPosY, velocity);
         this.estrategia = estrategia;
         this.invincibilityCounter = new Counter(30, 1);
+        this.setWeapon(weapon);
+        this.setHitbox(hitbox);
+        this.setAttributes(atributos);
+        ArrayList<MovingEntitySprites> sprites = new ArrayList<>();
+        sprites.add(MobSpriteProvider.getProjectileSprite(type));
+        this.type = type;
+        this.drawMethod = new DrawMovingEntity(this, sprites);
+        this.setSpriteSizeX(Constants.TILE_SIZE);
+        this.setSpriteSizeY(Constants.TILE_SIZE);
     }
 
     /**
@@ -31,7 +46,7 @@ public class Enemy extends AttackingEntity {
      * @return um clone de um inimigo modelo nas posições worldPosX e worldPosY
      */
     public Enemy clone(float worldPosX, float worldPosY){
-        Enemy clone = new Enemy(worldPosX, worldPosY, this.velocity, this.estrategia.clone());
+        Enemy clone = new Enemy(worldPosX, worldPosY, this.velocity, this.estrategia.clone(), this.getWeapon().clone(), new Hitbox(this.hitbox), new Attributes(this.getAttributes()), this.type);
         clone.setWeapon(this.getWeapon().clone());
         clone.hitbox = new Hitbox(this.hitbox);
         clone.setAttributes(new Attributes(this.getAttributes()));
@@ -44,12 +59,21 @@ public class Enemy extends AttackingEntity {
      */
     public void tick(Vector playerPos){
         this.invincibilityCounter.tick();
-        Vector direction = estrategia.newDirection(this.position, playerPos);
-        this.position = Vector.add(this.position, Vector.scalarMultiply(direction, this.velocity));
+        this.setDirection(estrategia.newDirection(this.position, playerPos));
+        this.position = Vector.add(this.position, Vector.scalarMultiply(getDirection(), this.velocity));
         this.getWeapon().tick();
         this.updateShoot(playerPos);
-        this.tickAttacks(direction);
+        this.tickAttacks(getDirection());
+        this.getAttributes().tick();
+        this.drawMethod.spriteUpdate(DirectionUpdater.updateDirection(getDirection()));
+        this.drawMethod.spriteCounterUpdate();
+        this.setScreenX(this.getWorldPosX() - playerPos.x + (float) Constants.WIDTH /2 - (float) this.getSpriteSizeX() / 2);
+        this.setScreenY(this.getWorldPosY() - playerPos.y + (float) Constants.HEIGHT /2 - (float) this.getSpriteSizeX() / 2);
         this.hitbox.setPosition(this.position);
+    }
+
+    public void draw(Graphics2D g2d) {
+        drawMethod.draw(g2d);
     }
 
     /**

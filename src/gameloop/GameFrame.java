@@ -7,8 +7,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 public class GameFrame extends JFrame {
-    // Criemos uma estratégia de buffering para tornar mais eficiente a renderização
-    private BufferStrategy bufferStrategy;
+    private BufferStrategy bufferStrategy; //Estratégia de buffering que torna a renderização eficiente mais eficiente
 
     /**
      * Construtor do GameFrame, com tamanho determinado

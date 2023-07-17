@@ -4,15 +4,17 @@ import game_entity.GameEntity;
 import game_entity.Vector;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
  * Classe abstrata para representar um projétil
  */
 public abstract class Projectile extends GameEntity {
-    Vector direction; // direção que o projétil deve seguir
+    protected Vector direction; // direção que o projétil deve seguir
     ProjectileHitbox hitbox; // hitbox do projétil
     boolean collided = false; // caso colida com algo, deve ser true
+    protected BufferedImage image;
 
     /**
      * @param posX posição x de geração do projétil
@@ -21,10 +23,11 @@ public abstract class Projectile extends GameEntity {
      * @param direction direção na qual o projétil deve seguir inicialmente
      * @param hitbox hitbox do projétil
      */
-    public Projectile(float posX, float posY, int velocity, Vector direction, ProjectileHitbox hitbox) {
+    public Projectile(float posX, float posY, int velocity, Vector direction, ProjectileHitbox hitbox, BufferedImage image) {
         super(posX, posY, velocity);
         this.direction = direction;
         this.hitbox = hitbox;
+        this.image = image;
     }
 
     /**
@@ -60,5 +63,14 @@ public abstract class Projectile extends GameEntity {
      */
     public void setCollided(boolean collided) {
         this.collided = collided;
+    }
+
+    @Override
+    public Vector getDirection() {
+        return direction;
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 }

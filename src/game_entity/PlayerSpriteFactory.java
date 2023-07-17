@@ -6,6 +6,9 @@ import game_entity.entity_sprites.PlayerNinjaSprite;
 
 import java.util.Objects;
 
+/**
+ * Fábrica que cria os sprites do player com base no tipo selecionado
+ */
 public class PlayerSpriteFactory{
 
     public static MovingEntitySprites create(String type) {

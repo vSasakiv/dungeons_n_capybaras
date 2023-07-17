@@ -13,8 +13,8 @@ public class EstacionamentoStrategy extends ChangeTileStrategy {
      */
     public EstacionamentoStrategy () {
         regions = new ArrayList<>();
-        regions.add(new int[]{Constants.TILE_SIZE * 4, Constants.TILE_SIZE * 8, Constants.TILE_SIZE * 48, Constants.TILE_SIZE * 49});
-        regions.add(new int[]{Constants.TILE_SIZE * 48, Constants.TILE_SIZE * 49, Constants.TILE_SIZE * 21, Constants.TILE_SIZE * 24});
+        regions.add(new int[]{Constants.TILE_SIZE * 4, Constants.TILE_SIZE * 8, Constants.TILE_SIZE * 48, Constants.TILE_SIZE * 49}); //Estacionamento --> BienioSup
+        regions.add(new int[]{Constants.TILE_SIZE * 48, Constants.TILE_SIZE * 49, Constants.TILE_SIZE * 21, Constants.TILE_SIZE * 24}); //Estacionamento --> EletricaDungeon
     }
 
     /**
@@ -26,12 +26,13 @@ public class EstacionamentoStrategy extends ChangeTileStrategy {
     public int changeMap (GameEntity player, int mapNum) {
         int index = changePosition(player.getPosition());
         switch (index) {
+            //Estacionamento --> BienioSup
             case 0 -> {
                 player.setPosition(new Vector(Constants.TILE_SIZE * 39, Constants.TILE_SIZE * 3));
                 return 1;
             }
+            //Estacionamento --> EletricaDungeon
             case 1 -> {
-                player.setPosition(new Vector(Constants.TILE_SIZE * 39, Constants.TILE_SIZE * 3));
                 return -3;
             }
         }

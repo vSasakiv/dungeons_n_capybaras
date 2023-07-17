@@ -2,6 +2,9 @@ package tile.dungeon;
 
 import java.util.ArrayList;
 
+/**
+ * Interface dos fábricas que criam espaços relacionados às dungeons
+ */
 public interface DungeonAbstractFactory{
     ArrayList<DungeonTile> createRoom();
     DungeonTile createHorizontalCorridor();

@@ -4,14 +4,11 @@ import game_entity.GameEntity;
 import game_entity.Vector;
 import game_entity.weapons.projectiles.Projectile;
 import game_entity.weapons.projectiles.ProjectileFactory;
-
-import javax.imageio.ImageIO;
+import gameloop.Constants;
+import gameloop.render.DrawWeapon;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 /**
@@ -22,22 +19,28 @@ public class MultiShotWeapon extends Weapon{
     BufferedImage image; // sprite da arma
     int angulo; // ângulo a partir da direção de cada novo projétil
     int numeroProjeteis; // número de projéteis por ataque
+    DrawWeapon drawMethod;
+    String weaponSprite;
 
     /**
+     *
      * @param fireRate velocidade de ataque da arma
      * @param damage dano de cada projétil da arma
      * @param projectileFactory Fábrica de projéteis
      * @param angulo angulo entre cada projétil
      * @param numeroProjeteis numero de projéteis por tiro
+     * @param weaponSprite Tipo de sprite da arma
      */
-    public MultiShotWeapon(int fireRate, int damage, ProjectileFactory projectileFactory, int angulo, int numeroProjeteis) {
+    public MultiShotWeapon(int fireRate, int damage, ProjectileFactory projectileFactory, int angulo, int numeroProjeteis, String weaponSprite) {
         super(fireRate, damage);
         this.projectileFactory = projectileFactory;
         this.angulo = angulo;
         this.numeroProjeteis = numeroProjeteis;
-        getImage();
-        this.setSpriteSizeX(13 * 3);
-        this.setSpriteSizeY(5 * 3);
+        this.weaponSprite = weaponSprite;
+        drawMethod = new DrawWeapon(this);
+        this.image = WeaponSpriteProvider.getWeaponSprite(weaponSprite);
+        this.setSpriteSizeX(image.getWidth() * Constants.SCALE);
+        this.setSpriteSizeY(image.getHeight() * Constants.SCALE);
     }
 
     /**
@@ -63,11 +66,12 @@ public class MultiShotWeapon extends Weapon{
     @Override
     public Weapon clone() {
         return new MultiShotWeapon(
-              this.coolDownCounter.getIncrement(),
-              this.damage,
-              this.projectileFactory,
-              this.angulo,
-              this.numeroProjeteis
+                this.coolDownCounter.getIncrement(),
+                this.damage,
+                this.projectileFactory,
+                this.angulo,
+                this.numeroProjeteis,
+                this.weaponSprite
         );
     }
 
@@ -78,30 +82,7 @@ public class MultiShotWeapon extends Weapon{
      */
     @Override
     public void draw(Graphics2D g2d, GameEntity entity) {
-        AffineTransform original = g2d.getTransform();
-        g2d.translate(
-                entity.getScreenX() + (float) entity.getSpriteSizeX() / 2,
-                entity.getScreenY() + (float) entity.getSpriteSizeY() / 2 + 16
-        );
-        g2d.rotate(-Math.toRadians(90) + Vector.getDegree(this.getDirection()) );
-        g2d.drawImage(
-                this.image,
-                - this.getSpriteSizeX() / 2,
-                - this.getSpriteSizeY() / 2,
-                this.getSpriteSizeX(),
-                this.getSpriteSizeY(),
-                null);
-        g2d.setTransform(original);
+        drawMethod.draw(g2d, entity);
     }
 
-    /**
-     * Método que carrega o sprite
-     */
-    private void getImage () {
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/weapons/bow/Bow.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

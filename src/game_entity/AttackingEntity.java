@@ -49,7 +49,7 @@ public class AttackingEntity extends GameEntity{
 
         // devemos apagar todos os ataques que já foram feitos
         this.meleeAttacks.removeIf(MeleeWeaponAttack::isFinished);
-    };
+    }
 
     /**
      * @return ArrayList com todos os projéteis gerados por esta entidade
